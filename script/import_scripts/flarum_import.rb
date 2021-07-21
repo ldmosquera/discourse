@@ -20,9 +20,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     super
 
     @htmlentities = HTMLEntities.new
-
-    #will hold a hash of keys to replacement strings
-    @finalized_html_placeholders = nil
+    @placeholders = nil
 
     @client = Mysql2::Client.new(
       host: FLARUM_HOST,
@@ -176,9 +174,11 @@ class ImportScripts::FLARUM < ImportScripts::Base
   def clean_up(raw, import_id)
     @@debug_file_before.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
 
+    @placeholders = PlaceholderContainer.new
+
     raw = replace_valuable_html(raw)
     raw = strip_html(raw)
-    raw = apply_html_replacements(raw)
+    raw = @placeholders.apply(raw)
 
     @@debug_file_after.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
 
@@ -208,7 +208,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
       quote_content = html_to_markdown(quote_content).gsub(/\n+/, "\n > ")
       markdown = "\n> #{quote_content}\n"
 
-      store_html_replacement(markdown)
+      @placeholders.store(markdown)
     end
 
     # <list type="decimal"> ... </list>
@@ -228,25 +228,6 @@ class ImportScripts::FLARUM < ImportScripts::Base
     raw
   end
 
-  def store_html_replacement(str)
-    key = SecureRandom.hex
-
-    @finalized_html_placeholders ||= {}
-    @finalized_html_placeholders[key] = str
-
-    key
-  end
-
-  def apply_html_replacements(str)
-    return str if @finalized_html_placeholders.nil?
-
-    @finalized_html_placeholders.each do |key, replacement|
-      str = str.gsub(/#{key}/, replacement)
-    end
-    @finalized_html_placeholders = {}
-    str
-  end
-
   def strip_html(raw)
     raw = raw.gsub(/<r>(.*)<\/r>/m, '\1') #remove outside <r> tags
     raw = raw.gsub(/<t>(.*)<\/t>/m, '\1') #remove outside <t> tags
@@ -260,6 +241,33 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
   def mysql_query(sql)
     @client.query(sql, cache_rows: false)
+  end
+
+  # Allows to leave placeholders in a string, which can then survive an otherwise destructive operation.
+  # In this file, used to store bits of "hand cooked" markdown
+  # so that the final HtmlToMarkdown call (which only expects HTML) doesn't destroy them.
+  #
+  # FIXME: improve abstraction
+  class PlaceholderContainer
+    def initialize
+      @store = {}
+    end
+
+    # stores str under a new random key which is returned
+    def store(str)
+      key = SecureRandom.hex
+      @store[key] = str
+      key
+    end
+
+    # for a given string, replace all stored placeholders
+    def apply(str)
+      @store.each do |key, replacement|
+        str = str.gsub(/#{key}/, replacement)
+      end
+      @store = {}
+      str
+    end
   end
 end
 
