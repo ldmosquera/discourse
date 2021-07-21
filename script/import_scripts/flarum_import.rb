@@ -15,6 +15,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
   FLARUM_PW ||= ENV['FLARUM_PW'] || "db_user_pass"
 
   FLARUM_POSTS_DRY_RUN = !!ENV['FLARUM_POSTS_DRY_RUN']
+  AVATAR_DIR ||= ENV['AVATAR_DIR'] || "/shared/import/data/import_uploads"
 
   def initialize
     super
@@ -63,7 +64,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     batches(BATCH_SIZE) do |offset|
       results = mysql_query(
-        "SELECT id, username, email, joined_at, last_seen_at
+        "SELECT id, username, email, joined_at, last_seen_at, avatar_url
          FROM users
          LIMIT #{BATCH_SIZE}
          OFFSET #{offset};")
@@ -78,7 +79,10 @@ class ImportScripts::FLARUM < ImportScripts::Base
           username: user['username'],
           name: user['username'],
           created_at: user['joined_at'],
-          last_seen_at: user['last_seen_at']
+          last_seen_at: user['last_seen_at'],
+          post_create_action: proc do |u|
+            import_profile_picture(user, u)
+          end,
         }
       end
     end
@@ -346,6 +350,34 @@ class ImportScripts::FLARUM < ImportScripts::Base
       @store = {}
       str
     end
+  end
+
+  def import_profile_picture(old_user, imported_user)
+    avatar_filename = old_user['avatar_url']
+    if avatar_filename.present?
+      path = File.join(AVATAR_DIR, avatar_filename)
+      file = get_file(path)
+      if file.present?
+        upload = UploadCreator.new(file, file.path, type: "avatar").create_for(imported_user.id)
+
+        if !upload.persisted?
+          #FIXME: investigate etiquette
+          STDERR.puts "upload not persisted for avatar of user #{imported_user['id']}"
+          return
+        end
+
+        imported_user.create_user_avatar
+        imported_user.user_avatar.update(custom_upload_id: upload.id)
+        imported_user.update(uploaded_avatar_id: upload.id)
+      end
+    end
+  ensure
+    file.close rescue nil
+  end
+
+  def get_file(path)
+    return File.open(path) if File.exist?(path)
+    nil
   end
 end
 
