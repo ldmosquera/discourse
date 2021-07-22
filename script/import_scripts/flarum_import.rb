@@ -176,8 +176,13 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     @placeholders = PlaceholderContainer.new
 
+    # convert any tags with special meaning before they are treated as standard HTML by
+    # HtmlToMarkdown and either mishandled or wiped away
     raw = replace_valuable_html(raw)
+
+    # use HtmlToMarkdown to turn remaining HTML into Markdown
     raw = strip_html(raw)
+
     raw = @placeholders.apply(raw)
 
     @@debug_file_after.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
@@ -190,14 +195,15 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     # HACK: remove anything within <s>, which in all cases seems to only add bogus markup
     # not production worthy - just to make sample data look good per audition instructions
-    # NOTE: only lowercase <s> and not <S> seems bogus, so no //i
+    # NOTE: only lowercase <s> seems bogus, so no //i
     raw = raw.gsub(/<s>.*?<\/s>/m, '')
 
     raw = raw.gsub(/<url>(.*?)<\/url>/i, '\1')
     raw = raw.gsub(/<url url="(.*?)">(.*?)<\/url>/i, '[\2](\1)')
 
-    # <c> .. </c> (code, presumably)
-    raw = raw.gsub(/<c>(.*?)<\/c>/mi, '```\1```')
+    # <c> .. </c> and <code> .. </code>
+    raw = raw.gsub(/<c>(.*?)<\/c>/mi, '<code>\1</code>')
+    raw = raw.gsub(/<code>(.*?)<\/code>/mi, '```\1```')
 
     # [u] .. [/u] (need to use a placeholder since there's no underlining in .md and thus in HtmlToMarkdown)
     raw = raw.gsub(/<u>(.*?)<\/u>/) do
@@ -205,12 +211,13 @@ class ImportScripts::FLARUM < ImportScripts::Base
       @placeholders.store(bbcode)
     end
 
-    # [youtube].. [/youtube]
+    # [youtube] .. [/youtube]
     raw = raw.gsub(/\[youtube\](.*?)\[\/youtube\]/, 'https://www.youtube.com/watch?v=\1')
 
     # <POSTMENTION discussionid="8" displayname="meghna" id="31" number="3" username="meghna">@meghna#31</POSTMENTION>
     #   becomes:
     # [quote="meghna, post:3, topic:8"]@meghna#31[/quote]
+    # FIXME: this should probably use a recursive regex
     raw = raw.gsub(/<postmention discussionId="(\d+)" displayname="(.*?)" id="(\d+)".*?>(.*?)<\/postmention>/im) do
       _, display_name, imported_post_id, tag_content = $1, $2, $3, $4
 
@@ -252,8 +259,8 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   def strip_html(raw)
-    raw = raw.gsub(/<r>(.*)<\/r>/m, '\1') #remove outside <r> tags
-    raw = raw.gsub(/<t>(.*)<\/t>/m, '\1') #remove outside <t> tags
+    raw = raw.gsub(/<r>(.*)<\/r>/im, '\1') #remove outside <r> tags
+    raw = raw.gsub(/<t>(.*)<\/t>/im, '\1') #remove outside <t> tags
 
     html_to_markdown raw
   end
