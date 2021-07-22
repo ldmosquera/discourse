@@ -17,6 +17,11 @@ class ImportScripts::FLARUM < ImportScripts::Base
   def initialize
     super
 
+    @htmlentities = HTMLEntities.new
+
+    #will hold a hash of keys to replacement strings
+    @finalized_html_placeholders = nil
+
     @client = Mysql2::Client.new(
       host: FLARUM_HOST,
       username: FLARUM_USER,
@@ -127,7 +132,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
         mapped[:id] = m['id']
         mapped[:user_id] = user_id_from_imported_user_id(m['user_id']) || -1
-        mapped[:raw] = process_FLARUM_post(m['raw'], m['id'])
+        mapped[:raw] = clean_up(m['raw'], m['id'])
         mapped[:created_at] = Time.zone.at(m['created_at'])
 
         if m['id'] == m['first_post_id']
@@ -148,10 +153,85 @@ class ImportScripts::FLARUM < ImportScripts::Base
     end
   end
 
-  def process_FLARUM_post(raw, import_id)
-    s = raw.dup
+  def clean_up(raw, import_id)
+    raw = replace_valuable_html(raw)
+    raw = strip_html(raw)
+    raw = apply_html_replacements(raw)
 
-    s
+    raw
+  end
+
+  def replace_valuable_html(raw)
+    raw = @htmlentities.decode(raw)
+
+    # HACK: remove anything within <s>, which in all cases seems to only add bogus markup
+    # not production worthy - just to make sample data look good per audition instructions
+    # NOTE: only lowercase <s> and not <S> seems bogus, so no //i
+    raw = raw.gsub(/<s>.*?<\/s>/m, '')
+
+    raw = raw.gsub(/<url>(.*?)<\/url>/i, '\1')
+    raw = raw.gsub(/<url url="(.*?)">(.*?)<\/url>/i, '[\2](\1)')
+
+    # <c> .. </c> (code, presumably)
+    raw = raw.gsub(/<c>(.*?)<\/c>/mi, '```\1```')
+
+    # [youtube].. [/youtube]
+    raw = raw.gsub(/\[youtube\](.*?)\[\/youtube\]/, 'https://www.youtube.com/watch?v=\1')
+
+    # <quote> ... </quote>
+    raw = raw.gsub(/<quote>(.+?)<\/quote>/im) do
+      quote_content = $1.gsub(/<i>\s*>\s*<\/i>/i, '') # HACK - otherwise results in redundant >
+      quote_content = html_to_markdown(quote_content).gsub(/\n+/, "\n > ")
+      markdown = "\n> #{quote_content}\n"
+
+      store_html_replacement(markdown)
+    end
+
+    # <list type="decimal"> ... </list>
+    raw = raw.gsub(/<list type="decimal">(.+?)<\/list>/im) do
+      list_contents = $1
+      markdown = list_contents.gsub(/<li>(.*?)<\/li>/i, "\n 1. \\1") + "\n"
+      @placeholders.store(markdown)
+    end
+
+    # <list> ... </list>
+    raw = raw.gsub(/<list>(.+?)<\/list>/im) do
+      list_contents = $1
+      markdown = list_contents.gsub(/<li>(.*?)<\/li>/i, "\n - \\1") + "\n"
+      @placeholders.store(markdown)
+    end
+
+    raw
+  end
+
+  def store_html_replacement(str)
+    key = SecureRandom.hex
+
+    @finalized_html_placeholders ||= {}
+    @finalized_html_placeholders[key] = str
+
+    key
+  end
+
+  def apply_html_replacements(str)
+    return str if @finalized_html_placeholders.nil?
+
+    @finalized_html_placeholders.each do |key, replacement|
+      str = str.gsub(/#{key}/, replacement)
+    end
+    @finalized_html_placeholders = {}
+    str
+  end
+
+  def strip_html(raw)
+    raw = raw.gsub(/<r>(.*)<\/r>/m, '\1') #remove outside <r> tags
+    raw = raw.gsub(/<t>(.*)<\/t>/m, '\1') #remove outside <t> tags
+
+    html_to_markdown raw
+  end
+
+  def html_to_markdown(str)
+    HtmlToMarkdown.new(str).to_markdown
   end
 
   def mysql_query(sql)
@@ -160,3 +240,4 @@ class ImportScripts::FLARUM < ImportScripts::Base
 end
 
 ImportScripts::FLARUM.new.perform
+
