@@ -150,7 +150,11 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
         mapped[:id] = m['id']
         mapped[:user_id] = user_id_from_imported_user_id(m['user_id']) || -1
-        mapped[:raw] = clean_up(m['raw'], m['id'])
+
+        cleaned_content, extra = clean_up(m['raw'], m['id'])
+        mapped[:reply_to_post_number] = extra[:reply_to_post_number]
+        mapped[:raw] = cleaned_content
+
         mapped[:created_at] = Time.zone.at(m['created_at'])
 
         if m['id'] == m['first_post_id']
@@ -171,6 +175,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     end
   end
 
+  #returns [ str, extra ] where extra is a hash of additional data
   def clean_up(raw, import_id)
     @@debug_file_before.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
 
@@ -181,7 +186,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     # convert any tags with special meaning before they are treated as standard HTML by
     # HtmlToMarkdown and either mishandled or wiped away
-    raw = replace_valuable_html(raw)
+    raw, extra = replace_valuable_html(raw)
 
     # use HtmlToMarkdown to turn remaining HTML into Markdown
     raw = strip_html(raw)
@@ -190,10 +195,12 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     @@debug_file_after.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
 
-    raw
+    [ raw, extra ]
   end
 
+  #returns [ str, extra ] where extra is a hash of additional data
   def replace_valuable_html(raw)
+    extra = {}
     raw = @htmlentities.decode(raw)
 
     # HACK: remove anything within <s>, which in all cases seems to only add bogus markup
@@ -233,6 +240,11 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
       tag_content.gsub!(/@#{display_name}#\d+/, "@#{display_name}") # @meghna#31 -> @meghna
 
+      # FIXME: this imports the post as a reply per last <postmention> occurrence in the text,
+      # but ignores any others before it, and it assumes they're always for the current topic.
+      # Ie. only semantically correct for posts with exactly 1 intra-topic <postmention>
+      extra[:reply_to_post_number] = post_number
+
       quote = %Q{[quote="#{display_name}, post:#{post_number}, topic:#{topic_id}"]#{tag_content}[/quote]}
       @placeholders.store(quote)
     end
@@ -267,7 +279,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     raw = raw.gsub(/<left>(.*?)<\/left>/mi, '[left]\1[/left]')
     raw = raw.gsub(/<right>(.*?)<\/right>/mi, '[right]\1[/right]')
 
-    raw
+    [ raw, extra ]
   end
 
   def strip_html(raw)
