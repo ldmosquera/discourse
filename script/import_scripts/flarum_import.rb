@@ -14,6 +14,8 @@ class ImportScripts::FLARUM < ImportScripts::Base
   FLARUM_USER ||= ENV['FLARUM_USER'] || "db_user"
   FLARUM_PW ||= ENV['FLARUM_PW'] || "db_user_pass"
 
+  FLARUM_POSTS_DRY_RUN = !!ENV['FLARUM_POSTS_DRY_RUN']
+
   def initialize
     super
 
@@ -31,10 +33,28 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   def execute
-
     import_users
     import_categories
-    import_posts
+
+    if ! FLARUM_POSTS_DRY_RUN
+      import_posts
+    else
+      begin
+        @@debug_file_before = File.open('/tmp/debug.1.before.txt', 'w+')
+        @@debug_file_after =  File.open('/tmp/debug.2.after.txt', 'w+')
+
+        Post.transaction do
+          import_posts
+
+          # don't actually create records so they won't be skipped on next run,
+          # removing need to rollback DB externally before testing again
+          raise ActiveRecord::Rollback, "nope"
+        end
+      ensure
+        @@debug_file_before.close
+        @@debug_file_after.close
+      end
+    end
 
   end
 
@@ -154,9 +174,13 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   def clean_up(raw, import_id)
+    @@debug_file_before.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
+
     raw = replace_valuable_html(raw)
     raw = strip_html(raw)
     raw = apply_html_replacements(raw)
+
+    @@debug_file_after.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
 
     raw
   end
