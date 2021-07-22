@@ -256,9 +256,20 @@ class ImportScripts::FLARUM < ImportScripts::Base
       end
     end
 
+    # fix [img] tags where src equals tag content
+    raw = raw.gsub(/<img src="(.*?)">(.*?)<\/img>/i) do
+      src, tag_content = $1, $2
+
+      if tag_content.strip == src.strip # FIXME: do lowercase comparison just in case
+        "[img]#{src}[/img]"
+      else
+        $& # if src != tag_content, leave unchanged
+      end
+    end
+
     # <c> <code> [pre]
-    raw = raw.gsub(/<c>(.*?)<\/c>/mi, '[code]\1[/code]')
-    raw = raw.gsub(/<code>(.*?)<\/code>/mi, '[code]\1[/code]')
+    raw = raw.gsub(/<c>(.*?)<\/c>/mi, "[code]\\1[/code]")
+    raw = raw.gsub(/<code>(.*?)<\/code>/mi, "[code]\\1[/code]")
     raw = raw.gsub(/\[pre\]/i, "<pre>")
     raw = raw.gsub(/\[\/pre\]/i, "</pre>")
 
