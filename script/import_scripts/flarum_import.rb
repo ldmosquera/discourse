@@ -199,6 +199,12 @@ class ImportScripts::FLARUM < ImportScripts::Base
     # <c> .. </c> (code, presumably)
     raw = raw.gsub(/<c>(.*?)<\/c>/mi, '```\1```')
 
+    # [u] .. [/u] (need to use a placeholder since there's no underlining in .md and thus in HtmlToMarkdown)
+    raw = raw.gsub(/<u>(.*?)<\/u>/) do
+      bbcode = "[u]#{$1}[/u]"
+      @placeholders.store(bbcode)
+    end
+
     # [youtube].. [/youtube]
     raw = raw.gsub(/\[youtube\](.*?)\[\/youtube\]/, 'https://www.youtube.com/watch?v=\1')
 
