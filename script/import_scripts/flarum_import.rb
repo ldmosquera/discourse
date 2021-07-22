@@ -22,6 +22,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     @htmlentities = HTMLEntities.new
     @placeholders = nil
+    @color_db = ColorDB.new
 
     @client = Mysql2::Client.new(
       host: FLARUM_HOST,
@@ -301,7 +302,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     end
 
     raw = raw.gsub(/<size size="(\d+)">(.*?)<\/size>/mi, '[size=\1]\2[/size]')
-    raw = raw.gsub(/<color color="(.+?)">(.*?)<\/color>/mi, '[color=1]\2[/color]')
+    raw = raw.gsub(/<color color="(.+?)">(.*?)<\/color>/mi, "[color=#{@color_db.hex_for("\\1")}]\\2[/color]")
 
     raw = raw.gsub(/<center>(.*?)<\/center>/mi, '[center]\1[/center]')
     raw = raw.gsub(/<left>(.*?)<\/left>/mi, '[left]\1[/left]')
@@ -349,6 +350,17 @@ class ImportScripts::FLARUM < ImportScripts::Base
       end
       @store = {}
       str
+    end
+  end
+
+  class ColorDB
+    def initialize
+      @color_db = Hash[ *CSV.read('script/import_scripts/csv/colors.csv').flatten ]
+    end
+
+    def hex_for(color_name)
+      fallback = 'blue'
+      @color_db[color_name] || fallback
     end
   end
 
