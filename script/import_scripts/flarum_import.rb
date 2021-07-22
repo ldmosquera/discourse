@@ -208,6 +208,23 @@ class ImportScripts::FLARUM < ImportScripts::Base
     # [youtube].. [/youtube]
     raw = raw.gsub(/\[youtube\](.*?)\[\/youtube\]/, 'https://www.youtube.com/watch?v=\1')
 
+    # <POSTMENTION discussionid="8" displayname="meghna" id="31" number="3" username="meghna">@meghna#31</POSTMENTION>
+    #   becomes:
+    # [quote="meghna, post:3, topic:8"]@meghna#31[/quote]
+    raw = raw.gsub(/<postmention discussionId="(\d+)" displayname="(.*?)" id="(\d+)".*?>(.*?)<\/postmention>/im) do
+      _, display_name, imported_post_id, tag_content = $1, $2, $3, $4
+
+      #FIXME: add error checking
+      imported = @lookup.topic_lookup_from_imported_post_id(imported_post_id)
+      topic_id = imported[:topic_id]
+      post_number = imported[:post_number]
+
+      tag_content.gsub!(/@#{display_name}#\d+/, "@#{display_name}") # @meghna#31 -> @meghna
+
+      quote = %Q{[quote="#{display_name}, post:#{post_number}, topic:#{topic_id}"]#{tag_content}[/quote]}
+      @placeholders.store(quote)
+    end
+
     # <quote> ... </quote>
     raw = raw.gsub(/<quote>(.+?)<\/quote>/im) do
       quote_content = $1.gsub(/<i>\s*>\s*<\/i>/i, '') # HACK - otherwise results in redundant >
