@@ -54,6 +54,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
       end
     end
 
+    create_permalinks
   end
 
   def import_users
@@ -171,6 +172,29 @@ class ImportScripts::FLARUM < ImportScripts::Base
         end
 
         skip ? nil : mapped
+      end
+    end
+  end
+
+  def create_permalinks
+    puts '', 'Creating redirects...', ''
+
+    # users: https://discuss.flarum.org/u/askvortsov
+    # no need to create User permalinks since URL is /u/#{username} both in Flarum and Discord
+
+    # posts: https://discuss.flarum.org/d/26525-rfc-flarum-cli-alpha/5
+    Post.find_each do |post|
+      pcf = post.custom_fields
+      if pcf && pcf["import_id"]
+        id = topic_lookup_from_imported_post_id(pcf["import_id"])[:topic_id]
+        topic = post.topic
+        slug = Slug.for(topic.title) # probably matches what flarum would do...
+        if post.post_number == 1
+          Permalink.find_or_create_by(url: "d/#{id}-#{slug}", topic_id: topic.id)
+        else
+          Permalink.find_or_create_by(url: "d/#{id}-#{slug}/#{post.post_number}", post_id: post.id)
+        end
+        print '.'
       end
     end
   end
