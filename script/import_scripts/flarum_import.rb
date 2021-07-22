@@ -213,6 +213,9 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     @placeholders = PlaceholderContainer.new
 
+    # apply hacks for special cases
+    raw = apply_hacks(raw)
+
     # convert any tags with special meaning before they are treated as standard HTML by
     # HtmlToMarkdown and either mishandled or wiped away
     raw, extra = replace_valuable_html(raw)
@@ -227,15 +230,20 @@ class ImportScripts::FLARUM < ImportScripts::Base
     [ raw, extra ]
   end
 
+  def apply_hacks(raw)
+    # NOTE: not production worthy - just to make sample data look good per audition instructions
+
+    # HACK: remove anything within <s>, which in all cases seems to only add bogus markup
+    # NOTE: only lowercase <s> seems bogus, so no //i
+    raw = raw.gsub(/<s>.*?<\/s>/m, '')
+
+    raw
+  end
+
   #returns [ str, extra ] where extra is a hash of additional data
   def replace_valuable_html(raw)
     extra = {}
     raw = @htmlentities.decode(raw)
-
-    # HACK: remove anything within <s>, which in all cases seems to only add bogus markup
-    # not production worthy - just to make sample data look good per audition instructions
-    # NOTE: only lowercase <s> seems bogus, so no //i
-    raw = raw.gsub(/<s>.*?<\/s>/m, '')
 
     raw = raw.gsub(/<url>(.*?)<\/url>/i, '\1')
     raw = raw.gsub(/<url url="(.*?)">(.*?)<\/url>/i) do
