@@ -174,6 +174,9 @@ class ImportScripts::FLARUM < ImportScripts::Base
   def clean_up(raw, import_id)
     @@debug_file_before.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
 
+    # NOTE: some BB is produced, which assumes the official BB code plugin is installed:
+    # https://meta.discourse.org/t/discourse-bbcode/65425
+
     @placeholders = PlaceholderContainer.new
 
     # convert any tags with special meaning before they are treated as standard HTML by
@@ -254,6 +257,13 @@ class ImportScripts::FLARUM < ImportScripts::Base
       markdown = list_contents.gsub(/<li>(.*?)<\/li>/i, "\n - \\1") + "\n"
       @placeholders.store(markdown)
     end
+
+    raw = raw.gsub(/<size size="(\d+)">(.*?)<\/size>/mi, '[size=\1]\2[/size]')
+    raw = raw.gsub(/<color color="(.+?)">(.*?)<\/color>/mi, '[color=1]\2[/color]')
+
+    raw = raw.gsub(/<center>(.*?)<\/center>/mi, '[center]\1[/center]')
+    raw = raw.gsub(/<left>(.*?)<\/left>/mi, '[left]\1[/left]')
+    raw = raw.gsub(/<right>(.*?)<\/right>/mi, '[right]\1[/right]')
 
     raw
   end
