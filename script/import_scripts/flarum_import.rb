@@ -36,13 +36,13 @@ class ImportScripts::FLARUM < ImportScripts::Base
     import_users
     import_categories
 
-    if ! FLARUM_POSTS_DRY_RUN
-      import_posts
-    else
-      begin
-        @@debug_file_before = File.open('/tmp/debug.1.before.txt', 'w+')
-        @@debug_file_after =  File.open('/tmp/debug.2.after.txt', 'w+')
+    @@debug_file_before = File.open('/tmp/debug.1.before.txt', 'w+')
+    @@debug_file_after =  File.open('/tmp/debug.2.after.txt', 'w+')
 
+    begin
+      if ! FLARUM_POSTS_DRY_RUN
+        import_posts
+      else
         Post.transaction do
           import_posts
 
@@ -50,10 +50,10 @@ class ImportScripts::FLARUM < ImportScripts::Base
           # removing need to rollback DB externally before testing again
           raise ActiveRecord::Rollback, "nope"
         end
-      ensure
-        @@debug_file_before.close
-        @@debug_file_after.close
       end
+    ensure
+      @@debug_file_before.close
+      @@debug_file_after.close
     end
 
     create_permalinks
@@ -206,7 +206,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
   #returns [ str, extra ] where extra is a hash of additional data
   def clean_up(raw, import_id)
-    @@debug_file_before.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
+    @@debug_file_before.puts "\n\n--- record #{import_id}\n\n#{raw}"
 
     # NOTE: some BB is produced, which assumes the official BB code plugin is installed:
     # https://meta.discourse.org/t/discourse-bbcode/65425
@@ -222,7 +222,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     raw = @placeholders.apply(raw)
 
-    @@debug_file_after.puts "\n\n--- record #{import_id}\n\n#{raw}" if FLARUM_POSTS_DRY_RUN
+    @@debug_file_after.puts "\n\n--- record #{import_id}\n\n#{raw}"
 
     [ raw, extra ]
   end
