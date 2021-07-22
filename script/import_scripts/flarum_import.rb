@@ -237,6 +237,9 @@ class ImportScripts::FLARUM < ImportScripts::Base
     # NOTE: only lowercase <s> seems bogus, so no //i
     raw = raw.gsub(/<s>.*?<\/s>/m, '')
 
+    # [li] -> [ul]
+    raw = raw.gsub(/\[li\](.*?)\[\/li\]/, '[ul]\1[/ul]')
+
     raw
   end
 
