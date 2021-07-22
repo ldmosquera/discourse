@@ -204,9 +204,11 @@ class ImportScripts::FLARUM < ImportScripts::Base
     raw = raw.gsub(/<url>(.*?)<\/url>/i, '\1')
     raw = raw.gsub(/<url url="(.*?)">(.*?)<\/url>/i, '[\2](\1)')
 
-    # <c> .. </c> and <code> .. </code>
-    raw = raw.gsub(/<c>(.*?)<\/c>/mi, '<code>\1</code>')
-    raw = raw.gsub(/<code>(.*?)<\/code>/mi, '```\1```')
+    # <c> <code> [pre]
+    raw = raw.gsub(/<c>(.*?)<\/c>/mi, '[code]\1[/code]')
+    raw = raw.gsub(/<code>(.*?)<\/code>/mi, '[code]\1[/code]')
+    raw = raw.gsub(/\[pre\]/i, "<pre>")
+    raw = raw.gsub(/\[\/pre\]/i, "</pre>")
 
     # [u] .. [/u] (need to use a placeholder since there's no underlining in .md and thus in HtmlToMarkdown)
     raw = raw.gsub(/<u>(.*?)<\/u>/) do
