@@ -238,7 +238,15 @@ class ImportScripts::FLARUM < ImportScripts::Base
     raw = raw.gsub(/<s>.*?<\/s>/m, '')
 
     raw = raw.gsub(/<url>(.*?)<\/url>/i, '\1')
-    raw = raw.gsub(/<url url="(.*?)">(.*?)<\/url>/i, '[\2](\1)')
+    raw = raw.gsub(/<url url="(.*?)">(.*?)<\/url>/i) do
+      url, tag_content = $1, $2
+
+      if tag_content.strip == url.strip # FIXME: do lowercase comparison just in case
+        url
+      else
+        "[#{tag_content}](#{url})"
+      end
+    end
 
     # <c> <code> [pre]
     raw = raw.gsub(/<c>(.*?)<\/c>/mi, '[code]\1[/code]')
