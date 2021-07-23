@@ -36,10 +36,12 @@ class ImportScripts::FLARUM < ImportScripts::Base
     import_users
     import_categories
 
-    @@debug_file_before = File.open('/tmp/debug.1.before.txt', 'w+')
-    @@debug_file_after =  File.open('/tmp/debug.2.after.txt', 'w+')
-
     begin
+
+      # FIXME: not production worthy - just for debugging by diffing both files - eventually remove
+      @@debug_file_before = File.open('/tmp/debug.1.before.txt', 'w+')
+      @@debug_file_after =  File.open('/tmp/debug.2.after.txt', 'w+')
+
       if ! FLARUM_POSTS_DRY_RUN
         import_posts
       else
@@ -186,7 +188,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     puts '', 'Creating redirects...', ''
 
     # users: https://discuss.flarum.org/u/askvortsov
-    # no need to create User permalinks since URL is /u/#{username} both in Flarum and Discord
+    # no need to create User permalinks since URL is /u/#{username} both in Flarum and Discourse
 
     # posts: https://discuss.flarum.org/d/26525-rfc-flarum-cli-alpha/5
     Post.find_each do |post|
@@ -223,7 +225,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
   def clean_up(raw, import_id)
     @@debug_file_before.puts "\n\n--- record #{import_id}\n\n#{raw}"
 
-    # NOTE: some BB is produced, which assumes the official BB code plugin is installed:
+    # NOTE: some BBCode is produced, which assumes the official BBCode plugin is installed:
     # https://meta.discourse.org/t/discourse-bbcode/65425
 
     @placeholders = PlaceholderContainer.new
@@ -256,7 +258,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     # [li] -> [ul]
     raw = raw.gsub(/\[li\](.*?)\[\/li\]/, '[ul]\1[/ul]')
 
-    # cover some more special cases which seem designed to intentionally break parsing
+    # cover some more special cases which seem to intentionally break parsing
     raw = raw.gsub(/!\[(.*?)\]/, '\1')
     raw = raw.gsub(%r{\(https://\)}, '')
 
@@ -279,7 +281,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
       end
     end
 
-    # fix [img] tags where src equals tag content
+    # simplify [img] tags where src equals tag content
     raw = raw.gsub(/<img (?:alt=".*?" )?src="(.*?)">(.*?)<\/img>/i) do
       src, tag_content = $1, $2
 
@@ -297,6 +299,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     raw = raw.gsub(/\[\/pre\]/i, "</pre>")
 
     # [u] .. [/u] (need to use a placeholder since there's no underlining in .md and thus in HtmlToMarkdown)
+    # FIXME: doesn't work
     raw = raw.gsub(/<u>(.*?)<\/u>/) do
       bbcode = "[u]#{$1}[/u]"
       @placeholders.store(bbcode)
@@ -319,7 +322,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
       tag_content.gsub!(/@#{display_name}#\d+/, "@#{display_name}") # @meghna#31 -> @meghna
 
-      # FIXME: this imports the post as a reply per last <postmention> occurrence in the text,
+      # FIXME: this imports the post as a reply per the last <postmention> occurrence in the text,
       # but ignores any others before it, and it assumes they're always for the current topic.
       # Ie. only semantically correct for posts with exactly 1 intra-topic <postmention>
       extra[:reply_to_post_number] = post_number
@@ -330,21 +333,25 @@ class ImportScripts::FLARUM < ImportScripts::Base
 
     # <quote> ... </quote>
     raw = raw.gsub(/<quote>(.+?)<\/quote>/im) do
-      quote_content = $1.gsub(/<i>\s*>\s*<\/i>/i, '') # HACK - otherwise results in redundant >
+      quote_content = $1
+      quote_content.gsub!(/<i>\s*>\s*<\/i>/i, '') # HACK - otherwise results in redundant > -- FIXME: doesn't fix all cases
+
+      #figure out where line breaks are and prepend each line with a >
       quote_content = html_to_markdown(quote_content).gsub(/\n+/, "\n > ")
+
       markdown = "\n> #{quote_content}\n"
 
       @placeholders.store(markdown)
     end
 
-    # <list type="decimal"> ... </list>
+    # <list type="decimal"> ... </list> (numbered list)
     raw = raw.gsub(/<list type="decimal">(.+?)<\/list>/im) do
       list_contents = $1
       markdown = list_contents.gsub(/<li>(.*?)<\/li>/i, "\n 1. \\1") + "\n"
       @placeholders.store(markdown)
     end
 
-    # <list> ... </list>
+    # <list> ... </list> (bullet points)
     raw = raw.gsub(/<list>(.+?)<\/list>/im) do
       list_contents = $1
       markdown = list_contents.gsub(/<li>(.*?)<\/li>/i, "\n - \\1") + "\n"
@@ -352,7 +359,12 @@ class ImportScripts::FLARUM < ImportScripts::Base
     end
 
     raw = raw.gsub(/<size size="(\d+)">(.*?)<\/size>/mi, '[size=\1]\2[/size]')
-    raw = raw.gsub(/<color color="(.+?)">(.*?)<\/color>/mi, "[color=#{@color_db.hex_for("\\1")}]\\2[/color]")
+
+    raw = raw.gsub(/<color color="(.+?)">(.*?)<\/color>/mi) do
+      color_name = $1
+      hex = @color_db.hex_for(color_name)
+      "[color=#{hex}]\\2[/color]"
+    end
 
     raw = raw.gsub(/<center>(.*?)<\/center>/mi, '[center]\1[/center]')
     raw = raw.gsub(/<left>(.*?)<\/left>/mi, '[left]\1[/left]')
@@ -377,8 +389,8 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   # Allows to leave placeholders in a string, which can then survive an otherwise destructive operation.
-  # In this file, used to store bits of "hand cooked" markdown
-  # so that the final HtmlToMarkdown call (which only expects HTML) doesn't destroy them.
+  # In this file, used to store bits of "hand cooked" markdown so that
+  # the final HtmlToMarkdown call (which only expects HTML) doesn't destroy them.
   #
   # FIXME: improve abstraction
   class PlaceholderContainer
@@ -393,7 +405,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
       key
     end
 
-    # for a given string, replace all stored placeholders
+    # in a given string, replace all stored placeholders
     def apply(str)
       @store.each do |key, replacement|
         str = str.gsub(/#{key}/, replacement)
@@ -423,7 +435,6 @@ class ImportScripts::FLARUM < ImportScripts::Base
         upload = UploadCreator.new(file, file.path, type: "avatar").create_for(imported_user.id)
 
         if !upload.persisted?
-          #FIXME: investigate etiquette
           STDERR.puts "upload not persisted for avatar of user #{imported_user['id']}"
           return
         end
