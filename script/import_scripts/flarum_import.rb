@@ -320,7 +320,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
       # Ie. only semantically correct for posts with exactly 1 intra-topic <postmention>
       extra[:reply_to_post_number] = post_number
 
-      quote = %Q{[quote="#{display_name}, post:#{post_number}, topic:#{topic_id}"]#{tag_content}[/quote]}
+      quote = %Q{\n[quote="#{display_name}, post:#{post_number}, topic:#{topic_id}"]#{tag_content}[/quote]\n}
       @placeholders.store(quote)
     end
 
