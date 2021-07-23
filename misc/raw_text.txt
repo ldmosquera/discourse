@@ -1,0 +1,1018 @@
+
+
+--- record 1
+
+<r><p><STRONG><s>**</s>Hello!<e>**</e></STRONG></p>
+
+<p>&#129395; Congratulations with your brand new Ajalan forum! The Free Flarum mission is to help people start independent communities, and we are keen to make yours a success. &#128640; Here are 10 cool things to do with your new forum.</p>
+
+<H3><s>### </s>1. Use your admin powers &#127947;️‍♂️<e> </e></H3>
+<p>You have received a mail with your new password. Click <C><s>`</s>login<e>`</e></C> (top-right). Then, click <C><s>`</s>admin<e>`</e></C> and <C><s>`</s>Administration<e>`</e></C>. Here is where you configure the look &amp; feel of your forum, and where you can enable cool features (called "extensions").</p> 
+
+<H3><s>### </s>2. Pimp your forum &#128141;<e> </e></H3>
+<p>A standard forum looks boring, right? No worries, there are many ways to style your forum. Start by adding a logo &amp; a favorite icon and change the standard colors. All this is done under the <C><s>`</s>Appearance<e>`</e></C> section in the admin panel. If you are feeling really adventurous, you can add custom CSS/Less to give your forum a bit of eye candy.</p>
+
+<H3><s>### </s>3. Set up your own language &#127462;&#127466;<e> </e></H3>
+<p>English is the default language, but many other languages are supported. Go to <C><s>`</s>extensions<e>`</e></C> in the admin panel and search for your language, then enable it. You can also configure Flarum to use this as the default language, if most of your members use that.</p> 
+
+<H3><s>### </s>4. Use your own domain name &#127760;<e> </e></H3>
+<p>Free Flarum allows you to use your own domain name. Besides looking look/professional, it helps you if you ever decide to move your forum elsewhere, because you won't be tied to the Free Flarum address. To do this, you should register a domainname elsewhere (for example with <URL url="https://www.namecheap.com"><s>[</s>Namecheap<e>](https://www.namecheap.com)</e></URL>). Then go to <URL url="https://www.freeflarum.com/settings"><s>[</s>Free Flarum Settings<e>](https://www.freeflarum.com/settings)</e></URL> and enter your domain name. Voila!</p>
+ 
+<H3><s>### </s>5. Create an introduction for new members &#128104;‍&#127891;<e> </e></H3>
+<p>Create a <EM><s>_</s>Sticky<e>_</e></EM> post, explaining the objective of your forum, the rules to join, etcetera. Don't be a dictator writing pages full of regulation, because nobody likes to join a prison &#128512; You should write something to inspire new members and motivate them to contribute.</p> 
+
+<H3><s>### </s>6. Create interesting posts ✏️<e> </e></H3>
+<p>A forum requires interesting content for people to return. Right now, there isn't much here &#128521; So let's change that! Good content is meaningful, useful, entertaining. Write something about your expertise. The news from your sports club. An opinionated essay. Make sure that people think: <EM><s>_</s>I hope s/he will post most like this!<e>_</e></EM>.</p>
+
+<H3><s>### </s>7. Invite people &#128140;</H3>
+<p>A forum without users isn't really a forum, is it? So let's invite your friends, colleagues, neighbours over. The first members of your forum should be <STRONG><s>**</s>active contributors<e>**</e></STRONG> as to get the discussions started. So ask the first members to write a few posts with meaningful content.</p> 
+
+<H3><s>### </s>8. Use tags &#128218;️</H3>
+<p>Once you have many posts, you can organize them around subjects ("tags"). To do that, first enable the Tag Extension, then go to the Tags section and add a couple of categories. Guidelines: don't make too many tags, especially if you don't have posts for them yet. Tip: create content first, organize later!</p>
+
+<H3><s>### </s>9. Nurture your forum &#127807;</H3>
+<p>As they say: <EM><s>_</s>everything that gets positive attention will grow<e>_</e></EM>. So come back often, and add new posts, guide new members and ensure your forum stays a welcome, inspiring place for all your members.</p> 
+
+<H3><s>### </s>10. Remove this post ❌</H3>
+<p>Congratulations for making it to number 10. You can now safely remove this post &#128521; Make sure you are logged in as admin, then click <C><s>`</s>delete<e>`</e></C> right underneath this story.</p>
+
+<p>Finally, here are some useful links:</p>
+<LIST><LI><s>- </s><URL url="https://www.freeflarum.com/docs"><s>[</s>Freeflarum documentation<e>](https://www.freeflarum.com/docs)</e></URL></LI>
+<LI><s>- </s><URL url="https://www.freeflarum.com/support"><s>[</s>Are you stuck?<e>](https://www.freeflarum.com/support)</e></URL></LI>
+<LI><s>- </s><URL url="https://github.com/gwillem/freeflarum.com/issues"><s>[</s>Feature requests or bug reports?<e>](https://github.com/gwillem/freeflarum.com/issues)</e></URL></LI></LIST>
+
+<p><STRONG><s>**</s>Good luck with your forum and building your community!<e>**</e></STRONG><br/>
+Team FreeFlarum</p></r>
+
+
+--- record 2
+
+<t><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dapibus sollicitudin orci non varius. Integer vel luctus nulla. Integer rhoncus sapien eu dictum sollicitudin. Nullam accumsan quam ac lacus ornare venenatis. Nam malesuada tincidunt mi, suscipit eleifend turpis iaculis at. Aliquam et nunc et augue condimentum vestibulum. Donec scelerisque ut massa id sodales. Donec ac libero sed ex convallis dignissim. Vivamus quis bibendum erat, nec condimentum risus. Vestibulum molestie lacinia eros, non dapibus augue ultrices at.</p></t>
+
+
+--- record 3
+
+[[],[1]]
+
+
+--- record 4
+
+<r><p>Hey - I just seemed to have stumbled into this place.</p>
+
+<i>    </i><CODE>What is it?</CODE>
+
+<H3><s>### </s>I'm not really sure what to think.</H3>
+
+ <p>&#128533;</p> 
+ </r>
+
+
+--- record 5
+
+<r><p>Mine is this from <URL url="http://www.imdb.com/title/tt0454921/"><s>[</s>The Pursuit of Happyness<e>](http://www.imdb.com/title/tt0454921/)</e></URL>:</p>
+
+<p><URL url="https://www.youtube.com/watch?v=dPEdwaLQLag"><s>[url]</s>https://www.youtube.com/watch?v=dPEdwaLQLag<e>[/url]</e></URL></p>
+
+<QUOTE><s>[quote]</s>
+<p>Don't ever let somebody tell you... You can't do something. Not even me. All right?</p>
+
+<p>You got a dream... You gotta protect it. People can't do somethin' themselves, they wanna tell you you can't do it. If you want somethin', go get it. Period.</p>
+<e>[/quote]</e></QUOTE></r>
+
+
+--- record 6
+
+<r><p><URL url="http://en.wikipedia.org/wiki/Rudy_%28film%29"><s>[</s>Rudy<e>](http://en.wikipedia.org/wiki/Rudy_(film))</e></URL> is the most inspirational movie I have ever seen!</p>
+
+<p>[youtube]Qoh3YkxuwVo[/youtube]</p>
+
+<p>What's yours?</p></r>
+
+
+--- record 7
+
+<r><p>Donec faucibus eros id dui malesuada, a condimentum urna ullamcorper. Nulla consectetur est in elementum fringilla. Aenean in nunc varius, interdum nisi non, ornare ligula. In ex purus, aliquam vitae leo sit amet, commodo convallis felis. Fusce a pellentesque risus, et vehicula nibh. Mauris maximus, nisi in iaculis blandit, mi eros venenatis mi, ut laoreet lacus odio quis mauris. Quisque ut aliquam ligula. Praesent dapibus, enim quis ullamcorper aliquet, neque sem vulputate nisi, ac sagittis dui nulla et orci. Nulla vestibulum ipsum vel massa lacinia volutpat. Nam elit nibh, accumsan id sagittis et, ultrices id ante. Vivamus ullamcorper ullamcorper massa, sit amet luctus metus elementum quis. Donec sagittis, sem sed cursus ornare, lectus elit dapibus mauris, in placerat nunc justo non turpis. Vestibulum ac blandit neque. Ut at dolor aliquam, scelerisque libero eget, hendrerit tellus.</p>
+
+<p>source: <URL url="https://www.lipsum.com/feed/html"><s>[url]</s>https://www.lipsum.com/feed/html<e>[/url]</e></URL></p></r>
+
+
+--- record 8
+
+<r><p>Hi there &#128075;</p> 
+
+<p>Nice to meet everyone! <E>:)</E></p>
+
+<p><B><s>[b]</s>bold text<e>[/b]</e></B>, <I><s>[i]</s>italic text<e>[/i]</e></I>, <U><s>[u]</s>underline text<e>[/u]</e></U>, <S><s>[s]</s> strikethrough text<e>[/s]</e></S></p>
+
+<p><SIZE size="20"><s>[size=20]</s>font size 20<e>[/size]</e></SIZE><br/>
+<COLOR color="blue"><s>[color=blue]</s>font color blue<e>[/color]</e></COLOR></p>
+
+<CENTER><s>[center]</s><p>centered text</p><e>[/center]</e></CENTER>
+<p>[left]left align text[/left]<br/>
+[right]right align text[/right]</p>
+
+<p><IMG src="https://images.unsplash.com/photo-1621959721891-d297dfd9d6ee"><s>[img]</s>https://images.unsplash.com/photo-1621959721891-d297dfd9d6ee<e>[/img]</e></IMG></p>
+
+<p>[ul]one[/ul]<br/>
+[ul]two[/ul]<br/>
+[ul]three[/ul]</p>
+
+<p>[li]one[/li]<br/>
+[li]two[/li]<br/>
+[li]three[/li]</p>
+
+<CODE><s>[code]</s>this is code<e>[/code]</e></CODE>
+
+<p>[pre]preformatted text[/pre]</p>
+
+<p>&#128075;</p> </r>
+
+
+--- record 9
+
+<t><p>Sed a dolor sed elit imperdiet porttitor ac eu est. Praesent scelerisque, neque sit amet blandit ultricies, elit orci tincidunt enim, id consequat neque tortor in lectus. Vestibulum at sollicitudin felis. Nunc eros est, elementum quis tincidunt blandit, sagittis ac sem. Nam vel tincidunt nisl. In id nibh tortor. Praesent eu luctus orci, eget fringilla risus. Sed elementum arcu ac diam efficitur volutpat. Donec condimentum pharetra lorem, non lacinia diam aliquet ac. Nulla semper semper risus, ac facilisis quam faucibus id. Phasellus sit amet nisl sit amet libero rhoncus accumsan vitae non diam. Cras quam ante, congue eget auctor quis, venenatis eu mauris.</p>
+
+</t>
+
+
+--- record 10
+
+<t><p>Cras iaculis interdum augue facilisis efficitur. Etiam odio est, consequat a accumsan non, ultricies lacinia lectus. Donec feugiat tellus ac nulla bibendum dictum. Suspendisse potenti. Phasellus luctus at odio ac cursus. Pellentesque eu ipsum id elit auctor maximus quis id leo. In consequat nisi vitae neque venenatis, non bibendum tortor tempus. Cras mattis dui sit amet ligula interdum sollicitudin. Vivamus vel laoreet elit, sed faucibus sem. Duis id tristique enim. Praesent condimentum odio vel mattis faucibus. Suspendisse hendrerit eleifend vulputate. In hac habitasse platea dictumst. Maecenas bibendum urna ante, sed efficitur tortor sodales vel.</p></t>
+
+
+--- record 11
+
+<t><p>Pellentesque elit metus, congue id accumsan id, varius ac nisi. Donec efficitur tristique magna sed lobortis. Praesent tellus nibh, suscipit pretium vulputate fermentum, ultricies et nibh. Fusce iaculis venenatis mi, a cursus mi mollis vel. Suspendisse vestibulum leo nisi, sit amet ornare tortor condimentum rutrum. Maecenas viverra fermentum elit, et malesuada metus semper ac. Suspendisse est purus, sollicitudin ut leo sed, venenatis gravida neque.</p></t>
+
+
+--- record 12
+
+<t><p>Mauris suscipit rutrum dolor sed dignissim. Suspendisse mauris enim, fermentum nec scelerisque at, luctus ut magna. Duis volutpat, lorem eget suscipit venenatis, nisl purus venenatis lacus, volutpat semper magna erat quis elit. Pellentesque posuere in mauris quis mattis. Etiam sed arcu id mauris venenatis sodales sit amet ut justo. Curabitur dapibus diam ac lacus sodales, at volutpat sapien suscipit. Phasellus sollicitudin gravida felis eu aliquet. Duis porttitor varius rhoncus. Duis non tellus eget libero fringilla convallis. Suspendisse dolor nisl, ullamcorper vitae efficitur nec, tempor id ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p></t>
+
+
+--- record 13
+
+<t><p>Fusce commodo blandit elit, sit amet consectetur nunc tincidunt nec. Integer sit amet pulvinar velit. Donec et libero eget elit dapibus fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Proin a nisl euismod, pharetra orci nec, dignissim magna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque dictum nisl quis nulla tincidunt, sit amet commodo arcu semper. Curabitur gravida viverra rutrum. Integer faucibus erat id orci sodales, eget molestie turpis feugiat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse elementum id libero ac semper. Aenean dictum mattis dictum. Phasellus interdum sodales euismod. Integer ornare, augue fringilla vehicula euismod, tellus diam rutrum ipsum, vitae ultrices mi felis nec urna.</p>
+
+</t>
+
+
+--- record 14
+
+<t><p>Ut id arcu mi. Aliquam id mauris dapibus, rutrum enim ut, pretium lacus. Aenean consequat nibh nec dolor porttitor, a vulputate sem iaculis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam in lectus elementum, ornare ante sit amet, vulputate purus. Quisque aliquet nulla a orci egestas lobortis vel vel tellus. Maecenas pulvinar, augue non finibus vulputate, purus justo viverra augue, ac mollis massa odio ut ligula. Praesent eu lorem libero. Nulla facilisi. Mauris vel dolor malesuada, aliquam ex porttitor, dictum dolor. Quisque non mauris congue mi porttitor vehicula. Vestibulum eu odio vel libero laoreet pellentesque in aliquam lacus. Suspendisse sodales orci odio, sed gravida ligula sollicitudin eget.</p></t>
+
+
+--- record 15
+
+<r><p>Rudy Locker Room:</p>
+
+<p><URL url="https://www.youtube.com/watch?v=hdRiPWOP8so">https://www.youtube.com/watch?v=hdRiPWOP8so</URL></p></r>
+
+
+--- record 16
+
+<r><p>“It’s supposed to be hard. If it wasn’t hard, everyone would do it. The hard is what makes it great.”</p>
+
+<p><URL url="https://www.youtube.com/watch?v=ndL7y0MIRE4">https://www.youtube.com/watch?v=ndL7y0MIRE4</URL></p></r>
+
+
+--- record 17
+
+<r><p><STRONG><s>**</s>The Social Network<e>**</e></STRONG></p>
+
+<p><URL url="http://en.wikipedia.org/wiki/The_Social_Network">http://en.wikipedia.org/wiki/The_Social_Network</URL></p>
+
+<p>Directed by <URL url="http://en.wikipedia.org/wiki/David_Fincher"><s>[</s>David Fincher<e>](http://en.wikipedia.org/wiki/David_Fincher)</e></URL>.</p>
+
+<p><URL url="https://www.youtube.com/watch?v=lB95KLmpLR4">https://www.youtube.com/watch?v=lB95KLmpLR4</URL></p></r>
+
+
+--- record 18
+
+<r><p>Speaking of inspiring sports-related movies:</p>
+
+<p><URL url="http://en.wikipedia.org/wiki/Rocky">http://en.wikipedia.org/wiki/Rocky</URL></p>
+
+<p>The training montage alone is legendary</p>
+
+<p><URL url="https://www.youtube.com/watch?v=DP3MFBzMH2o">https://www.youtube.com/watch?v=DP3MFBzMH2o</URL></p>
+
+<p>And</p>
+
+<p><URL url="http://en.wikipedia.org/wiki/Philadelphia_%28film%29">http://en.wikipedia.org/wiki/Philadelphia_(film)</URL></p>
+
+<p>Another Jonathan Demme classic. Explain this to me like I'm two years old.</p>
+
+<p><URL url="https://www.youtube.com/watch?v=l433n5zAxAU">https://www.youtube.com/watch?v=l433n5zAxAU</URL></p></r>
+
+
+--- record 19
+
+<t><p>Quisque pharetra blandit tortor, at dictum felis efficitur eget. Curabitur dignissim ex a orci facilisis sollicitudin. Integer tristique lectus eget bibendum tempor. Sed aliquet ut nunc ac condimentum. Nullam libero dui, posuere sed tellus eu, feugiat rutrum ipsum. Vivamus pulvinar lectus eget auctor condimentum. Aenean pretium eleifend nunc nec sodales. Suspendisse massa tellus, maximus feugiat elit vitae, luctus molestie ex. Maecenas imperdiet efficitur libero, at ullamcorper mi posuere non. Suspendisse potenti. Curabitur pellentesque sodales facilisis. Proin in massa vehicula, viverra nisl eu, euismod quam. Ut pretium gravida ultrices. Nam non maximus elit, nec sollicitudin justo. Aliquam nec est quam.Quisque pharetra blandit tortor, at dictum felis efficitur eget. Curabitur dignissim ex a orci facilisis sollicitudin. Integer tristique lectus eget bibendum tempor. Sed aliquet ut nunc ac condimentum. Nullam libero dui, posuere sed tellus eu, feugiat rutrum ipsum. Vivamus pulvinar lectus eget auctor condimentum. Aenean pretium eleifend nunc nec sodales. Suspendisse massa tellus, maximus feugiat elit vitae, luctus molestie ex. Maecenas imperdiet efficitur libero, at ullamcorper mi posuere non. Suspendisse potenti. Curabitur pellentesque sodales facilisis. Proin in massa vehicula, viverra nisl eu, euismod quam. Ut pretium gravida ultrices. Nam non maximus elit, nec sollicitudin justo. Aliquam nec est quam.</p></t>
+
+
+--- record 20
+
+<r><p>This year's Apple Watch Series 7 is likely to have thinner display bezels and use a new lamination technique that brings the display closer to the front cover, according to Bloomberg's Mark Gurman.</p>
+
+<p>![<URL url="https://images.macrumors.com/t/YOv69v87Ds-V0ETH5pT2nyyAgnA=/1600x0/filters:quality%2890%29/article-new/2021/03/apple-watch-6s-202009.jpeg">https://images.macrumors.com/t/YOv69v87Ds-V0ETH5pT2nyyAgnA=/1600x0/filters:quality(90)/article-new/2021/03/apple-watch-6s-202009.jpeg</URL>](https://)</p>
+
+<p>From the report:</p>
+
+<QUOTE><i>&gt; </i><p>The Cupertino, California-based tech giant is planning to refresh the line this year -- with a model likely dubbed the Apple Watch Series 7 -- by adding a faster processor, improved wireless connectivity and an updated screen, according to people with knowledge of the plans.</p>
+<i>&gt; </i>
+<i>&gt; </i><p>For this year's model, Apple has tested thinner display borders and a new lamination technique that brings the display closer to the front cover. The new Watch is likely to be slightly thicker overall, but not in a way that's noticeable to the user.</p> </QUOTE>
+
+<p>The model will also include updated ultra-wideband functionality, the same underlying technology in Apple's AirTag item finder, according to Gurman, although additional biometric health sensors are likely to be pushed back to a successor model.</p>
+
+<QUOTE><s>[quote]</s><p>Apple had previously aimed to put a body temperature sensor in this year's model, but that is now more likely to be included in the 2022 update. The blood-sugar sensor, which would help diabetics monitor their glucose levels, is unlikely to be ready for commercial launch for several more years.</p><e>[/quote]</e></QUOTE>
+
+<p>Apple previewed its upcoming watchOS 8 software update at WWDC last week, demonstrating previously unseen features such as the ability for Apple Watch to unlock door and hotel rooms. It was not clear at the time which Apple Watch models these new features would be made for, but Gurman's report suggests they could be exclusive to the forthcoming Series 7.</p>
+
+<p>Gurman previously reported that Apple is working on a more rugged "extreme sports" model of the Apple Watch and that it could launch as soon as this year. However, Gurman has now revised that expectation and says that it won't arrive until 2022 at the earliest. Apple is also said to be planning a revised model of the Apple Watch SE for launch next year, according to the report. Apple launched the latter model in 2020 as a more affordable alternative to the Series 6.</p></r>
+
+
+--- record 21
+
+<r><QUOTE><i>&gt; </i><p>No killer feature since AW4. Maybe next year.</p></QUOTE>
+<i>&gt; </i>
+<p>Always-on display, UWB, always-on altimeter, compass plus the usual silicon-based improvements (faster, better battery life, wider coverage for cellular model, adding 5 GHz Wifi), all came with AW5 &amp; 6.</p>
+
+<p>Always-on display is a killer feature for some. Better outdoor activity capabilities (always-on altimeter, compass, better battery life while tracking activity) is significant for others.</p></r>
+
+
+--- record 22
+
+<r><p>Apple this week previewed iOS 15, which is available now in beta for developers ahead of a public release later this year. One smaller but useful new feature added is the ability to drag and drop images, text, files, and more across apps on iPhone.</p>
+
+<p>MacStories editor-in-chief Federico Viticci demonstrated the new feature in a tweet:</p>
+
+<QUOTE><i>&gt; </i><p>Using cross-app drag and drop on iPhone in iOS 15. Finally &#127881; #WWDC21 pic.twitter.com/1RbyPBGfcq — Federico Viticci (@viticci) June 7, 2021</p></QUOTE>
+
+<p>Cross-app drag and drop has been available on the iPad since 2017 and Apple has finally extended the feature to the iPhone with iOS 15. Cross-app drag and drop always results in duplication, not movement, of content.<br/>
+From the iOS 15 features page on Apple's website:</p>
+
+<QUOTE><i>&gt; </i><p>Drag and drop<br/>
+<i>&gt; </i>With support for drag and drop across apps, you can pick up images, documents, and files from one app and drag them into another.</p></QUOTE>
+
+<p>To drag and drop on iOS 15, long press on an image, text, or file and, without lifting that finger, use a second finger to swipe out of the app and open another app. Then, let go of the image, text, or file to drop it into the other app. Long pressing on content makes it appear to rise and adhere to your finger, and as the content is dragged, animations and visual cues identify possible destinations where the content can be dropped.</p></r>
+
+
+--- record 23
+
+<r><p>Nvidia is putting owners of Kepler GPUs on notice that effective October of this year, there will be no new 'Game Ready' driver updates, only critical security patches as necessary. This means most GeForce GTX 700 and 600 series cards will not benefit from performance optimizations or gain access to new features, or even receive bug fixes once support comes to an end.</p>
+
+<p>"Kepler-based desktop GPUs initially launched in March of 2012. Since then, gaming technology has evolved dramatically with technologies like DirectX 12 Ultimate and Nvidia DLSS (Deep Learning Super Sampling). Moving forward, Nvidia’s software QA team will be focusing on hardware that supports newer technologies," Nvidia stated in an FAQ on the topic.</p>
+
+<p>The decision affects over two dozen graphics card models. They include:</p>
+
+<LIST><LI><s>- </s>GeForce GTX Titan Z </LI>
+<LI><s>- </s>GeForce GTX Titan Black </LI>
+<LI><s>- </s>GeForce GTX Titan </LI>
+<LI><s>- </s>GeForce GTX 780 Ti </LI>
+<LI><s>- </s>GeForce GTX 780 </LI>
+<LI><s>- </s>GeForce GTX 770 </LI>
+<LI><s>- </s>GeForce GTX 760 Ti </LI>
+<LI><s>- </s>GeForce GTX 760</LI>
+<LI><s>- </s>GeForce GTX 760 (192-bit)</LI>
+<LI><s>- </s>GeForce GTX 760 Ti OEM </LI>
+<LI><s>- </s>GeForce GT 740 </LI>
+<LI><s>- </s>GeForce GT 730 </LI>
+<LI><s>- </s>GeForce GT 720 </LI>
+<LI><s>- </s>GeForce GT 710</LI>
+<LI><s>- </s>GeForce GTX 690</LI>
+<LI><s>- </s>GeForce GTX 680</LI>
+<LI><s>- </s>GeForce GTX 670</LI>
+<LI><s>- </s>GeForce GTX 660 Ti</LI>
+<LI><s>- </s>GeForce GTX 660</LI>
+<LI><s>- </s>GeForce GTX 650 Ti Boost</LI>
+<LI><s>- </s>NGeForce GTX 650 Ti</LI>
+<LI><s>- </s>GeForce GTX 650</LI>
+<LI><s>- </s>GeForce GTX 645</LI>
+<LI><s>- </s>GeForce GT 640</LI>
+<LI><s>- </s>GeForce GT 635</LI>
+<LI><s>- </s>GeForce GT 630</LI></LIST>
+
+<p>A few GeForce GTX 700 series cards are noticeably absent from the list. Namely, the GeForce GTX 750 Ti, GeForce GTX 750, and GeForce GTX 745 (OEM). Those parts actually utilized a first-generation Maxwell GPU (specifically the GM107), which succeeded Kepler, and will presumably still be eligible for Game Ready driver updates for a bit longer.</p>
+
+<p>YOUR NEXT UPGRADE</p>
+
+
+<p>(Image credit: Future)<br/>
+Best CPU for gaming: the top chips from Intel and AMD<br/>
+Best graphics card: your perfect pixel-pusher awaits<br/>
+Best SSD for gaming: get into the game ahead of the rest</p>
+
+<p>While some may find this disappointing, it does not come as a surprise, for a couple of reasons. For one, Kepler is almost a decade old at this point, so it has had a good long run. And secondly, Nvidia a few weeks ago had updated a data center document to indicate that the R470 driver would be the end of the road for Kepler.</p> 
+
+<p>Curiously, Nvidia later removed the entry, reverting back to listing driver support as "ongoing" for Kepler. This led us to wonder if Nvidia had backtracked, given the current landscape—it's next to impossible to buy a new GPU right now, unless you're willing to pay reseller pricing.</p>
+
+<p>Now we know Nvidia did not change its mind. Instead, the final Game Ready driver for Kepler (R470 GA5) will arrive on August 31, 2021. The first Game Ready driver that doesn't support Kepler (R495 GA1) will be pushed out a few days later, on October 4.</p></r>
+
+
+--- record 24
+
+<r><p><B><s>[b]</s>bold text<e>[/b]</e></B>, <I><s>[i]</s>italic text<e>[/i]</e></I>, <U><s>[u]</s>underline text<e>[/u]</e></U>, <S><s>[s]</s> strikethrough text<e>[/s]</e></S></p>
+
+<p><SIZE size="20"><s>[size=20]</s>font size 20<e>[/size]</e></SIZE><br/>
+<COLOR color="blue"><s>[color=blue]</s>font color blue<e>[/color]</e></COLOR></p>
+
+<CENTER><s>[center]</s><p>centered text</p><e>[/center]</e></CENTER>
+<p>[left]left align text[/left]<br/>
+[right]right align text[/right]</p>
+
+<p><IMG src="https://images.unsplash.com/photo-1621959721891-d297dfd9d6ee"><s>[img]</s>https://images.unsplash.com/photo-1621959721891-d297dfd9d6ee<e>[/img]</e></IMG></p>
+
+<p>[ul]one[/ul]<br/>
+[ul]two[/ul]<br/>
+[ul]three[/ul]</p>
+
+<p>[li]one[/li]<br/>
+[li]two[/li]<br/>
+[li]three[/li]</p>
+
+<CODE><s>[code]</s>this is code<e>[/code]</e></CODE>
+
+<p>[pre]preformatted text[/pre]</p>
+
+<p>&#128075;</p> </r>
+
+
+--- record 25
+
+<t><p>Vivamus in auctor augue. Praesent iaculis ornare condimentum. Praesent pharetra eget ante sed auctor. Duis a lobortis mauris. Phasellus efficitur finibus felis. Mauris maximus tempor libero, in faucibus lorem porttitor gravida. Sed mattis, ante ac ultricies tincidunt, turpis purus ultricies nibh, at pharetra ipsum felis feugiat lacus. Donec et lorem gravida, aliquet tortor ut, consectetur enim. Proin aliquet augue odio, non viverra quam pharetra nec. Nunc dui magna, vestibulum ut est a, finibus volutpat ipsum. Praesent placerat facilisis malesuada. Maecenas lorem ligula, gravida eget imperdiet eget, commodo a purus.</p></t>
+
+
+--- record 26
+
+<t><p>Praesent blandit ut tortor non venenatis. Proin auctor lacus id leo egestas, vitae varius dolor sollicitudin. Fusce sed turpis at arcu sagittis consectetur eget id risus. Vivamus porta a neque a hendrerit. Donec viverra quam in justo accumsan accumsan. Fusce aliquam fermentum diam, eu imperdiet erat egestas at. Suspendisse sagittis neque nec nisl rhoncus porttitor. Proin sit amet vestibulum quam, at mattis nulla. Sed eleifend turpis ut nisi aliquet varius. Morbi sollicitudin augue sed nulla dictum ullamcorper. Nam auctor ultrices quam, eu suscipit odio fermentum a. Morbi sed nunc pulvinar, facilisis ligula ac, facilisis dui. Suspendisse potenti. Vestibulum dapibus, nisl in blandit suscipit, dui dui porttitor purus, vitae varius nulla risus non quam. Maecenas euismod lacus sed lectus malesuada ornare.</p></t>
+
+
+--- record 27
+
+<t><p>Always-on display is a killer feature for some. Better outdoor activity capabilities (always-on altimeter, compass, better battery life while tracking activity) is significant for others.</p></t>
+
+
+--- record 28
+
+<t><p>Pursuit of happyness​<br/>
+​The struggle and never-give-up attitude of protagonist is inspiring.</p></t>
+
+
+--- record 29
+
+<r><p>For me it has to be this scene from GoodWill Hunting</p>
+
+<p><URL url="https://www.youtube.com/watch?v=qM-gZintWDc">https://www.youtube.com/watch?v=qM-gZintWDc</URL></p></r>
+
+
+--- record 30
+
+<t><p>Anyone else feel like iOS has become super unintuitive with its weird and almost random gestures and stuff by pressing on invisible areas on the screen with different amount of fingers on top or am I just getting old? It can’t be that cuz half the people I know didn’t even know multitasking was a thing on their iPads ?</p></t>
+
+
+--- record 31
+
+<t><p>I just wished Nvidia would focus on mass producing the 3060, 3060Ti and 3070 and focusing on reducing prices so that older pre-RTX GPU users could upgrade to Ray Tracing.</p>
+</t>
+
+
+--- record 32
+
+<r><p>I think it might be fun to have a topic where we can mention what we’re playing and make recommendations to others.<br/>
+I had some fun playing they are billions lately:</p>
+
+<p><URL url="http://www.numantiangames.com/theyarebillions/">http://www.numantiangames.com/theyarebillions/</URL></p>
+
+</r>
+
+
+--- record 33
+
+<t><p>macOS Monterey makes several improvements to password management, positioning iCloud Keychain as an ideal password service to replace third-party services like Lastpass and 1Password.</p>
+
+<p>In System Preferences, there's a new "Passwords" section that houses all of your ‌iCloud‌ Keychain logins and passwords so they're easier to get to, edit, and manage. There's a similar Passwords section that's been on iOS for some time now, so now there's one streamlined way to access your passwords across Apple devices.</p>
+
+<p>Prior to now, passwords on Mac were accessible through the Preferences interface in Safari, but the System Preferences option is easier to find. As with the prior version of the feature, Safari will suggest passwords automatically and detect compromised passwords for you.</p>
+
+<p>New in Monterey is an option to import and export passwords, so you can move your logins between ‌iCloud‌ Keychain and other password management apps. ‌iCloud‌ Keychain does not have as many entry fields as some password managers, but it supports username, password, and website data.</p>
+
+<p>There's also a built-in authenticator feature, which is coming to iOS and iPadOS 15 too. For sites and apps that use codes for two-factor authentication, you can store those codes right in ‌iCloud‌ Keychain and have them autofilled when you log in.</p>
+
+<p>Direct authenticator support will allow iPhone and Mac users to choose to use Apple's solution over third-party apps and software like Authy and Google Authenticator.</p>
+
+<p>Other smaller changes include an ‌iCloud‌ Passwords extension for autofilling saved ‌iCloud‌ Passwords in the Edge browser, which is handy for Windows users who need cross platform password access in the browser, plus there's a new ‌iCloud‌ Passwords app included with ‌iCloud‌ for Windows.</p>
+
+<p>The ‌macOS Monterey‌ password changes are live now in the developer beta, with Apple planning to release a public beta in July before the software sees a public launch this fall.</p>
+
+</t>
+
+
+--- record 34
+
+<t><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mattis vitae enim ac hendrerit. Sed volutpat metus massa, id cursus velit hendrerit quis. Donec turpis risus, tempor et porttitor et, pretium eget quam. Curabitur blandit sed eros at tristique. Nunc efficitur finibus lorem, eget eleifend nisl posuere a. Nam at gravida augue. Phasellus felis nulla, facilisis sit amet nulla et, vehicula molestie nulla.</p></t>
+
+
+--- record 35
+
+<t><p>Pellentesque imperdiet, orci et sollicitudin efficitur, purus quam facilisis velit, ut interdum diam velit a leo. Curabitur eu venenatis felis, sit amet aliquet justo. Mauris risus neque, fringilla quis diam vitae, placerat malesuada est. Praesent quam est, condimentum ut scelerisque nec, placerat et neque. Aliquam a est condimentum, maximus odio nec, pharetra erat. Nunc finibus, justo quis maximus ornare, orci purus viverra massa, ut tincidunt nisi purus sed nunc. Aenean ac blandit augue. Vivamus consectetur at nulla facilisis facilisis. Praesent orci enim, tristique in maximus quis, pellentesque vitae tortor. Etiam in tristique turpis.</p></t>
+
+
+--- record 36
+
+<r><p>With tvOS 15, Apple is bringing Spatial Audio to the Apple TV when the set-top box is used with AirPods Pro or AirPods Max. It has been unclear how this feature will work because the ‌Apple TV‌ does not have a U1 chip for head tracking purposes, but Apple recently gave an explanation to Engadget.</p>
+
+<p><IMG alt="apple-tv" src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/apple-tv-4k-hero-select-202104_FMT_WHH?wid=640&amp;hei=600&amp;fmt=jpeg&amp;qlt=80&amp;.v=1617137945000"><s>![</s>apple-tv<e>](https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/apple-tv-4k-hero-select-202104_FMT_WHH?wid=640&amp;hei=600&amp;fmt=jpeg&amp;qlt=80&amp;.v=1617137945000)</e></IMG></p>
+
+<p>When you’re watching a TV show or movie on the ‌Apple TV‌, the head tracking feature (powered by ‌AirPods Pro‌ or Max) detects that you’ve been looking in the same direction, calculates your probable head orientation, and activates the Spatial Audio effect. If you get up, it reactivates.</p>
+
+<QUOTE><s>[quote]</s><p>When you sit down to watch a movie or TV show, the included head tracking feature will lock in after it detects you’ve been looking in the same direction for a while. Once you get up to walk around, it will reactivate.</p><e>[/quote]</e></QUOTE>
+
+<p>Spatial Audio will work with stereo, 5.1, 7.1, and Dolby Atmos content, and connecting the AirPods to an ‌Apple TV‌ that’s running tvOS 15 has been streamlined. When you’re wearing ‌AirPods‌ and are near the ‌Apple TV‌, you’ll see an on-screen popup that will let you connect with a click of the remote.</p>
+
+<p>Spatial Audio is designed to provide a theater-like listening experience with sound that seems to come from all around you. tvOS 15 is also gaining new SharePlay features for watching TV with friends over FaceTime calls and support for pairing two HomePod mini speakers to an ‌Apple TV‌.</p></r>
+
+
+--- record 37
+
+<t><p>In tvOS 15, Apple has simplified the process of entering a login and password with a connected iPhone by allowing for Face ID and Touch ID to be used for authentication purposes.</p>
+
+<p>Developers will be able to implement a new tvOS feature that enables Face ID or ‌Touch ID‌ integration for authenticating purchases and signing into apps.</p>
+
+<p>You'll see a new "Sign in With Apple Device" option when signing into an app where you need a login for the first time, so long as the developers have implemented this feature.</p>
+
+<p>Users who opt to authenticate with an ‌iPhone‌ or iPad will get a notification on their devices that will bring them to a Face ID/‌Touch ID‌ authentication page that suggests a login credential from the Keychain.</p>
+
+<p>Face ID and ‌Touch ID‌ sign in for Apple TV apps will make the authentication process quicker and more streamlined, with the feature coming this fall in the tvOS 15 update.</p></t>
+
+
+--- record 38
+
+<r><p>Apple has rolled out a new spatial audio feature for Apple Music subscribers that uses Dolby Atmos to create a richer, more immersive soundstage when listening to songs in the Apple Music catalog.</p>
+
+<p><URL url="https://i.ytimg.com/vi/-trB7g3ivbQ/maxresdefault.jpg">https://i.ytimg.com/vi/-trB7g3ivbQ/maxresdefault.jpg</URL></p>
+
+<p>With Spatial Audio and Dolby Atmos enabled, the subjective experience is that musical notes are coming from all around you. The steps below show you how to control the new audio feature on any iOS device with an Apple Music subscription.</p>
+
+<LIST type="decimal"><LI><s>1. </s>Launch the Settings app on your iPhone or iPad.</LI>
+<LI><s>2. </s>Tap Music.</LI>
+<LI><s>3. </s>Under "Audio," tap Dolby Atmos.</LI>
+<LI><s>4. </s>Select from Automatic, Always On, and Off.</LI></LIST>
+
+<p>Now that you've enabled Dolby Atmos, you'll be able to enjoy a more immersive audio experience. Apple Music will play Dolby Atmos tracks on all AirPods and Beats headphones with an H1 or W1 chip, as will the built-in speakers of the newest iPhones, iPads, and Macs. Just make sure that you have Spatial Audio enabled on capable headphones.</p>
+
+<p>You can check which tracks in Apple Music support the audio effect by looking for the logo in the app interface. Apple plans to add new Dolby Atmos tracks on a regular basis, and will offer up a curated selection of Dolby Atmos playlists. At launch, there are thousands of Dolby Atmos-enabled songs that are available to listen to.</p></r>
+
+
+--- record 39
+
+<t><p>In iOS 15, Apple has made some welcome improvements to the Photos app, such as the ability to see the EXIF data for a photo. The latter feature is accessed via a new "Info" button, which also brings up a caption field for the selected photo, the location where the photo was taken, and any Look Up information available.</p>
+
+<p>In addition to the above, the Info button will also tell you which app on your device that an image was saved from if you didn't take it using your camera. For instance, in the example above, you can see that the HomePod image was saved from the web via Safari.</p>
+
+<p>This metadata information also acts like an organizing tag, so if you tap the "Saved from" location in bold, the ‌Photos‌ app will filter your photo library to show you any other images that were saved from the same app, meaning you don't have to scroll endlessly for any others that might be in your camera roll.</p>
+
+<p>The new feature adds another organizational layer to your photos, allowing you to, say, find all the images you've saved from Messages or WhatsApp conversation threads without having to go into the apps themselves.</p>
+
+<p>‌iOS 15‌ is available as an early developer beta, with a public beta due to be released next month and an official release set to drop this fall.</p></t>
+
+
+--- record 40
+
+<t><p>Praesent non consequat nunc. Donec vulputate augue quam, non condimentum libero semper eu. Ut commodo aliquam varius. Integer aliquet dapibus dignissim. Duis rhoncus metus libero, sit amet condimentum nunc volutpat ut. Integer eu accumsan ex. Fusce sagittis sodales tellus. Cras tristique nisi quis dolor venenatis, rhoncus malesuada libero tincidunt. Phasellus malesuada nisi et imperdiet semper. Nulla laoreet orci sed bibendum iaculis. Suspendisse fermentum consectetur ipsum, ut pulvinar justo pharetra quis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus at nulla tincidunt, efficitur libero et, tempor metus. Praesent nulla felis, suscipit sed neque placerat, malesuada convallis tellus.</p>
+
+</t>
+
+
+--- record 41
+
+<t><p>That sounds neat! Too bad I'm an Android user though...</p></t>
+
+
+--- record 42
+
+<t><p>Thanks for the tip Arpit - I'll try this pit soon. I wonder if my surround sound system supports this over Bluetooth &#129300;</p></t>
+
+
+--- record 43
+
+<t><p>Very cool. My Nvidia Shield needs something like this. Setting up accounts is painful using the arrow keys to enter a password.</p></t>
+
+
+--- record 44
+
+<r><p>Hmm, your list doesn't seem to be working <POSTMENTION discussionid="3" displayname="ruby" id="8" number="2" username="ruby">@ruby#8</POSTMENTION>. I think you need to do it like this:</p>
+
+<LIST><LI><s>- </s>one</LI>
+<LI><s>- </s>two</LI>
+<LI><s>- </s>three</LI></LIST>
+
+
+<LIST type="decimal"><LI><s>1. </s>one</LI>
+<LI><s>2. </s>two</LI>
+<LI><s>3. </s>three</LI></LIST></r>
+
+
+--- record 45
+
+<r><p><POSTMENTION discussionid="8" displayname="meghna" id="31" number="3" username="meghna">@meghna#31</POSTMENTION>, 100%! I'd really like to upgrade my current card (a 1-thousand series), but the prices are out of control! I'd almost need to take out a loan to afford a new card right now...</p></r>
+
+
+--- record 46
+
+<r><p>In addition to Gmail, Meet, and other Workspace announcements today, Google Docs and Drive will soon get Client-side encryption where “customer data is indecipherable to Google.”</p>
+
+<p>This will allow customers to directly control encryption keys, while end users are still able to “take advantage of Google’s native web-based collaboration, access content on mobile devices, and share encrypted files externally.” This will work with Google Drive files (Office, PDF, and more file formats), Docs, Sheets, and Slides.</p>
+
+<QUOTE><i>&gt; </i><p>Client-side encryption is especially beneficial for organizations that store sensitive or regulated data, like intellectual property, healthcare records, or financial data. It can help meet data sovereignty requirements and compliance requirements for ITAR, CJIS, TISAX, IRS 1075, and EAR.</p></QUOTE>
+
+<p>Google is working with Flowcrypt, Futurex, Thales, or Virtru, while enterprises will later be able to build and integrate their own in-house key services.</p>
+
+<QUOTE><i>&gt; </i><p>Each of these partners have built tools in accordance with Google’s specifications and provide both key management and access control capabilities. Your partner of choice holds the key to decode encrypted Google Workspace files, and Google cannot access or decipher these files without this key.</p> </QUOTE>
+
+<p>A beta of Client-side encryption in Drive will be available in the “coming weeks” for Google Workspace Enterprise Plus and Google Workspace Education Plus customers. Google Meet will add support in the fall, while this capability will eventually come to Gmail and Calendar.</p> 
+
+<p>Other announcements today include trust rules for Drive, and Drive labels that integrate with existing data loss prevention tools.</p>
+
+<p><URL url="https://9to5google.com/2021/06/14/google-drive-client-encryption/"><s>[</s>Source<e>](https://9to5google.com/2021/06/14/google-drive-client-encryption/)</e></URL></p></r>
+
+
+--- record 47
+
+<t><p>One of the headlining changes in the iOS 15 Weather app is the interface. It features an all-new design that changes based on the current conditions in your area. For example, if it’s raining outside or there is rain coming soon, the app will adjust its layout to show the hourly forecast, next-hour precipitation, and the radar at the top.</p>
+
+<p>On the other hand, if there’s no rain in your area, the app focuses on the 10-day forecast and current conditions at the top, and pushes other things such as the radar towards the bottom. This modular design is a really nice touch in the Weather app in iOS 15, and it seems perfect for also coming to the iPad at some point… but that’s not happening this year.</p>
+
+<p>There are also now “thousands of variations” the background design and animations in the Weather app. These show backgrounds and animations are designed to represent the sun position, clouds, and precipitation. Here’s a GIF of it in action.</p>
+
+<p>There’s also a big focus on weather maps with iOS 15. In the built-in Weather app, you can now view maps for precipitation, air quality, and temperature. The maps are full-screen and the precipitation map supports viewing three hours of historical data and one hour of future data in the hourly view, and a week’s worth of data in the day-by-day view.</p>
+
+<p>Another change is support for notifications. Similar to the Dark Sky weather app, which Apple acquired last year, the Weather app can now send you a notification when rain, snow, hail, or sleet is about to start or stop. Apple says this feature is available in the US, UK, and Ireland.</p>
+
+<p>The Weather app in iOS 15 is a really remarkable overhaul, particularly from a design standpoint. The addition of maps and notifications also helps make it a true competitor to third-party weather apps on the App Store.</p></t>
+
+
+--- record 48
+
+<t><p>Suspendisse sollicitudin orci vestibulum purus ornare, finibus consequat odio molestie. Aliquam iaculis metus ipsum, in interdum dui porta at. Suspendisse sit amet egestas ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis elementum consequat leo, sed placerat dui laoreet sit amet. Vestibulum metus quam, pharetra nec efficitur ultrices, tristique sit amet lacus. Ut nibh velit, eleifend et sollicitudin eu, posuere vel ex. Praesent metus nulla, ultricies at iaculis vitae, commodo sit amet purus. Donec neque dolor, blandit id feugiat nec, convallis laoreet est. Proin eu ornare nibh. Aliquam eget pulvinar massa, quis commodo neque. Nulla facilisi. Aenean vel convallis nibh, eget blandit nunc. Integer semper velit mauris, nec luctus libero scelerisque in. Sed purus lectus, varius nec lacus in, vehicula interdum nisi. Phasellus quis felis quis felis imperdiet tempus nec vel tortor.</p></t>
+
+
+--- record 49
+
+<t><p>Back in September, Google’s internal Area 120 incubator launched Tables as a “user-friendly, intuitive work tracking tool.” The Tables team announced today that the service has proven a “success” and that it will become a “fully-supported Google Cloud product” in the next year.</p>
+
+<p>Last September, we beta launched Tables in Area 120 with the goal of proving market demand for a solution that helps teams organize and track work, and it was a success! Google Cloud has committed to investing in this product area long-term. Moving forward, the beta version of Tables will still be available until we release a fully-supported Google Cloud product – which we expect to complete in the next year.</p>
+
+<p>Google announced the news in an email to existing users today, noting that there is sufficient market demand for the tool.</p>
+
+<p>As a tracker, Tables can be used for: Project &amp; task management, IT Operations, Customer tracker &amp; sales CRM, Employees, teams &amp; recruiting, and Product launch &amp; development. It features automated action Bots, customizable views, Google Chat and Slack integration, and templates that allow for Sheets and .CSV import.</p>
+
+<p>Until the new product is released, the beta version of Tables will remain available for free — there are two per user/month tiers, but Google never charged for the “Paid Plan.” Users will be required to migrate when it launches.</p>
+
+<p>In the near-term, the beta version of Tables will remain as is until we release a fully-supported Google Cloud product, at which time we will require users to migrate. As a reminder, you can always “Export to Sheets” from any workspace or table.</p>
+
+</t>
+
+
+--- record 50
+
+<r><p><IMG alt="google" src="https://i0.wp.com/9to5google.com/wp-content/uploads/sites/4/2021/06/google-meet-Companion-Mode.png?w=2500&amp;quality=82&amp;strip=all&amp;ssl=1"><s>![</s>google<e>](https://i0.wp.com/9to5google.com/wp-content/uploads/sites/4/2021/06/google-meet-Companion-Mode.png?w=2500&amp;quality=82&amp;strip=all&amp;ssl=1)</e></IMG></p>
+
+<p>Google has been rapidly iterating on Meet in the past year, and that’s continuing today alongside updates to Gmail and Workspace. Google Meet is getting a “Companion Mode” to provide a second-screen experience as part of a push to make hybrid meetings more equitable.</p>
+
+<QUOTE><s>[quote]</s><p>Companion Mode is designed to seamlessly connect those in the room with their remote teammates, giving everyone advanced features to participate, while leveraging the best of in-room audio and video conferencing capabilities.</p><e>[/quote]</e></QUOTE>
+
+<p>On the web, you’ll be able to present, send messages to video call participants, take part in Q&amp;A or polls, and raise your hand. Some second screen experiences will also be available on the Nest Hub Max.</p>
+
+<QUOTE><i>&gt; </i><p>Colleagues who are in the same meeting room together will enable Companion Mode on their personal devices, giving them their own video tile in Meet and helping them to stay connected with their remote teammates.</p> </QUOTE>
+<i>&gt;</i>
+<p>Google Meet’s Companion Mode will be available on the web in September and is coming soon to mobile.</p>
+
+<p>Another improvement to the Meet experience will let you specify on an RSVP whether you’re joining a call virtually or in person.</p>
+
+<p>On the safety front, admins will be better able to set policies for who can join meetings. A new moderation control will allow hosts to disable in-meeting chat and presenting during meetings, as well as full control over mute and unmute.</p> </r>
+
+
+--- record 51
+
+<t><p>I can now ditch Dark Sky app for good.</p>
+
+<p>While the new Weather app is missing few of Dark Sky features still (custom temperature notification rules), it looks so much better than Dark Sky.</p></t>
+
+
+--- record 52
+
+<t><p>I want Area 120 to come up with a true project management competitor so badly.</p></t>
+
+
+--- record 53
+
+<t><p>This is awesome news! &#127881;</p> </t>
+
+
+--- record 54
+
+<t><p>The recommendation to stay at home is meaningless to a person who has no home. Same for some other coronavirus disease 2019 (COVID-19) mitigation measures, such as frequent handwashing—difficult when even many “public” restrooms are for customers’ use only—and social distancing, which is tricky to maintain on the streets or in homeless shelters.</p>
+
+<p>On top of that, exposure to harsh weather and the inability to maintain good hygiene mean people experiencing homelessness develop skin problems more frequently than people with stable housing. One out of every 5 visits by a person who is homeless to an emergency department or community clinic is due to dermatological conditions, according to the American Academy of Dermatology.</p>
+
+<p>Before the pandemic, Tan spearheaded an effort to collect donations of dandruff shampoos, moisturizing creams, and other over-the-counter remedies for skin problems and assemble them into kits to distribute to Boston’s homeless population. This year, one of the medical students she mentors suggested adding COVID-19–related products, such as hand sanitizer and masks, to the kits.</p>
+
+<p>Tan, recently named a “Patient Care Hero” by the American Academy of Dermatology for helping to create and distribute more than 1000 COVID-19 care kits in Boston, Massachusetts, and Portland, Maine, spoke with JAMA about the challenges of treating skin conditions in people experiencing homelessness, especially during the pandemic.</p></t>
+
+
+--- record 55
+
+<r><p><IMG alt="img" src="https://i1.wp.com/9to5google.com/wp-content/uploads/sites/4/2021/06/Gmail-Google-Chat-Spaces-cover.png?w=2500&amp;quality=82&amp;strip=all&amp;ssl=1"><s>![</s>img<e>](https://i1.wp.com/9to5google.com/wp-content/uploads/sites/4/2021/06/Gmail-Google-Chat-Spaces-cover.png?w=2500&amp;quality=82&amp;strip=all&amp;ssl=1)</e></IMG></p>
+
+<p>A key part of Google’s integrated vision for productivity is routing everything through the Gmail apps. As part of Workspace becoming available “for everyone,” Gmail is getting streamlined navigation on the web, while Google Chat’s “Rooms” will soon be called “Spaces.”</p>
+
+<p>This streamlined navigation, which will be available later this summer, comes as “Gmail” is now home to Google Chat messaging and Meet video calling. Currently, expanding the Gmail navigation drawer reveals Mail (folders &amp; labels), Chat (one-to-one &amp; group conversations), Rooms (larger conversations), and Meet (start or join) sections that you can expand/collapse.</p> 
+
+<p>Web Gmail is moving to a navigation rail (like in Google Photos) with round buttons for Mail, Chat, Spaces (more on that below), and Meet. Once you tap into a view, another drawer appears to the right with familiar navigation. For example, you get the standard list of folders and labels for Gmail and a list of recent conversations for Chat and Spaces.</p>
+
+<p>That said, the top-left corner, underneath the hamburger button, shows an email compose FAB, while avatars of people you’ve just talked to can appear at the bottom. Otherwise, the app bar that features the search field, active status, and other settings, as well as the right rail with add-ons for Calendar, Drive, and more, are unchanged.</p>
+
+<p>Google imagines this as being an easier way to switch between different apps while staying on one page. You can think of it as the bottom bar on Gmail for Android and iOS coming to the web. Meanwhile, the main app you’re interacting with is at the center inside a sheet that features rounded corners at the top.</p>
+
+<p>Google’s key announcement today is how Chat “Rooms” — their Slack and Teams competitor — in Gmail are being rebranded to “Spaces” — a name that might sound familiar. It’s meant to be “a dedicated place for organizing people, topics, and projects in Google Workspace,” if not your “new home,” for work. You can have a chat window — with tabs for Files and Tasks — appear on the left side of your screen while a document takes up the rest of it.</p>
+
+<QUOTE><i>&gt; </i><p>Over the summer, we’ll evolve Rooms to become Spaces and launch a streamlined and flexible user interface that helps teams and individuals stay on top of everything that’s important.</p></QUOTE>
+
+<p>The company sees them as being useful for the times when an email or chat needs to get bigger. It includes features like in-line topic threading, custom emoji/GIFs and other expressive reactions, message pinning, and presence indicators and custom statuses from Calendar while fully integrating with files and Tasks. You can also run polls and integrate workflows with third-party bots.</p>
+</r>
+
+
+--- record 56
+
+<t><p>Fusce nisl ipsum, maximus ut vestibulum id, sagittis quis risus. Ut nec sodales quam, sit amet semper lorem. Nam quis lacus lacus. Duis blandit lacus eu elit hendrerit pharetra. Quisque finibus enim nec felis ultrices, id mollis justo finibus. Etiam libero eros, tempor in hendrerit in, maximus at risus. Sed facilisis, mi vel mattis vehicula, eros augue laoreet erat, ac imperdiet nisl nisi eu libero. Pellentesque maximus, ligula ut accumsan vehicula, odio leo hendrerit urna, quis ultricies sem tellus et velit. Etiam id lectus tristique, interdum felis at, consectetur dolor. Morbi tempus rhoncus varius.</p></t>
+
+
+--- record 57
+
+<t><p>MONTPELIER, Vt. (WCAX) - Vermont has reached its 80% COVID vaccination goal. Gov. Phil Scott made the announcement Monday morning and said, as promised, he is dropping all existing COVID restrictions.</p>
+
+<p>The pandemic milestone means masking, social distancing, distance between tables, Plexiglass barriers and other health measures are now recommended, not required. But municipalities and businesses can place restrictions if they choose to do so.</p>
+
+<p>However, masking will remain in a number of settings like schools, hospitals, prisons and public transportation, to name a few.</p>
+
+<p>The state of emergency will formally end at midnight June 15.</p>
+
+<p>The governor said that as of Monday, 80.2% of the state’s eligible population-- those 12 and over-- have received at least one dose of the COVID-19 vaccine. And nearly 82% of the population over 18 has been vaccinated.</p>
+
+<p>Vermont is the first state in the nation to reach an 80% vaccination rate.</p>
+
+<p>“Now that we have hit 80%, as promised and effective immediately, I am lifting all remaining state pandemic restrictions and the State of Emergency will formally end at midnight June 15,” Scott, R-Vermont, announced at the news briefing Monday. “And here’s why: Because it’s safe to do so. It is safe because Vermonters have done their part to keep spread of the virus low throughout the pandemic and stepped up to get vaccinated. In fact, no state in the nation is in a better or safer position to do this than we are.”</p>
+
+<p>The governor called the state’s vaccine rollout the most effective in the nation and Vermont is a global leader, saying, “Our state has shown the world what is possible.”</p>
+
+<p>Scott thanked his team and he thanked Vermonters, saying the unity of the people of Vermont is the main reason for our success. He said he is very proud.</p>
+
+<p>Based on the success of the state’s vaccination drive and falling virus counts, the governor last month made the challenge that when the state reached the 80% goal, he would drop restrictions ahead of the original July 4 date outlined in the Vermont Forward reopening plan.</p>
+
+<p>During Monday’s briefing, the governor reflected on the last 15 months, noting it was 464 days ago Vermont recorded its first case of COVID-19. He called COVID a once-in-a-century global crisis.</p>
+
+<p>Scott said even as we hit this milestone, Vermont’s work isn’t done. He says we’ll be ready to rollout vaccines to Vermonters under 12.</p></t>
+
+
+--- record 58
+
+<t><p>Good job Vermont. Now celebrate with some ice cream. &#127848;</p> </t>
+
+
+--- record 59
+
+<t><p>Prime Minister Justin Trudeau pledged 13 million surplus vaccines to help the world get immunized against COVID-19 as he and other G7 leaders wrapped up a weekend summit in Britain dominated by the pandemic, climate change and China.</p>
+
+<p>Canada previously said it would offer up to 100 million vaccine doses to help poorer countries beat back the global pandemic, but was the only country from the G7 to not say how many of those would be actual shots rather than money.</p>
+
+<p>Trudeau on Sunday said in addition to the 13 million shots it deemed as surplus, Canada paid for the purchase and distribution of 87 million doses through money already sent to the ACT-Accelerator, a global program to make sure the entire world has access to COVID-19 testing, treatments and vaccines.</p>
+
+<p>The prime minister told reporters during a closing news conference that some of the promised jabs are already on their way to countries lagging wealthy nations in the worldwide immunization effort. But he stopped short of saying when the rest would arrive.</p>
+
+<p>"A number of these doses are on their way as we speak, more will come in the coming months," Trudeau said. "We're going to be able to share around the world as we see Canadians getting vaccinated to higher and higher levels, and we simply do not need those doses."</p>
+
+<p>The Prime Minister's Office later provided a breakdown showing more than seven million of the doses being donated are from pharmaceutical firm Novavax, whose vaccine remains in clinical trials and has yet to be approved for use in Canada.</p></t>
+
+
+--- record 60
+
+<t><p>A meal won’t fix all of your problems, but we all have that “one thing” that makes us feel slightly better.</p>
+
+<p>So, what’s that one thing for you?</p>
+
+<p>Mine is: Red beans and rice  &#128512;</p> 
+</t>
+
+
+--- record 61
+
+<t><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+</t>
+
+
+--- record 62
+
+<t><p>Google is aiming this redesign to be a gradual rollout, so users can expect to see incremental changes in their Gmail experience as the months wear on.</p>
+
+<p>For starters, you’ll see the new iteration of Google’s design language, Material Design. It’s all part of an effort by Google to enforce uniform branding across all of its web properties. Designers should take note — effective design is rooted in clearly communicating to users that they’ll get the same great UX from all products.</p>
+
+<p>As Jeroen Jillissen, Gmail’s UX design lead, points out:</p>
+
+<p>“Gmail is the first G Suite product to roll out with the new version of Material Design, called the Google Material Theme. This new approach helps us to align the look and feel across the company, making it all feel distinctively Google.”</p>
+
+
+<p>If you’re like many of us, you rely on Gmail as your primary email service, both for work and personal use. In the 14 years since its launch, Gmail has taken a lot of market share from the once-popular Yahoos and Hotmails of the last decade. According to business-stats resource DMR, Gmail’s share of the worldwide email-client market is about 20 percent today. To say that it’s quite popular would be an understatement.</p>
+
+<p>Gmail has now redesigned certain parts of its user interface, with new features cropping up in unexpected places. It’s all part of an ambitious and broad redesign project that Google will roll out in the coming months to its premier email service.</p>
+
+<p>Here’s are some of the user experience (UX) design considerations that went into these new changes.</p>
+
+<p>The biggest design changes and their effects on the UX<br/>
+Google is aiming this redesign to be a gradual rollout, so users can expect to see incremental changes in their Gmail experience as the months wear on.</p>
+
+<p>For starters, you’ll see the new iteration of Google’s design language, Material Design. It’s all part of an effort by Google to enforce uniform branding across all of its web properties. Designers should take note — effective design is rooted in clearly communicating to users that they’ll get the same great UX from all products.</p>
+
+<p>As Jeroen Jillissen, Gmail’s UX design lead, points out:</p>
+
+<p>“Gmail is the first G Suite product to roll out with the new version of Material Design, called the Google Material Theme. This new approach helps us to align the look and feel across the company, making it all feel distinctively Google.”</p>
+
+ <p>GIF showing Google's Material Design elements in action.<br/>
+Besides the visual refresh, they have also introduced the following new features:</p>
+
+<p>New density settings that show attachments right in the inbox.<br/>
+Snooze.<br/>
+Collapsible left navigation and right-side panel.<br/>
+Improved security banners.<br/>
+Gmail confidential mode.<br/>
+AI-powered features like “Smart Compose” and “Smart Reply.”<br/>
+The company’s new features seem geared toward making things more convenient and productive for users as they go about their usual tasks within Gmail. For example, collapsible navigation empowers users to only interact with screen elements when they’re actually using them, and Smart Compose intelligently suggests sentence completers while you’re typing.</p></t>
+
+
+--- record 63
+
+<t><p>Bernie Sanders said he got warmer treatment from President Joe Biden's campaign team than that of Hillary Clinton.</p>
+
+<p>The Vermont senator told CNN's Gloria Berger on Sunday that Biden's team made him feel "very welcome" when Sanders was running against him in the 2020 presidential campaign, according to a clip of the interview reposted by Mediaite.</p>
+
+<p>He said Biden reached out to him to talk and they had "very useful conversations and friendly conversations."<br/>
+Berger indicated that that was different from the Clinton campaign when they were opponents in the 2016 election, and Sanders agreed.<br/>
+"I was tolerated," Sanders replied.</p>
+
+<p>He added: "They wanted my support, obviously."</p></t>
+
+
+--- record 64
+
+<r><H3><s>### </s>A beloved fantasy farming RPG makes the jump from the Nintendo Switch.</H3>
+
+<p>Rune Factory 4 is almost a decade old, at this point. It first released on the 3DS in 2021, before last year's Rune Factory 4 Special made the jump to the Nintendo Switch. It's also, according to longtime series fans, the best of the bunch—a potent concoction of Harvest Moon-style farming and socializing and action-RPG adventuring. There have been plenty of farming sims on PC in the last few years in the wake of Stardew Valley, but none have so thoroughly blended genres as Rune Factory, which makes today's news that Rune Factory 4 Special is hitting PC a real delight.</p>
+
+<p>In a trailer during the Future Games Show today, publisher XSeed announced Rune Factory 4 Special is headed to Steam (as well as PS4, Xbox One and Series X/S). XSeed also brought a trailer for the upcoming Rune Factory 5, which looks like a huge graphical leap for the series. Makes sense, considering RF4's 3DS origins.</p>
+
+<p>Rune Factory 5, sadly, has only been announced for the Nintendo Switch for early 2022. But if you aim to be a completionist in Rune Factory 4 Special, it may well hold you over until then.</p>
+
+<p>Rune Factory 4 Special releases on Steam this fall.</p></r>
+
+
+--- record 65
+
+<t><p>With technology at the forefront, the world has been changing faster than ever. The COVID-19 pandemic further accelerated these shifts, plunging all into a digital-first world, and forcing even the most traditional businesses to transform and adopt digital strategies to remotely extend personalized and humanized experiences and services to their customers.</p>
+
+<p>COVID-19 brought with it a tide of uncertainty and disruption for all businesses. Multiple waves of the pandemic and lockdowns were unpredictable, making it harder for businesses to operate. The most practical solution was to go back to the drawing board to devise a customer strategy for the new normal.<br/>
+A customer wants a quick yet uncomplicated experience online -- from browsing products to placing an order, every tap of the process requires attention to detail and personalization by the brand. As consumers continue to raise the bar for experiences they expect in today’s times, it’s becoming table stakes for brands to not only create compelling content but to deliver it to the right customer, at the right time, on the channel of their choice.<br/>
+It’s not just the customer that’s online - back-end operations are also remote today, requiring cutting-edge tools that enable collaboration across teams, vendors, and other parties involved.</p></t>
+
+
+--- record 66
+
+<t><p>During this year's PC Gaming Show, Robot Entertainment confirmed what we've been waiting to hear. Orcs Must Die! 3, currently available exclusively on Google Stadia, will be releasing on Steam this year.</p>
+
+<p>The third in the series remains true to its roots: it's a game of tower defense as third-person action, with two-player online co-op. Orcs, and sometimes ogres, kobolds, trolls, gnolls, and other staple fantasy baddies want your stuff, and to stop them you've got magic weapons and a huge catalogue of traps. In the trailer we see fire, spikes, spring-loaded medieval weaponry, ceiling maces, poison, rolling barrels, arrows, meat tenderizers, hot coals, lasers, wall saws, floor saws, and those things from Indiana Jones and Skyrim dungeons that swing out and impale you (or Lydia).</p>
+
+<p>Unlike previous games in the series, OMD!3 adds War Scenarios that scale up its tower defense to "that cool siege from the second Lord of the Rings movie" grandiosity. To defeat the hordes there's another new addition: Mountable War Machines. These additions, and the story campaign set 20 years after the events of OMD!2, will be available in the Steam version along with "all new content, features, and improvements".</p>
+
+<p>Back in 2011, our review of the original said, "Not since Lemmings has a game so seamlessly mixed engaging mechanics, humor, cuteness, and gleeful cruelty." That certainly seems true of Orcs Must Die! 3, which arrives on Steam this July 23.</p></t>
+
+
+--- record 67
+
+<r><H3><s>### </s>Our first good look at Avengers' biggest expansion to date, coming August 2021.</H3>
+
+<p><URL url="https://www.youtube.com/watch?v=zf7W4CG-7MA">https://www.youtube.com/watch?v=zf7W4CG-7MA</URL></p>
+
+<p>Revealed today during Square Enix's Summer Game Showcase, we now have our first good luck at the Marvel's Avengers Black Panther expansion announced earlier this year: War for Wakanda.</p>
+
+<p>Like the first two heroes added to the game (Kate Bishop and Clint Barton), War for Wakanda will tell an original Black Panther story with characters that both movie and comic fans will recognize. "Black Panther must defend Wakanda from Klaw, who seeks to steal Vibranium for his own desires," reads the brief description below the trailer on YouTube.</p>
+
+<p>Klaw is a longtime Black Panther villain, but if you've only seen the movies like me, you probably only know him as that guy with the beard that's obsessed with Vibranium (portrayed by Andy Serkis).</p>
+
+<p>Despite predictions that Avengers might be shifting to a free-to-play style, it looks like Crystal Dynamics is sticking to its guns with an initial buy-in and free expansions like this one. War For Wakanda is coming sometime in August 2021.</p> 
+</r>
+
+
+--- record 68
+
+<t><p>Microsoft didn't spend too long on Halo at this year's E3 conference, but it did debut our first look at multiplayer which got me plenty excited. It looks like Halo, classic Halo, but with a bunch of fun new stuff in it, like grappling hooks and new vehicles. Microsoft's Joseph Staten, a longtime Bungie developer who joined 343 Industries late last year to help ship Halo Infinite, also got on stage to talk a little bit about the game—but not to announce a release date.</p>
+
+<p>Infinite's only a few months away, but we still don't know when, exactly, it's coming—Staten only said that singleplayer and multiplayer will launch together "this Holiday."</p>
+
+<p>Microsoft rolled a brief clip of the new Halo ring, showing off a snippet of the environment. Then it cut to a singleplayer cutscene showing a new character—a new AI that looks and sounds an awful lot like Cortana, who went rampant in the last game in the series (that means she's the bad guy now).</p>
+
+<p>Or is she? This scene in Halo Infinite implies Cortana is dead, but it sure sounds like more's going on.</p>
+
+<p>"The rogue AI known as Cortana is gone. She's been deleted," says the new AI. When Chief asks how, he and the new AI realize something fishy's going on. "The mission's changed. They always do," says Chief. This nu-Cortana looks like she'll be our voice-in-our-head companion throughout Infinite.</p></t>
+
+
+--- record 69
+
+<t><p>Everything about this looks underwhelming. Now we've seen mutliplayer gameplay as well, I'm even less hyped. Not expecting anything remotely spectacular here.</p></t>
+
+
+--- record 70
+
+<t><p>Sed dignissim erat tellus, a aliquam quam rhoncus vel. Vivamus interdum, purus id tempus blandit, lorem turpis lacinia tellus, id molestie quam urna pharetra lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam fringilla dignissim eros, non ornare ante cursus ut. Phasellus tristique metus sit amet neque fermentum, a fermentum turpis viverra. Mauris quis sapien neque. Vivamus tincidunt sem at ultricies pellentesque. Curabitur aliquet vulputate ipsum, in pretium eros condimentum in. Pellentesque porta venenatis mollis. Aliquam mattis viverra dolor nec varius. Vestibulum varius volutpat lacus at vulputate. Vestibulum egestas cursus ipsum vitae efficitur. Nunc mattis vestibulum pulvinar.</p></t>
+
+
+--- record 71
+
+<t><p>Nice to see Chadwick Boseman’s stunt double finally get his time to shine.</p></t>
+
+
+--- record 72
+
+<t><p>Honestly i thought it never released.<br/>
+Never heard absolutely anything about it since it was announced for Stadia only.</p>
+
+</t>
+
+
+--- record 73
+
+<t><p>Aw yeah I'm stoked about this, heard those are great games but haven't played any of them yet.</p></t>
+
+
+--- record 74
+
+<t><p>The Prime Minister's Office later provided a breakdown showing more than seven million of the doses being donated are from pharmaceutical firm Novavax, whose vaccine remains in clinical trials and has yet to be approved for use in Canada.</p>
+
+<p>The remainder are Oxford-AstraZeneca doses and shots from Johnson &amp; Johnson that Canada bought through COVAX, an international vaccine sharing initiative.</p></t>
+
+
+--- record 75
+
+<t><p>It is still bad on the phone: when you maximize someone else's presentation, your own camera covers the upper right part of the presentation as a PiP. I don't know what they were thinking. Besides, your can't fix your own camera nor there is a button shortcut in other people's images to fix them, as there was before. I realize Meet is better on a desktop or larger screen, but often we need to use a phone for meetings, so these regressions hurt.</p></t>
+
+
+--- record 76
+
+<t><p>They've got a low population working in their favor, the entire state of Vermont (density of 68 people per square mile) has fewer people than the city of Boston alone (13,841 people per square mile)! A good milestone regardless!</p></t>
+
+
+--- record 77
+
+<t><p>Interesting! Glad they're putting the Dark Sky acquisition to good use!</p></t>
+
+
+--- record 78
+
+<r><p>I've been playing through the Donkey Kong Country series with my 5-year old, we just started the third one:</p> 
+
+<p><URL url="https://en.wikipedia.org/wiki/Donkey_Kong_Country_3:_Dixie_Kong%27s_Double_Trouble">https://en.wikipedia.org/wiki/Donkey_Kong_Country_3:_Dixie_Kong%27s_Double_Trouble</URL>!</p></r>
+
+
+--- record 79
+
+<r><p>Just watched the first episode of <URL url="https://en.wikipedia.org/wiki/Loki_%28TV_series%29"><s>[</s>Loki<e>](https://en.wikipedia.org/wiki/Loki_(TV_series))</e></URL> over the weekend. It's entertaining and beautiful! They're using lots of sci-fi inspiration from Blade Runner, Hitchhiker's Guide, etc</p>
+
+
+<p>I've also been catching a few episodes of Amphibia with my son, which is a fun adventure! <URL url="https://www.youtube.com/watch?v=dfYAb84mnZg">https://www.youtube.com/watch?v=dfYAb84mnZg</URL></p></r>
+
+
+--- record 80
+
+<r><p>I've been eating a lot of <URL url="https://www.beyondmeat.com/products/beyond-beef/"><s>[</s>beyond beef<e>](https://www.beyondmeat.com/products/beyond-beef/)</e></URL> with broccoli and rice lately! Meat substitutes have been getting so much better!</p></r>
+
+
+--- record 81
+
+<t><p>I'm always interested to see what the new health-related features are; rumors this time around seem to be blood glucose and blood pressure monitoring</p></t>
+
+
+--- record 82
+
+<r><p>This is a really interesting article on Singapore's Kebun Baru Birdsinging Competition; they're trying to raise awareness to reduce poaching! Click through to the article below and check out how they hoist the cages up high on flagpoles!</p>
+
+<p><URL url="https://www.atlasobscura.com/articles/singapore-birdsinging-kebun-baru">https://www.atlasobscura.com/articles/singapore-birdsinging-kebun-baru</URL></p>
+
+<QUOTE><i>&gt; </i><p>At the end of the day, Muhammad holds a trophy with white and orange ribbons, a wide smile filling his face. His prized shama was ranked sixth in this month’s competition, but, as it’s been for centuries, social connection is the biggest prize. “At the end of the day, it’s not the cup or winning that keeps me going, it’s the friendships that motivate me,” says Muhammad. “Being part of the Kebun Baru community is what makes this hobby come alive.”</p></QUOTE></r>
+
+
+--- record 83
+
+<r><p>Reminds me a little of <URL url="https://en.wikipedia.org/wiki/Google_Wave"><s>[</s>Google Wave<e>](https://en.wikipedia.org/wiki/Google_Wave)</e></URL>  &#129315;</p> </r>
+
+
+--- record 84
+
+<r><p><URL url="https://www.theatlantic.com/science/archive/2021/06/dengue-mosquitoes-defanged/619161">https://www.theatlantic.com/science/archive/2021/06/dengue-mosquitoes-defanged/619161</URL></p>
+
+<p>Scientists are infecting mosquitos with a bacterium called Wolbachia, which prevents mosquitos from being infected with dengue viruses! The process involves releasing a small amount of infected mosquitos in various areas, and those mosquitos spread Wolbachia to the rest of the local population. The first trial reduced the incedence of dengue by 77%!  &#128512;</p> </r>
+
+
+--- record 85
+
+<r><p>It's the year of <URL url="https://en.wikipedia.org/wiki/Brood_X"><s>[</s>Brood X <e>](https://en.wikipedia.org/wiki/Brood_X)</e></URL> and a restaurant in Ohio did a livestream showcasing a "spicy thai cicada pie." Unforunately it was a one-time thing and the pizza is not available to the public.</p> 
+
+<QUOTE><i>&gt; </i><p>"Opinions of the pizza range from absolutely delicious to...well...uh...yeah...," the Facebook post said.</p></QUOTE>
+
+<p><URL url="https://www.cnn.com/2021/06/13/us/cicada-pizza-spicy-ohio-trnd/index.html">https://www.cnn.com/2021/06/13/us/cicada-pizza-spicy-ohio-trnd/index.html</URL></p>
+
+<p>I'd give it a try, but be careful... cicadas can trigger shellfish allergies!</p> </r>
+
+
+--- record 86
+
+<r><p>This is a fun selector for when you need space between every element, except the last one.</p> 
+
+<p><C><s>`</s>* + * {<br/>
+  margin-top: 1.5em;<br/>
+}<e>`</e></C></p>
+
+<p>I've also used a trick for cases where you have two elements next to each other, and the second element may not always be there:</p> 
+
+<p><C><s>`
+</s>:first-of-type:not(:last-of-type) {<br/>
+     margin-right: 1.5em;<br/>
+ }<e>`</e></C></p></r>
+
+
+--- record 87
+
+<r><p>Last year <URL url="https://en.wikipedia.org/wiki/Jeff_Rosenstock"><s>[</s>Jeff Rosenstock<e>](https://en.wikipedia.org/wiki/Jeff_Rosenstock)</e></URL> released his latest punk album, <URL url="https://jeffrosenstock.bandcamp.com/album/no-dream"><s>[</s>No Dream<e>](https://jeffrosenstock.bandcamp.com/album/no-dream)</e></URL>. This year he took that album and released a Ska version of it called <URL url="https://jeffrosenstock.bandcamp.com/album/ska-dream"><s>[</s>Ska Dream<e>](https://jeffrosenstock.bandcamp.com/album/ska-dream)</e></URL>. I guess Ska's not quite dead yet.</p>
+
+<p><URL url="https://jeffrosenstock.bandcamp.com/album/ska-dream">https://jeffrosenstock.bandcamp.com/album/ska-dream</URL></p></r>
+
+
+--- record 88
+
+<t><p>is Workspace a rebrand of GSuite? They shift branding a lot and it's hard to keep track of!</p> </t>
+
+
+--- record 89
+
+<r><p>Watch out <URL url="https://airtable.com/">https://airtable.com/</URL>! Looks like Google's coming for you.</p></r>
+
+
+--- record 90
+
+<t><p>They are my favourite.</p></t>
+
+
+--- record 91
+
+<r><p>Probably a rare bug to hit, but worth noting. See video below:</p>
+
+<p><URL url="https://d11a6trkgmumsb.cloudfront.net/original/3X/4/a/4af65305097c7d13680804b3dd561834b6629cd2.mp4">https://d11a6trkgmumsb.cloudfront.net/original/3X/4/a/4af65305097c7d13680804b3dd561834b6629cd2.mp4</URL></p></r>
+
+
+--- record 92
+
+<r><p>My top 4:</p>
+
+<LIST type="decimal"><LI><s>1. </s>Life is Beautiful</LI>
+<LI><s>2. </s>Requiem for a Dream</LI>
+<LI><s>3. </s>American History X</LI>
+<LI><s>4. </s>Fight Club</LI></LIST></r>
+
+
+--- record 93
+
+<t><p>HI all,<br/>
+I’m trying to get my first installation up and running on Oracle Cloud. I got all the basic configuration done and eventually the app running in docker, but I’m not able to access it via browser.</p>
+
+<p>Been through several forum posts that helped me get to a successful build, now looking at the logs there is a problem related to SSL.</p>
+
+<p>I have the default SSL templates active in the app.yml and in the log I see many of the following errors</p>
+
+<p>nginx: [emerg] cannot load certificate "/shared/ssl/discourse.wrecklab.com.cer": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/shared/ssl/discourse.wrecklab.com.cer','r') error:2006D080:BIO routines:BIO_new_file:no such file)</p>
+
+<p>I’m not sure where to start troubleshooting this. Let me know what information I should provide you to help you help me :slight_smile:</p></t>
+
+
+--- record 94
+
+<r><p>My favourite food is animal biscuits</p>
+
+<p><IMG alt="" src="https://kiwicornerdairy.com/pub/media/catalog/product/cache/02de9f15904050a853201665f0046d23/a/r/arnotts-biscuits-iced-animals_1.jpg"><s>![</s><e>](https://kiwicornerdairy.com/pub/media/catalog/product/cache/02de9f15904050a853201665f0046d23/a/r/arnotts-biscuits-iced-animals_1.jpg)</e></IMG></p>
+
+
+<p>Second favourite is wonton noodle soup</p>
+
+<p><URL url="https://www.google.com/url?sa=i&amp;url=https%3A%2F%2Fwww.marionskitchen.com%2Famp%2Fwonton-bbq-pork-noodle-soup%2F&amp;psig=AOvVaw3jYeInj6t0pHFWEwDgqj70&amp;ust=1623800308336000&amp;source=images&amp;cd=vfe&amp;ved=0CA0QjhxqFwoTCIj_rdilmPECFQAAAAAdAAAAABAD">https://www.google.com/url?sa=i&amp;url=https%3A%2F%2Fwww.marionskitchen.com%2Famp%2Fwonton-bbq-pork-noodle-soup%2F&amp;psig=AOvVaw3jYeInj6t0pHFWEwDgqj70&amp;ust=1623800308336000&amp;source=images&amp;cd=vfe&amp;ved=0CA0QjhxqFwoTCIj_rdilmPECFQAAAAAdAAAAABAD</URL></p></r>
+
+
+--- record 95
+
+<r><p>Favorite? Probably <URL url="https://en.wikipedia.org/wiki/Blintz"><s>[</s>Blinztes<e>](https://en.wikipedia.org/wiki/Blintz)</e></URL>.</p> </r>
