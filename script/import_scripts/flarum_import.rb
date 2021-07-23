@@ -236,6 +236,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     # HACK: remove anything within <s>, which in all cases seems to only add bogus markup
     # NOTE: only lowercase <s> seems bogus, so no //i
     raw = raw.gsub(/<s>.*?<\/s>/m, '')
+    raw = raw.gsub(/<e>.*?<\/e>/im, '')
 
     # [li] -> [ul]
     raw = raw.gsub(/\[li\](.*?)\[\/li\]/, '[ul]\1[/ul]')
