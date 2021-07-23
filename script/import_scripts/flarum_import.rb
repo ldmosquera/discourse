@@ -276,7 +276,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     end
 
     # fix [img] tags where src equals tag content
-    raw = raw.gsub(/<img src="(.*?)">(.*?)<\/img>/i) do
+    raw = raw.gsub(/<img (?:alt=".*?" )?src="(.*?)">(.*?)<\/img>/i) do
       src, tag_content = $1, $2
 
       if tag_content.strip == src.strip # FIXME: do lowercase comparison just in case
