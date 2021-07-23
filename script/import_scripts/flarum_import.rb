@@ -63,7 +63,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   def import_users
-    puts '', "creating users"
+    STDERR.puts '', "creating users"
     total_count = mysql_query("SELECT count(*) count FROM users;").first['count']
 
     batches(BATCH_SIZE) do |offset|
@@ -93,7 +93,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   def import_categories
-    puts "", "importing top level categories..."
+    STDERR.puts "", "importing top level categories..."
 
     categories = mysql_query("
                               SELECT id, name, description, position
@@ -108,7 +108,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
       }
     end
 
-    puts "", "importing children categories..."
+    STDERR.puts "", "importing children categories..."
 
     children_categories = mysql_query("
                                        SELECT id, name, description, position
@@ -126,7 +126,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   def import_posts
-    puts "", "creating topics and posts"
+    STDERR.puts "", "creating topics and posts"
 
     total_count = mysql_query("SELECT count(*) count from posts").first["count"]
 
@@ -174,7 +174,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
           if parent
             mapped[:topic_id] = parent[:topic_id]
           else
-            puts "Parent post #{m['first_post_id']} doesn't exist. Skipping #{m["id"]}: #{m["title"][0..40]}"
+            STDERR.puts "Parent post #{m['first_post_id']} doesn't exist. Skipping #{m["id"]}: #{m["title"][0..40]}"
             skip = true
           end
         end
@@ -185,7 +185,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
   end
 
   def create_permalinks
-    puts '', 'Creating redirects...', ''
+    STDERR.puts '', 'Creating redirects...', ''
 
     # users: https://discuss.flarum.org/u/askvortsov
     # no need to create User permalinks since URL is /u/#{username} both in Flarum and Discourse
@@ -202,21 +202,21 @@ class ImportScripts::FLARUM < ImportScripts::Base
         else
           Permalink.find_or_create_by(url: "d/#{id}-#{slug}/#{post.post_number}", post_id: post.id)
         end
-        print '.'
+        STDERR.print '.'
       end
     end
-    puts ''
+    STDERR.puts ''
   end
 
   def rebake_posts
-    puts '', 'rebaking posts...', ''
+    STDERR.puts '', 'rebaking posts...', ''
 
     Post.find_each do |post|
       pcf = post.custom_fields
       if pcf && pcf["import_id"]
         post.rebake!
       end
-      print '.'
+      STDERR.print '.'
     end
     puts
   end
