@@ -272,7 +272,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     raw = raw.gsub(/<url url="(.*?)">(.*?)<\/url>/i) do
       url, tag_content = $1, $2
 
-      if tag_content.strip == url.strip # FIXME: do lowercase comparison just in case
+      if urls_match(url, tag_content)
         url
       else
         "[#{tag_content}](#{url})"
@@ -283,7 +283,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     raw = raw.gsub(/<img (?:alt=".*?" )?src="(.*?)">(.*?)<\/img>/i) do
       src, tag_content = $1, $2
 
-      if tag_content.strip == src.strip # FIXME: do lowercase comparison just in case
+      if urls_match(src, tag_content)
         "[img]#{src}[/img]"
       else
         $& # if src != tag_content, leave unchanged
@@ -440,6 +440,15 @@ class ImportScripts::FLARUM < ImportScripts::Base
   def get_file(path)
     return File.open(path) if File.exist?(path)
     nil
+  end
+
+  def urls_match(url1, url2)
+    normalize_url(url1) == normalize_url(url2)
+  end
+
+  def normalize_url(url)
+    return url if url.nil?
+    URI.decode_www_form_component url.strip
   end
 end
 
