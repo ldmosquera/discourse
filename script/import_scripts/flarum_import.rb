@@ -256,6 +256,10 @@ class ImportScripts::FLARUM < ImportScripts::Base
     # [li] -> [ul]
     raw = raw.gsub(/\[li\](.*?)\[\/li\]/, '[ul]\1[/ul]')
 
+    # cover some more special cases which seem designed to intentionally break parsing
+    raw = raw.gsub(/!\[(.*?)\]/, '\1')
+    raw = raw.gsub(%r{\(https://\)}, '')
+
     raw
   end
 
