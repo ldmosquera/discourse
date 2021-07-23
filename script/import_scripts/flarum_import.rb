@@ -57,6 +57,7 @@ class ImportScripts::FLARUM < ImportScripts::Base
     end
 
     create_permalinks
+    rebake_posts
   end
 
   def import_users
@@ -202,6 +203,20 @@ class ImportScripts::FLARUM < ImportScripts::Base
         print '.'
       end
     end
+    puts ''
+  end
+
+  def rebake_posts
+    puts '', 'rebaking posts...', ''
+
+    Post.find_each do |post|
+      pcf = post.custom_fields
+      if pcf && pcf["import_id"]
+        post.rebake!
+      end
+      print '.'
+    end
+    puts
   end
 
   #returns [ str, extra ] where extra is a hash of additional data
