@@ -202,7 +202,9 @@ class ImportScripts::Vanilla < ImportScripts::Base
       user_emails_in_conversation = @users.select { |u| user_ids_in_conversation.include?(u[:user_id]) }
         .map { |u| u[:email] }
       # retrieve their usernames from the database
-      target_usernames = User.where("email IN (?)", user_emails_in_conversation).pluck(:username).to_a
+      target_usernames = User.joins(:user_emails)
+        .where(user_emails: { email: user_emails_in_conversation })
+        .pluck(:username)
 
       next if target_usernames.blank?
 
