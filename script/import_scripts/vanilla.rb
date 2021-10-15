@@ -3,6 +3,9 @@
 require "csv"
 require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 
+# NOTE: this importer expects a text file obtained through Vanilla Porter
+# user documentation: https://meta.discourse.org/t/how-to-migrate-import-from-vanilla-to-discourse/27273
+
 class ImportScripts::Vanilla < ImportScripts::Base
 
   def initialize
