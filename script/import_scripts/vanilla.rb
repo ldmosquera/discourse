@@ -212,7 +212,6 @@ class ImportScripts::Vanilla < ImportScripts::Base
       first_message = @conversation_messages.select { |cm| cm[:message_id] == conversation[:first_message_id] }.first
 
       {
-        archetype: Archetype.private_message,
         id: "conversation#" + conversation[:conversation_id],
         user_id: user.id,
         title: "Private message from #{user.username}",
