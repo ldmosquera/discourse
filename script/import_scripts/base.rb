@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# encoding: utf-8
 
 if ARGV.include?('bbcode-to-md')
   # Replace (most) bbcode with markdown before creating posts.
@@ -315,6 +316,12 @@ class ImportScripts::Base
     original_username = opts[:username]
     original_name = opts[:name]
     original_email = opts[:email] = opts[:email].downcase
+
+    #FIXME: this duct-tapes over the fact that the Lithium importer is sending ASCII encoded strings here,
+    #which trips unicode_normalize! in lib/user_name_suggester.rb
+    #
+    #This might not be the correct fix; maybe we need to add that to UsernameSuggester itself.
+    opts[:username] = opts[:username].dup.force_encoding('UTF-8')
 
     if !UsernameValidator.new(opts[:username]).valid_format? || !User.username_available?(opts[:username])
       opts[:username] = UserNameSuggester.suggest(opts[:username].presence || opts[:name].presence || opts[:email])
