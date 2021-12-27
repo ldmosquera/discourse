@@ -28,13 +28,14 @@ class ImportScripts::Lithium < ImportScripts::Base
   BATCH_SIZE = 1000
 
   # CHANGE THESE BEFORE RUNNING THE IMPORTER
-  DATABASE = "wd"
-  PASSWORD = "password"
-  AVATAR_DIR = '/tmp/avatars'
-  ATTACHMENT_DIR = '/tmp/attachments'
-  UPLOAD_DIR = '/tmp/uploads'
+  DATABASE = "endnote"
+  USERNAME = "discourse"
+  PASSWORD = "123456"
+  AVATAR_DIR =     '/shared/tmp/endnote/avatars'
+  ATTACHMENT_DIR = '/shared/tmp/endnote/attachments'
+  UPLOAD_DIR =     '/shared/tmp/endnote/uploads'
 
-  OLD_DOMAIN = 'community.wd.com'
+  OLD_DOMAIN =     'community.thomsonreuters.com'
 
   TEMP = ""
 
@@ -60,7 +61,7 @@ class ImportScripts::Lithium < ImportScripts::Base
 
     @client = Mysql2::Client.new(
       host: "localhost",
-      username: "root",
+      username: USERNAME,
       password: PASSWORD,
       database: DATABASE
     )
@@ -888,8 +889,15 @@ SQL
         unless post.raw == new_raw
           post.raw = new_raw
           post.cooked = post.cook(new_raw)
+
           cpp = CookedPostProcessor.new(post)
-          cpp.link_post_uploads
+          #FIXME: this seems to be broken in commit 434035f167eb15f3e2d8c6a52577d66d0e140b71:
+          #  https://github.com/discourse/discourse/commit/434035f167eb15f3e2d8c6a52577d66d0e140b71#diff-126d35b8c178f242e394566a7c86c29b576738796b30944c182758b70e5f1d99R889
+          #
+          #CookedPostProcessor does not have this method; Post does.
+          #But now the CookedPostProcessor object is left unused; perhaps CookedPostProcessor#post_process was meant to be used? It calls link_post_uploads inside.
+          post.link_post_uploads
+
           post.custom_fields["import_post_process"] = true
           post.save
         end
