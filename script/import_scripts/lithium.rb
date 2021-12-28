@@ -851,7 +851,8 @@ SQL
     real_filename.prepend SecureRandom.hex if real_filename[0] == '.'
     upload = create_upload(user_id, filename, real_filename)
 
-    if upload.nil? || !upload.valid?
+    # HACK: fix bogus usage of errors.add to directly add errors outside of validations
+    if upload.nil? || upload.errors.any?
       puts "Upload not valid :("
       puts upload.errors.inspect if upload
       return nil
