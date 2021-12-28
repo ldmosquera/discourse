@@ -73,8 +73,13 @@ class Convert < Saxy
     row = data[:row_data]
     col_names = row.keys.join(",")
 
-    #FIXME: this renders SQL NULLs as 'null' (ie. a string), which is morally and semantically wrong
-    vals = row.values.map { |v| "'#{v.gsub("'", "''").gsub('\\', '\\\\\\')}'" }.join(",")
+    vals = row.values.map do |v|
+      if v =~ /^'+null'+$/i
+        'NULL'
+      else
+        "'#{v.gsub("'", "''").gsub('\\', '\\\\\\')}'"
+      end.join(",")
+    end
 
     puts "INSERT INTO #{name} (#{col_names}) VALUES (#{vals});"
   end
