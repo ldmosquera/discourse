@@ -72,7 +72,10 @@ class Convert < Saxy
 
     row = data[:row_data]
     col_names = row.keys.join(",")
+
+    #FIXME: this renders SQL NULLs as 'null' (ie. a string), which is morally and semantically wrong
     vals = row.values.map { |v| "'#{v.gsub("'", "''").gsub('\\', '\\\\\\')}'" }.join(",")
+
     puts "INSERT INTO #{name} (#{col_names}) VALUES (#{vals});"
   end
 end
