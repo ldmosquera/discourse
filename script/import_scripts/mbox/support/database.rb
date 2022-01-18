@@ -30,8 +30,8 @@ module ImportScripts::Mbox
 
     def insert_category(category)
       @db.execute(<<-SQL, category)
-        INSERT OR REPLACE INTO category (name, description)
-        VALUES (:name, :description)
+        INSERT OR REPLACE INTO category (name, description, parent_category_id)
+        VALUES (:name, :description, :parent_category_id)
       SQL
     end
 
@@ -218,7 +218,8 @@ module ImportScripts::Mbox
       @db.execute <<-SQL
         CREATE TABLE IF NOT EXISTS category (
           name TEXT NOT NULL PRIMARY KEY,
-          description TEXT
+          description TEXT,
+          parent_category_id INTEGER
         )
       SQL
     end

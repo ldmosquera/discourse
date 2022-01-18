@@ -22,8 +22,8 @@ module ImportScripts
 
     def insert_category(category)
       @db.execute(<<-SQL, prepare(category))
-        INSERT OR REPLACE INTO category (id, name, description, position, url)
-        VALUES (:id, :name, :description, :position, :url)
+        INSERT OR REPLACE INTO category (id, name, description, position, url, parent_category_id)
+        VALUES (:id, :name, :description, :position, :url, :parent_category_id)
       SQL
     end
 
@@ -269,7 +269,8 @@ module ImportScripts
           name TEXT NOT NULL,
           description TEXT,
           position INTEGER,
-          url TEXT
+          url TEXT,
+          parent_category_id INTEGER
         )
       SQL
     end
