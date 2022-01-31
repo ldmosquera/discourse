@@ -85,6 +85,15 @@ module ImportScripts::Mbox
             end
           end
 
+          #HACK: ellide up to last occurence of = in addresses;
+          #ie. normalize these:
+          #    prvs=00377ab9a2=someone@somewhere.com
+          #    bounces+840901-dbd9-flang-dev=someone@somewhere.com
+          #    blah=blih=bluh=someone@somewhere.com
+          #into:
+          #    someone@somewhere.com
+          from_email = from_email.sub(/^(.*)=/, '')
+
           body, elided, format = receiver.select_body
           reply_message_ids = extract_reply_message_ids(parsed_email)
 
