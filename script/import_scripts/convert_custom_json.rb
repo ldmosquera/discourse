@@ -66,6 +66,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     @imported_users_json.each do |user|
       u = {}
       u['id'] = user['User']['id']
+      u['external_id'] = user['User']['sso_id']
       u['username'] = user['User']['login']
       u['email'] = user['User']['email']
       u['name'] = "#{user['User']['first_name']} #{user['User']['last_name']}"
@@ -95,11 +96,13 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
             UserAvatar.import_url_for_user(u['avatar_url'], user) rescue nil
           end
           u['group_ids'].each do |g|
-            user_id = user_id_from_imported_user_id(u['id'])
             group_id = group_id_from_imported_group_id(g)
-            if user_id && group_id
-              GroupUser.find_or_create_by(user_id: user_id, group_id: group_id)
+            if group_id
+              GroupUser.find_or_create_by(user_id: user.id, group_id: group_id)
             end
+          end
+          if u['external_id'].present?
+            SingleSignOnRecord.create!(user_id: user.id, external_id: u['external_id'], external_email: u['email'], last_payload: '')
           end
         end
       }
