@@ -7,12 +7,16 @@ require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 class ImportScripts::JsonGeneric < ImportScripts::Base
 
   JSON_USERS_FILE_PATH = ENV['JSON_FILE'] || 'script/import_scripts/support/sample.json'
+  JSON_CATEGORIES_FILE_PATH = ENV['JSON_FILE'] || 'script/import_scripts/support/category.json'
+  JSON_SUBCATEGORIES_FILE_PATH = ENV['JSON_FILE'] || 'script/import_scripts/support/Boards.json'
   BATCH_SIZE ||= 1000
 
   def initialize
     super
 
     @imported_users_json = load_json(JSON_USERS_FILE_PATH)
+    @imported_categories_json = load_json(JSON_CATEGORIES_FILE_PATH)
+    @imported_subcategories_json = load_json(JSON_SUBCATEGORIES_FILE_PATH)
   end
 
   def execute
@@ -20,6 +24,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     import_groups
     import_users
+    import_categories
     puts "", "Done"
   end
 
@@ -105,6 +110,40 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
             SingleSignOnRecord.create!(user_id: user.id, external_id: u['external_id'], external_email: u['email'], last_payload: '')
           end
         end
+      }
+    end
+  end
+
+  def import_categories
+    puts '', "Importing categories"
+
+    categories = []
+    @imported_categories_json.each do |category|
+      c = {}
+      if category['parent_category'].empty? # To ensure parents are created first
+        c['id'] = category['id']
+        c['name'] = category['title']
+        c['description'] = category['description']
+        c['position'] = category['position']
+        categories.unshift(c)
+      else
+        c['id'] = category['id']
+        c['name'] = category['title']
+        c['description'] = category['description']
+        c['parent_category_id'] = category['root_category']['id']
+        c['position'] = category['position']
+        categories << c
+      end
+    end
+    categories.uniq!
+    
+    create_categories(categories) do |category|
+      {
+        id: category['id'],
+        name: category['name'],
+        position: category['position'],
+        description: category['description'],
+        parent_category_id: category['parent_category_id'].present? ? category_id_from_imported_category_id(category['parent_category_id']) : nil
       }
     end
   end
