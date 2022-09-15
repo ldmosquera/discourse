@@ -119,31 +119,33 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     categories = []
     @imported_categories_json.each do |category|
-      c = {}
+      c = {
+        id: category['id'],
+        name: category['title'],
+        position: category['position'],
+        description: category['description'],
+      }
+
       if category['parent_category'].empty? # To ensure parents are created first
-        c['id'] = category['id']
-        c['name'] = category['title']
-        c['description'] = category['description']
-        c['position'] = category['position']
         categories.unshift(c)
       else
-        c['id'] = category['id']
-        c['name'] = category['title']
-        c['description'] = category['description']
         c['parent_category_id'] = category['root_category']['id']
-        c['position'] = category['position']
         categories << c
       end
     end
     categories.uniq!
     
     create_categories(categories) do |category|
+      if category['parent_category_id'].present?
+        parent_category_id = category_id_from_imported_category_id(category['parent_category_id'])
+      end
+
       {
         id: category['id'],
         name: category['name'],
         position: category['position'],
         description: category['description'],
-        parent_category_id: category['parent_category_id'].present? ? category_id_from_imported_category_id(category['parent_category_id']) : nil
+        parent_category_id: parent_category_id,
       }
     end
   end
