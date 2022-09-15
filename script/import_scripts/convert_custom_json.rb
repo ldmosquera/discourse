@@ -6,9 +6,9 @@ require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 
 class ImportScripts::JsonGeneric < ImportScripts::Base
 
-  JSON_USERS_FILE_PATH = ENV['JSON_FILE'] || 'script/import_scripts/support/sample.json'
-  JSON_CATEGORIES_FILE_PATH = ENV['JSON_FILE'] || 'script/import_scripts/support/category.json'
-  JSON_SUBCATEGORIES_FILE_PATH = ENV['JSON_FILE'] || 'script/import_scripts/support/Boards.json'
+  JSON_USERS_FILE_PATH = ENV['JSON_USERS_FILE'] || 'script/import_scripts/support/sample.json'
+  JSON_CATEGORIES_FILE_PATH = ENV['JSON_CATEGORIES_FILE'] || 'script/import_scripts/support/category.json'
+  JSON_SUBCATEGORIES_FILE_PATH = ENV['JSON_SUBCATEGORIES_FILE'] || 'script/import_scripts/support/Boards.json'
   BATCH_SIZE ||= 1000
 
   def initialize
