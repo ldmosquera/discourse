@@ -24,6 +24,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     import_groups
     import_users
+    # "categories" and "boards" map to first and second level categories in Discourse respectively
     import_categories
     puts "", "Done"
   end
@@ -115,7 +116,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   end
 
   def import_categories
-    puts '', "Importing categories"
+    puts '', "Importing categories and boards"
 
     categories = []
     @imported_categories_json.each do |category|
@@ -133,8 +134,28 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         categories << c
       end
     end
+
+    @imported_subcategories_json.each do |outer|
+      parent_category_name = outer['Category']
+      parent_category = @imported_categories_json.find { |c| c['id'] == parent_category_name }
+      raise "ERROR: non existing root category #{parent_category_name}" unless parent_category
+
+      outer['boards'].each do |board|
+        categories << {
+          id: board['id'],
+          name: board['title'],
+
+          #FIXME: this field probably needs massaging of some kind
+          position: board['position'],
+
+          description: board['description'],
+          parent_category_id: parent_category['id'],
+        }
+      end
+    end
+
     categories.uniq!
-    
+
     create_categories(categories) do |category|
       if category['parent_category_id'].present?
         parent_category_id = category_id_from_imported_category_id(category['parent_category_id'])
