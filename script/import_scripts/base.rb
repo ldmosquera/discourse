@@ -428,8 +428,11 @@ class ImportScripts::Base
         skipped += 1
       else
         # Basic massaging on the category name
-        params[:name] = "Blank" if params[:name].blank?
-        params[:name].strip!
+        if params[:name].blank?
+          params[:name] = "Blank"
+        else
+          params[:name].strip!
+        end
         params[:name] = params[:name][0..49]
 
         # make sure categories don't go more than 2 levels deep
