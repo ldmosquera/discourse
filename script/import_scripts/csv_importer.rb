@@ -8,12 +8,14 @@ require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 
 class ImportScripts::CsvImporter < ImportScripts::Base
 
-  CSV_FILE_PATH = ENV['CSV_USER_FILE'] || '/var/www/discourse/tmp/users.csv'
+  CSV_USERS = ENV['CSV_USER_FILE'] || '/Users/constanza/Work/migrations/landtrust/csv/users_landtrust.csv'
+  IMPORT_CUSTOM_FIELDS = ENV['CSV_USER_FILE'] || false
   CSV_CUSTOM_FIELDS = ENV['CSV_CUSTOM_FIELDS'] || '/var/www/discourse/tmp/custom_fields.csv'
-  CSV_EMAILS = ENV['CSV_EMAILS'] || '/var/www/discourse/tmp/emails.csv'
-  CSV_CATEGORIES = ENV['CSV_CATEGORIES'] || '/var/www/discourse/tmp/categories.csv'
+  CSV_EMAILS = ENV['CSV_EMAILS'] || '/Users/constanza/Work/migrations/landtrust/csv/emails_landtrust.csv'
+  CSV_CATEGORIES = ENV['CSV_CATEGORIES'] || '/Users/constanza/Work/migrations/landtrust/csv/categories_landtrust.csv'
   CSV_TOPICS = ENV['CSV_TOPICS'] || '/var/www/discourse/tmp/topics_new_users.csv'
   CSV_TOPICS_EXISTING_USERS = ENV['CSV_TOPICS'] || '/var/www/discourse/tmp/topics_existing_users.csv'
+  CSV_SSO = ENV['CSV_SSO'] || '/Users/constanza/Work/migrations/landtrust/csv/sso_records_landtrust.csv'
   IMPORT_PREFIX = ENV['IMPORT_PREFIX'] || '2022-08-11'
   IMPORT_USER_ID_PREFIX = 'csv-user-import-' + IMPORT_PREFIX + '-'
   IMPORT_CATEGORY_ID_PREFIX = 'csv-category-import-' + IMPORT_PREFIX + '-'
@@ -23,10 +25,11 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def initialize
     super
 
-    @imported_users = load_csv(CSV_FILE_PATH)
+    @imported_users = load_csv(CSV_USERS)
     @imported_emails = load_csv(CSV_EMAILS)
-    @imported_custom_fields = load_csv(CSV_CUSTOM_FIELDS)
-    @imported_custom_fields_names = @imported_custom_fields.headers.drop(1)
+    @imported_sso = load_csv(CSV_SSO)
+    @imported_custom_fields = load_csv(CSV_CUSTOM_FIELDS) if IMPORT_CUSTOM_FIELDS
+    @imported_custom_fields_names = @imported_custom_fields.headers.drop(1) if IMPORT_CUSTOM_FIELDS
     @imported_categories = load_csv(CSV_CATEGORIES)
     @imported_topics = load_csv(CSV_TOPICS)
     @imported_topics_existing_users = load_csv(CSV_TOPICS_EXISTING_USERS)
@@ -36,9 +39,10 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def execute
     puts "", "Importing from CSV file..."
     import_users
+    import_sso_records
     import_categories
-    import_topics
-    import_topics_existing_users
+    # import_topics
+    # import_topics_existing_users
 
     puts "", "Done"
   end
@@ -49,11 +53,11 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       return nil
     end
 
-    CSV.parse(File.read(path, encoding: 'bom|utf-8'), headers: true)
+    CSV.parse(File.read(path, encoding: 'bom|utf-8'), headers: true, col_sep: ";")
   end
 
   def username_for(name)
-    result = name.downcase.gsub(/[^a-z0-9\-\_]/, '')
+    result = name.downcase.gsub(/[^a-z0-9\-\_ ]/, '')
     if result.blank?
       result = Digest::SHA1.hexdigest(name)[0...10]
     end
@@ -88,26 +92,53 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def import_users
     puts '', "Importing users"
 
+    limit = 200
+
+    counter = 0
     users = []
     @imported_users.each do |u|
+      if counter == limit
+        break
+      end
       email = get_email(u['id'])
-      custom_fields = get_custom_fields(u['id'])
+      custom_fields = IMPORT_CUSTOM_FIELDS ? get_custom_fields(u['id']) : {}
       u['email'] = email
       u['custom_fields'] = custom_fields
-      u['id'] = IMPORT_USER_ID_PREFIX + u['id']
+      user_id = u['id'].present? ? u['id'] : counter.to_s
+      u['id'] = IMPORT_USER_ID_PREFIX + user_id 
       users << u
+      counter += 1
     end
     users.uniq!
 
     create_users(users) do |u|
       {
         id: u['id'],
-        username: u['username'],
+        username: username_for(u['name']),
         email: u['email'],
         created_at: u['created_at'],
+        name: u['name'],
         custom_fields: u['custom_fields'],
       }
     end
+  end
+
+  def import_sso_records
+    puts '', "Importing sso records"
+    limit = 100
+
+    counter = 0
+
+    @imported_sso.each do |s|
+      if counter == limit
+        break
+      end
+      user_id = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + s['user_id'])
+      email = get_email(s['user_id'])
+      SingleSignOnRecord.create!(user_id: user_id, external_id: s['external_id'], external_email: email, last_payload: '')
+      counter += 1
+    end
+
   end
 
   def import_categories
@@ -115,7 +146,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
 
     categories = []
     @imported_categories.each do |c|
-      c['user_id'] = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + c['user_id']) || Discourse::SYSTEM_USER_ID
+      c['user_id'] = UserEmail.where(email: c['email']).pluck(:user_id) || Discourse::SYSTEM_USER_ID
       c['id'] = IMPORT_CATEGORY_ID_PREFIX + c['id']
       categories << c
     end
@@ -136,9 +167,15 @@ class ImportScripts::CsvImporter < ImportScripts::Base
 
     topics = []
     @imported_topics.each do |t|
-      t['user_id'] = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + t['user_id']) || Discourse::SYSTEM_USER_ID
+      if t['type'] == 'Post'
+        next
+      end
+      user_id = UserEmail.where(email: t['email']).pluck(:user_id) || Discourse::SYSTEM_USER_ID
+      t['user_id'] = user_id || Discourse::SYSTEM_USER_ID
       t['category_id'] = category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + t['category_id'])
       t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
+      t['topic_id'] = 
+      t['reply_to_post_number']
       topics << t
     end
 
@@ -146,9 +183,8 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       {
         id: t['id'],
         user_id: t['user_id'],
-        title: t['title'],
-        category: t['category_id'],
-        raw: t['raw']
+        raw: t['raw'],
+        topic_id: t
       }
     end
   end
@@ -172,6 +208,33 @@ class ImportScripts::CsvImporter < ImportScripts::Base
         raw: t['raw']
       }
     end
+  end
+end
+
+def import_posts
+  # Work In Progress
+
+  puts '', "Importing posts"
+
+  topics = []
+  @imported_topics.each do |t|
+    if t['type'] == 'Discussion'
+      next
+    end
+    t['user_id'] = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + t['user_id']) || Discourse::SYSTEM_USER_ID
+    t['category_id'] = category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + t['category_id'])
+    t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
+    topics << t
+  end
+
+  create_posts(topics) do |t|
+    {
+      id: t['id'],
+      user_id: t['user_id'],
+      title: t['title'],
+      category: t['category_id'],
+      raw: t['raw']
+    }
   end
 end
 
