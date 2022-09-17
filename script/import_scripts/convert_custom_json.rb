@@ -2,6 +2,8 @@
 
 require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 
+require 'htmlentities'
+
 # Edit the constants and initialize method for your import data.
 
 class ImportScripts::JsonGeneric < ImportScripts::Base
@@ -9,23 +11,31 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   JSON_USERS_FILE_PATH = ENV['JSON_USERS_FILE'] || 'script/import_scripts/support/sample.json'
   JSON_CATEGORIES_FILE_PATH = ENV['JSON_CATEGORIES_FILE'] || 'script/import_scripts/support/category.json'
   JSON_SUBCATEGORIES_FILE_PATH = ENV['JSON_SUBCATEGORIES_FILE'] || 'script/import_scripts/support/Boards.json'
+  JSON_MESSAGES_FILE_PATH = ENV['JSON_MESSAGES_FILE'] || 'script/import_scripts/support/messages.json'
   BATCH_SIZE ||= 1000
 
   def initialize
     super
 
+    puts "", "Reading in files"
     @imported_users_json = load_json(JSON_USERS_FILE_PATH)
     @imported_categories_json = load_json(JSON_CATEGORIES_FILE_PATH)
     @imported_subcategories_json = load_json(JSON_SUBCATEGORIES_FILE_PATH)
+    @imported_messages_json = load_json(JSON_MESSAGES_FILE_PATH)
+
+    @htmlentities = HTMLEntities.new
   end
 
   def execute
-    puts "", "Importing from JSON file..."
+    puts "", "Importing"
 
     import_groups
     import_users
     # "categories" and "boards" map to first and second level categories in Discourse respectively
     import_categories
+    import_topics
+    import_posts
+
     puts "", "Done"
   end
 
@@ -168,6 +178,55 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         description: category['description'],
         parent_category_id: parent_category_id,
       }
+    end
+  end
+
+  def post_from_message(inner_message, topic_id)
+    p = {}
+
+    id = inner_message['id']
+    user_id = user_id_from_imported_user_id(inner_message['author']['id'])
+
+    return nil unless user_id
+
+    p.merge!({
+      id: id,
+      user_id: user_id,
+      title: @htmlentities.decode(inner_message['subject']).strip[0...255],
+      category: category_id_from_imported_category_id(inner_message['board']['id']),
+      raw: inner_message['body'],
+      created_at: inner_message['post_time'],
+      views: inner_message['metrics']['views'],
+      import_mode: true,
+    })
+
+    p.merge! topic_id: topic_id if topic_id
+
+    p
+  end
+
+  def import_topics
+    puts '', "Importing topics"
+
+    topics = @imported_messages_json.select { |m| m['Message']['parent'].nil? }.map do |message|
+      post_from_message(message['Message'], nil)
+    end
+
+    create_posts(topics, total: topics.count) do |topic|
+      topic
+    end
+  end
+
+  def import_posts
+    puts '', "Importing posts"
+
+    posts = @imported_messages_json.reject { |m| m['Message']['parent'].nil? }.map do |message|
+      topic_id = topic_lookup_from_imported_post_id(inner_message['parent']['id'])
+      post_from_message(message['Message'], topic_id)
+    end
+
+    create_posts(posts, total: posts.count) do |post|
+      post
     end
   end
 end
