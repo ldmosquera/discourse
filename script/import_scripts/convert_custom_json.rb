@@ -3,6 +3,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 
 require 'htmlentities'
+require 'nokogiri'
 
 # Edit the constants and initialize method for your import data.
 
@@ -28,6 +29,8 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
   def execute
     puts "", "Importing"
+
+    SiteSetting.max_category_nesting = 3
 
     import_groups
     import_users
@@ -145,28 +148,45 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       end
     end
 
-    @imported_subcategories_json.each do |outer|
-      parent_category_name = outer['Category']
-      parent_category = @imported_categories_json.find { |c| c['id'] == parent_category_name }
+    root_category_names = categories.map { |c| c['id'] }
+
+    # move leaf categories to the end to ensure their parents will be created before them
+    sorted_subcats =
+      @imported_subcategories_json.
+      map { |sc| sc['boards'] }.flatten(1).
+      sort_by { |board| root_category_names.include? board['parent_category']['id'] ? 0 : 1 }
+
+    sorted_subcats.each do |board|
+      parent_category_name =
+        case board['parent_category']['id']
+          #HACK: pave over some inconsistencies
+          when 'Schulungen_Events' then 'schulungen'
+          when 'Praxisteam' then 'Praxisteams'
+          else
+            board['parent_category']['id']
+        end
+
+      parent_category = categories.find { |c| c[:id] == parent_category_name }
+
       raise "ERROR: non existing root category #{parent_category_name}" unless parent_category
 
-      outer['boards'].each do |board|
-        categories << {
-          id: board['id'],
-          name: board['title'],
+      categories << {
+        id: board['id'],
+        name: board['title'],
 
-          #FIXME: this field probably needs massaging of some kind
-          position: board['position'],
+        #FIXME: this field probably needs massaging of some kind
+        position: board['position'],
 
-          description: board['description'],
-          parent_category_id: parent_category['id'],
-        }
-      end
+        description: board['description'],
+        parent_category_id: parent_category[:id],
+      }
     end
 
     categories.uniq!
 
     create_categories(categories) do |category|
+      category = HashWithIndifferentAccess.new(category)
+
       if category['parent_category_id'].present?
         parent_category_id = category_id_from_imported_category_id(category['parent_category_id'])
       end
@@ -175,7 +195,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         id: category['id'],
         name: category['name'],
         position: category['position'],
-        description: category['description'],
+        description: strip_html(category['description']),
         parent_category_id: parent_category_id,
       }
     end
@@ -229,6 +249,11 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       post
     end
   end
+
+  def strip_html(html)
+    Nokogiri::HTML(html).text
+  end
+
 end
 
 if __FILE__ == $0
