@@ -37,7 +37,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     # "categories" and "boards" map to first and second level categories in Discourse respectively
     import_categories
     import_topics
-    import_posts
+    import_replies
 
     puts "", "Done"
   end
@@ -201,7 +201,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     end
   end
 
-  def post_from_message(inner_message, topic_id)
+  def post_from_message(inner_message)
     p = {}
 
     id = inner_message['id']
@@ -212,7 +212,6 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     p.merge!({
       id: id,
       user_id: user_id,
-      title: @htmlentities.decode(inner_message['subject']).strip[0...255],
       category: category_id_from_imported_category_id(inner_message['board']['id']),
       raw: inner_message['body'],
       created_at: inner_message['post_time'],
@@ -220,7 +219,15 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       import_mode: true,
     })
 
-    p.merge! topic_id: topic_id if topic_id
+    if first_post_id = inner_message.dig('parent', 'id')
+      topic_id = topic_lookup_from_imported_post_id(first_post_id)&.[](:topic_id)
+
+      # raise "ERROR: topic_id not found for first post #{first_post_id} for post #{id}" unless topic_id
+
+      p.merge! topic_id: topic_id
+    else
+      p.merge! title: @htmlentities.decode(inner_message['subject']).strip[0...255]
+    end
 
     p
   end
@@ -228,22 +235,23 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   def import_topics
     puts '', "Importing topics"
 
-    topics = @imported_messages_json.select { |m| m['Message']['parent'].nil? }.map do |message|
-      post_from_message(message['Message'], nil)
-    end
+    topics = @imported_messages_json.
+      select { |m| m['Message']['parent'].nil? }.
+      map { |message| post_from_message(message['Message']) }
 
     create_posts(topics, total: topics.count) do |topic|
       topic
     end
   end
 
-  def import_posts
-    puts '', "Importing posts"
+  def import_replies
+    puts '', "Importing replies"
 
-    posts = @imported_messages_json.reject { |m| m['Message']['parent'].nil? }.map do |message|
-      topic_id = topic_lookup_from_imported_post_id(inner_message['parent']['id'])
-      post_from_message(message['Message'], topic_id)
-    end
+    posts = @imported_messages_json.
+      reject { |m| m['Message']['parent'].nil? }.
+      sort_by { |m| [ m['Message']['parent']['id'], m['Message']['depth'] ] }.
+      map { |message| post_from_message(message['Message']) }
+
 
     create_posts(posts, total: posts.count) do |post|
       post
