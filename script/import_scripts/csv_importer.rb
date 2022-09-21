@@ -9,7 +9,6 @@ require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 class ImportScripts::CsvImporter < ImportScripts::Base
 
   CSV_USERS                 = ENV['CSV_USER_FILE']     || '/tmp/csv_import/users_landtrust.csv'
-  CSV_CUSTOM_FIELDS         = ENV['CSV_CUSTOM_FIELDS'] || '/tmp/csv_import/custom_fields.csv'
   CSV_EMAILS                = ENV['CSV_EMAILS']        || '/tmp/csv_import/emails_landtrust.csv'
   CSV_CATEGORIES            = ENV['CSV_CATEGORIES']    || '/tmp/csv_import/categories_landtrust.csv'
   CSV_TOPICS                = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_new_users.csv'
@@ -22,6 +21,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   IMPORT_TOPIC_ID_PREFIX          = 'csv-topic-import-' + IMPORT_PREFIX + '-'
   IMPORT_TOPIC_ID_EXISITNG_PREFIX = 'csv-topic_existing-import-' + IMPORT_PREFIX + '-'
 
+  CSV_CUSTOM_FIELDS         = ENV['CSV_CUSTOM_FIELDS'] || '/shared/tmp/coco/custom_fields.csv'
   IMPORT_CUSTOM_FIELDS      = !! ENV['CSV_USER_FILE']
 
   def initialize
@@ -99,9 +99,9 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     users = []
     @imported_users.each do |u|
       email = get_email(u['id'])
-      custom_fields = IMPORT_CUSTOM_FIELDS ? get_custom_fields(u['id']) : {}
+      #custom_fields = IMPORT_CUSTOM_FIELDS ? get_custom_fields(u['id']) : {}
       u['email'] = email
-      u['custom_fields'] = custom_fields
+      #u['custom_fields'] = custom_fields
       user_id = u['id'].present? ? u['id'] : counter.to_s
       u['id'] = IMPORT_USER_ID_PREFIX + user_id 
       users << u
@@ -116,7 +116,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
         email: u['email'],
         created_at: u['created_at'],
         name: u['name'],
-        custom_fields: u['custom_fields'],
+        #custom_fields: u['custom_fields'],
       }
     end
   end
