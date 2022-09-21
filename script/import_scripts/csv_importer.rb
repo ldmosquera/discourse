@@ -94,14 +94,9 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def import_users
     puts '', "Importing users"
 
-    limit = 200
-
     counter = 0
     users = []
     @imported_users.each do |u|
-      if counter == limit
-        break
-      end
       email = get_email(u['id'])
       custom_fields = IMPORT_CUSTOM_FIELDS ? get_custom_fields(u['id']) : {}
       u['email'] = email
@@ -127,18 +122,12 @@ class ImportScripts::CsvImporter < ImportScripts::Base
 
   def import_sso_records
     puts '', "Importing sso records"
-    limit = 100
 
-    counter = 0
 
     @imported_sso.each do |s|
-      if counter == limit
-        break
-      end
       user_id = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + s['user_id'])
       email = get_email(s['user_id'])
       SingleSignOnRecord.create!(user_id: user_id, external_id: s['external_id'], external_email: email, last_payload: '')
-      counter += 1
     end
 
   end
