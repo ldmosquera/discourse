@@ -24,6 +24,11 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     @imported_subcategories_json = load_json(JSON_SUBCATEGORIES_FILE_PATH)
     @imported_messages_json = load_json(JSON_MESSAGES_FILE_PATH)
 
+    @missing_user_id = User.create!(
+      username: 'missing_user',
+      email: 'missing_user@invalid.email',
+    ).id
+
     @htmlentities = HTMLEntities.new
   end
 
@@ -36,6 +41,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     import_users
     # "categories" and "boards" map to first and second level categories in Discourse respectively
     import_categories
+
     import_topics
     import_replies
 
@@ -148,9 +154,8 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       end
     end
 
-    root_category_names = categories.map { |c| c['id'] }
-
     # move leaf categories to the end to ensure their parents will be created before them
+    root_category_names = categories.map { |c| c['id'] }
     sorted_subcats =
       @imported_subcategories_json.
       map { |sc| sc['boards'] }.flatten(1).
@@ -201,32 +206,34 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     end
   end
 
-  def post_from_message(inner_message)
+  def post_from_message(inner_message, is_first_post:)
     p = {}
 
     id = inner_message['id']
     user_id = user_id_from_imported_user_id(inner_message['author']['id'])
 
-    return nil unless user_id
+    user_id ||= @missing_user_id
 
     p.merge!({
       id: id,
       user_id: user_id,
       category: category_id_from_imported_category_id(inner_message['board']['id']),
+      title: strip_html_entities(inner_message['subject'])[0...255],
       raw: inner_message['body'],
       created_at: inner_message['post_time'],
       views: inner_message['metrics']['views'],
       import_mode: true,
     })
 
-    if first_post_id = inner_message.dig('parent', 'id')
+    if ! is_first_post
+      first_post_id = inner_message.dig('topic', 'id')
       topic_id = topic_lookup_from_imported_post_id(first_post_id)&.[](:topic_id)
 
       # raise "ERROR: topic_id not found for first post #{first_post_id} for post #{id}" unless topic_id
+      STDERR.puts "ERROR: first post not found for post #{inner_message['id']}"
+      return nil unless topic_id
 
       p.merge! topic_id: topic_id
-    else
-      p.merge! title: @htmlentities.decode(inner_message['subject']).strip[0...255]
     end
 
     p
@@ -236,8 +243,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     puts '', "Importing topics"
 
     topics = @imported_messages_json.
-      select { |m| m['Message']['parent'].nil? }.
-      map { |message| post_from_message(message['Message']) }
+      select  { |m| m['Message']['depth'] == 0 }.
+      sort_by { |m| m['Message']['id'].to_i } .
+      map     { |m| post_from_message(m['Message'], is_first_post: true) }.
+      compact
 
     create_posts(topics, total: topics.count) do |topic|
       topic
@@ -248,10 +257,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     puts '', "Importing replies"
 
     posts = @imported_messages_json.
-      reject { |m| m['Message']['parent'].nil? }.
-      sort_by { |m| [ m['Message']['parent']['id'], m['Message']['depth'] ] }.
-      map { |message| post_from_message(message['Message']) }
-
+      reject  { |m| m['Message']['depth'] == 0 }.
+      sort_by { |m| m['Message']['id'].to_i } .
+      map     { |m| post_from_message(m['Message'], is_first_post: false) }.
+      compact
 
     create_posts(posts, total: posts.count) do |post|
       post
@@ -260,6 +269,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
   def strip_html(html)
     Nokogiri::HTML(html).text
+  end
+
+  def strip_html_entities(text)
+    @htmlentities.decode(text).strip
   end
 
 end
