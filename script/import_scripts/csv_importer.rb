@@ -8,12 +8,12 @@ require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 
 class ImportScripts::CsvImporter < ImportScripts::Base
 
-  CSV_USERS                 = ENV['CSV_USER_FILE']     || '/tmp/csv_import/users_landtrust.csv'
-  CSV_EMAILS                = ENV['CSV_EMAILS']        || '/tmp/csv_import/emails_landtrust.csv'
-  CSV_CATEGORIES            = ENV['CSV_CATEGORIES']    || '/tmp/csv_import/categories_landtrust.csv'
-  CSV_TOPICS                = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_new_users.csv'
-  #CSV_TOPICS_EXISTING_USERS = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_existing_users.csv'
-  CSV_SSO                   = ENV['CSV_SSO']           || '/tmp/csv_import/sso_records_landtrust.csv'
+  CSV_USERS                 = ENV['CSV_USER_FILE']     || '/shared/tmp/coco/users_landtrust.csv'
+  CSV_EMAILS                = ENV['CSV_EMAILS']        || '/shared/tmp/coco/emails_landtrust.csv'
+  CSV_CATEGORIES            = ENV['CSV_CATEGORIES']    || '/shared/tmp/coco/categories_landtrust.csv'
+  CSV_TOPICS                = ENV['CSV_TOPICS']        || '/shared/tmp/coco/posts_landtrust.csv'
+  #CSV_TOPICS_EXISTING_USERS = ENV['CSV_TOPICS']        || '/shared/tmp/coco/topics_existing_users.csv'
+  CSV_SSO                   = ENV['CSV_SSO']           || '/shared/tmp/coco/sso_records_landtrust.csv'
 
   IMPORT_PREFIX                   = ENV['IMPORT_PREFIX'] || '2022-08-11'
   IMPORT_USER_ID_PREFIX           = 'csv-user-import-' + IMPORT_PREFIX + '-'
