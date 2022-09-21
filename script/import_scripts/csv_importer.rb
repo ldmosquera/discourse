@@ -172,7 +172,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def import_topics
     puts '', "Importing topics"
 
-    topics = []
+    first_posts = []
     @imported_topics.each do |t|
       if t['type'] == 'Post'
         next
@@ -183,15 +183,15 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
       t['topic_id'] = 
       t['reply_to_post_number']
-      topics << t
+      first_posts << t
     end
 
-    create_posts(topics) do |t|
+    create_posts(first_posts) do |p|
       {
-        id: t['id'],
-        user_id: t['user_id'],
-        raw: t['raw'],
-        topic_id: t
+        id: p['id'],
+        user_id: p['user_id'],
+        raw: p['raw'],
+        topic_id: p
       }
     end
   end
