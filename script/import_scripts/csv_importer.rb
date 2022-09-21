@@ -123,11 +123,26 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def import_sso_records
     puts '', "Importing sso records"
 
-
     @imported_sso.each do |s|
-      user_id = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + s['user_id'])
-      email = get_email(s['user_id'])
-      SingleSignOnRecord.create!(user_id: user_id, external_id: s['external_id'], external_email: email, last_payload: '')
+
+      user_id = s['user_id']
+      external_id = s['external_id']
+
+      user_id = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + user_id)
+      email = get_email(user_id)
+
+      raise "ERROR: imported user_id not found for SSO record with external_id #{external_id}" unless user_id
+
+      UserAssociatedAccount.create!(
+        provider_name: "oidc",
+        provider_uid: external_id,
+
+        user_id: user_id,
+        info: { 'email' => email, 'email_verified' => true },
+      )
+
+      print '.'
+
     end
 
   end
