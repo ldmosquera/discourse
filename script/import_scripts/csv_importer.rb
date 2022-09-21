@@ -8,19 +8,21 @@ require File.expand_path(File.dirname(__FILE__) + "/base.rb")
 
 class ImportScripts::CsvImporter < ImportScripts::Base
 
-  CSV_USERS = ENV['CSV_USER_FILE'] || '/Users/constanza/Work/migrations/landtrust/csv/users_landtrust.csv'
-  IMPORT_CUSTOM_FIELDS = ENV['CSV_USER_FILE'] || false
-  CSV_CUSTOM_FIELDS = ENV['CSV_CUSTOM_FIELDS'] || '/var/www/discourse/tmp/custom_fields.csv'
-  CSV_EMAILS = ENV['CSV_EMAILS'] || '/Users/constanza/Work/migrations/landtrust/csv/emails_landtrust.csv'
-  CSV_CATEGORIES = ENV['CSV_CATEGORIES'] || '/Users/constanza/Work/migrations/landtrust/csv/categories_landtrust.csv'
-  CSV_TOPICS = ENV['CSV_TOPICS'] || '/var/www/discourse/tmp/topics_new_users.csv'
-  CSV_TOPICS_EXISTING_USERS = ENV['CSV_TOPICS'] || '/var/www/discourse/tmp/topics_existing_users.csv'
-  CSV_SSO = ENV['CSV_SSO'] || '/Users/constanza/Work/migrations/landtrust/csv/sso_records_landtrust.csv'
-  IMPORT_PREFIX = ENV['IMPORT_PREFIX'] || '2022-08-11'
-  IMPORT_USER_ID_PREFIX = 'csv-user-import-' + IMPORT_PREFIX + '-'
-  IMPORT_CATEGORY_ID_PREFIX = 'csv-category-import-' + IMPORT_PREFIX + '-'
-  IMPORT_TOPIC_ID_PREFIX = 'csv-topic-import-' + IMPORT_PREFIX + '-'
+  CSV_USERS                 = ENV['CSV_USER_FILE']     || '/tmp/csv_import/users_landtrust.csv'
+  CSV_CUSTOM_FIELDS         = ENV['CSV_CUSTOM_FIELDS'] || '/tmp/csv_import/custom_fields.csv'
+  CSV_EMAILS                = ENV['CSV_EMAILS']        || '/tmp/csv_import/emails_landtrust.csv'
+  CSV_CATEGORIES            = ENV['CSV_CATEGORIES']    || '/tmp/csv_import/categories_landtrust.csv'
+  CSV_TOPICS                = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_new_users.csv'
+  CSV_TOPICS_EXISTING_USERS = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_existing_users.csv'
+  CSV_SSO                   = ENV['CSV_SSO']           || '/tmp/csv_import/sso_records_landtrust.csv'
+
+  IMPORT_PREFIX                   = ENV['IMPORT_PREFIX'] || '2022-08-11'
+  IMPORT_USER_ID_PREFIX           = 'csv-user-import-' + IMPORT_PREFIX + '-'
+  IMPORT_CATEGORY_ID_PREFIX       = 'csv-category-import-' + IMPORT_PREFIX + '-'
+  IMPORT_TOPIC_ID_PREFIX          = 'csv-topic-import-' + IMPORT_PREFIX + '-'
   IMPORT_TOPIC_ID_EXISITNG_PREFIX = 'csv-topic_existing-import-' + IMPORT_PREFIX + '-'
+
+  IMPORT_CUSTOM_FIELDS      = !! ENV['CSV_USER_FILE']
 
   def initialize
     super
