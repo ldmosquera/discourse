@@ -36,6 +36,22 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     @imported_topics = load_csv(CSV_TOPICS)
     #@imported_topics_existing_users = load_csv(CSV_TOPICS_EXISTING_USERS)
     @skip_updates = true
+
+    @anonymized_user_id = User.create!(
+      name: 'Anonymous User',
+      username: 'anonymous',
+      email: 'anonymous@invalid.email',
+    ).id
+  end
+
+  def user_id_for(original_user_id, fallback: nil)
+    user_id = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + original_user_id.to_s)
+    user_id || fallback
+  end
+
+  def user_id_by_email(email, fallback: nil)
+    user_id = UserEmail.where(email: email).first&.user_id
+    user_id || fallback
   end
 
   def execute
@@ -129,18 +145,19 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       user_id = s['user_id']
       external_id = s['external_id']
 
-      user_id = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + user_id)
-      email = get_email(user_id)
+      if user_id = user_id_for(user_id)
+        email = get_email(user_id)
 
-      raise "ERROR: imported user_id not found for SSO record with external_id #{external_id}" unless user_id
+        UserAssociatedAccount.create!(
+          provider_name: "oidc",
+          provider_uid: external_id,
 
-      UserAssociatedAccount.create!(
-        provider_name: "oidc",
-        provider_uid: external_id,
-
-        user_id: user_id,
-        info: { 'email' => email, 'email_verified' => true },
-      )
+          user_id: user_id,
+          info: { 'email' => email, 'email_verified' => true },
+        )
+      else
+        STDERR.puts "ERROR: imported user_id not found for SSO record with external_id #{external_id}"
+      end
 
       print '.'
 
@@ -153,7 +170,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
 
     categories = []
     @imported_categories.each do |c|
-      c['user_id'] = UserEmail.where(email: c['email']).pluck(:user_id) || Discourse::SYSTEM_USER_ID
+      c['user_id'] = user_id_by_email(c['email'], fallback: Discourse::SYSTEM_USER_ID)
       c['id'] = IMPORT_CATEGORY_ID_PREFIX + c['id']
       categories << c
     end
@@ -177,12 +194,9 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       if t['type'] == 'Post'
         next
       end
-      user_id = UserEmail.where(email: t['email']).pluck(:user_id) || Discourse::SYSTEM_USER_ID
-      t['user_id'] = user_id || Discourse::SYSTEM_USER_ID
+      t['user_id'] = user_id_by_email(t['email'], fallback: @anonymized_user_id)
       t['category_id'] = category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + t['category_id'])
       t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
-      t['topic_id'] = 
-      t['reply_to_post_number']
       first_posts << t
     end
 
@@ -190,59 +204,42 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       {
         id: p['id'],
         user_id: p['user_id'],
+        title: p['title'] || 'ZZZ no title',
+        category: p['category_id'],
         raw: p['raw'],
-        topic_id: p
       }
     end
   end
 
-  def import_topics_existing_users
-    # Import topics for users that already existed in the DB, not imported during this migration
-    puts '', "Importing topics for existing users"
+  def import_posts
+    # Work In Progress
+
+    puts '', "Importing posts"
 
     topics = []
-    @imported_topics_existing_users.each do |t|
-      t['id'] = IMPORT_TOPIC_ID_EXISITNG_PREFIX + t['id']
+    @imported_topics.each do |t|
+      if t['type'] == 'Discussion'
+        next
+      end
+      t['user_id'] = user_id_by_email(t['email'], fallback: @anonymized_user_id)
+      t['category_id'] = category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + t['category_id'])
+      t['topic_id'] = topic_lookup_from_imported_post_id(t['reply'])&.[](:topic_id)
+      t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
       topics << t
     end
 
     create_posts(topics) do |t|
       {
         id: t['id'],
-        user_id: t['user_id'], # This is a Discourse user ID
-        title: t['title'],
-        category: t['category_id'], # This is a Discourse category ID
-        raw: t['raw']
+        user_id: t['user_id'],
+        title: t['title'] || 'no title',
+        category: t['category_id'],
+        raw: t['raw'],
+        topic_id: t['topic_id'],
       }
     end
   end
-end
 
-def import_posts
-  # Work In Progress
-
-  puts '', "Importing posts"
-
-  topics = []
-  @imported_topics.each do |t|
-    if t['type'] == 'Discussion'
-      next
-    end
-    t['user_id'] = user_id_from_imported_user_id(IMPORT_USER_ID_PREFIX + t['user_id']) || Discourse::SYSTEM_USER_ID
-    t['category_id'] = category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + t['category_id'])
-    t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
-    topics << t
-  end
-
-  create_posts(topics) do |t|
-    {
-      id: t['id'],
-      user_id: t['user_id'],
-      title: t['title'],
-      category: t['category_id'],
-      raw: t['raw']
-    }
-  end
 end
 
 if __FILE__ == $0
