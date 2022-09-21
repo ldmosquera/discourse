@@ -13,7 +13,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   CSV_EMAILS                = ENV['CSV_EMAILS']        || '/tmp/csv_import/emails_landtrust.csv'
   CSV_CATEGORIES            = ENV['CSV_CATEGORIES']    || '/tmp/csv_import/categories_landtrust.csv'
   CSV_TOPICS                = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_new_users.csv'
-  CSV_TOPICS_EXISTING_USERS = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_existing_users.csv'
+  #CSV_TOPICS_EXISTING_USERS = ENV['CSV_TOPICS']        || '/tmp/csv_import/topics_existing_users.csv'
   CSV_SSO                   = ENV['CSV_SSO']           || '/tmp/csv_import/sso_records_landtrust.csv'
 
   IMPORT_PREFIX                   = ENV['IMPORT_PREFIX'] || '2022-08-11'
@@ -34,7 +34,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     @imported_custom_fields_names = @imported_custom_fields.headers.drop(1) if IMPORT_CUSTOM_FIELDS
     @imported_categories = load_csv(CSV_CATEGORIES)
     @imported_topics = load_csv(CSV_TOPICS)
-    @imported_topics_existing_users = load_csv(CSV_TOPICS_EXISTING_USERS)
+    #@imported_topics_existing_users = load_csv(CSV_TOPICS_EXISTING_USERS)
     @skip_updates = true
   end
 
@@ -43,8 +43,9 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     import_users
     import_sso_records
     import_categories
-    # import_topics
-    # import_topics_existing_users
+    import_topics
+    #import_topics_existing_users
+    import_posts
 
     puts "", "Done"
   end
