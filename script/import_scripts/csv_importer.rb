@@ -42,6 +42,8 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       username: 'anonymous',
       email: 'anonymous@invalid.email',
     ).id
+
+    @email_by_user_id = Hash[ * @imported_emails.map{ |e| [ e['user_id'], e['email'] ] }.flatten ]
   end
 
   def user_id_for(original_user_id, fallback: nil)
@@ -85,14 +87,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   end
 
   def get_email(id)
-    email = nil
-    @imported_emails.each do |e|
-      if e["user_id"] == id
-        email = e["email"]
-      end
-    end
-
-    email
+    @email_by_user_id[id]
   end
 
   def get_custom_fields(id)
@@ -114,9 +109,8 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     counter = 0
     users = []
     @imported_users.each do |u|
-      email = get_email(u['id'])
       #custom_fields = IMPORT_CUSTOM_FIELDS ? get_custom_fields(u['id']) : {}
-      u['email'] = email
+      u['email'] = get_email(u['id'])
       #u['custom_fields'] = custom_fields
       user_id = u['id'].present? ? u['id'] : counter.to_s
       u['id'] = IMPORT_USER_ID_PREFIX + user_id 
