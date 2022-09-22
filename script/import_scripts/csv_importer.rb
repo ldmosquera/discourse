@@ -204,6 +204,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       category_id: category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + s['category_id']),
       title: s['title'] || 'ZZZ no title',
       raw: s['raw'],
+      created_at: Time.parse(s['PostedOn']),
       topic_id: topic_id,
     }
   end
