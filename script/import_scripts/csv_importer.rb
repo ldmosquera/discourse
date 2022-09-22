@@ -113,8 +113,14 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       u['email'] = get_email(u['id'])
       #u['custom_fields'] = custom_fields
       user_id = u['id'].present? ? u['id'] : counter.to_s
-      u['id'] = IMPORT_USER_ID_PREFIX + user_id 
-      users << u
+      u['id'] = IMPORT_USER_ID_PREFIX + user_id
+
+      if u['email']
+        users << u
+      else
+        STDERR.puts "ERROR: email not found for user_id #{u['id']}"
+      end
+
       counter += 1
     end
     users.uniq!
