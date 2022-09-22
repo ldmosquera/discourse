@@ -74,7 +74,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       return nil
     end
 
-    CSV.parse(File.read(path, encoding: 'bom|utf-8'), headers: true, col_sep: ";")
+    CSV.parse(File.read(path, encoding: 'bom|utf-8'), headers: true)
   end
 
   def username_for(name)
