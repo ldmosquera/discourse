@@ -204,6 +204,13 @@ class ImportScripts::CsvImporter < ImportScripts::Base
         end
       end
 
+    reply_to_post_number =
+      if ! is_first_post
+        in_reply_to = s['reply']
+        record = post_id_from_imported_post_id(IMPORT_TOPIC_ID_PREFIX + in_reply_to)
+        Post.find(record[:post_id]).post_number if record
+      end
+
     {
       id: IMPORT_TOPIC_ID_PREFIX + s['id'],
       user_id: user_id_by_email(s['email'], fallback: @anonymized_user_id),
@@ -212,6 +219,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       raw: s['raw'],
       created_at: Time.parse(s['PostedOn']),
       topic_id: topic_id,
+      reply_to_post_number: reply_to_post_number,
     }
   end
 
@@ -219,10 +227,9 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     puts '', "Importing topics"
 
     first_posts = @imported_topics.
-      select { |t| t['type'] == 'Discussion' }.
-      map    { |t| post_from_source(t, is_first_post: true) }.
+      select  { |t| t['type'] == 'Discussion' }.
+      map     { |t| post_from_source(t, is_first_post: true) }.
       compact
-
 
     create_posts(first_posts) { |p| p }
   end
@@ -231,8 +238,8 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     puts '', "Importing posts"
 
     posts = @imported_topics.
-      select { |t| t['type'] == 'Post' }.
-      map    { |t| post_from_source(t, is_first_post: false) }.
+      select  { |t| t['type'] == 'Post' }.
+      map     { |t| post_from_source(t, is_first_post: false) }.
       compact
 
     create_posts(posts) { |p| p }
