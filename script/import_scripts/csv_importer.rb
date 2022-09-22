@@ -180,18 +180,21 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     end
   end
 
-  def post_from_source(source, is_first_post = true)
+  def post_from_source(source, is_first_post: false)
     s = source
 
     topic_id =
       if ! is_first_post
-        record = topic_lookup_from_imported_post_id(s['reply'])
+        posted_in = s['PostedIn']
+        record = topic_lookup_from_imported_post_id(IMPORT_TOPIC_ID_PREFIX + posted_in)
 
         if record
           record[:topic_id]
         else
-          STDERR.puts "ERROR: imported topic_id not found for post #{s['reply']}"
-          nil
+          STDERR.puts "ERROR: imported topic_id not found for post #{posted_in}"
+
+          # signal to avoid creating the record, otherwise this reply would be created as a topic instead
+          return nil
         end
       end
 
@@ -208,10 +211,10 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def import_topics
     puts '', "Importing topics"
 
-    first_posts = @imported_topics.map do |t|
-      next unless t['type'] == 'Discussion'
-      post_from_source(t, true)
-    end.compact
+    first_posts = @imported_topics.
+      select { |t| t['type'] == 'Discussion' }.
+      map    { |t| post_from_source(t, is_first_post: true) }.
+      compact
 
 
     create_posts(first_posts) { |p| p }
@@ -220,10 +223,10 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def import_posts
     puts '', "Importing posts"
 
-    posts = @imported_topics.map do |t|
-      next unless t['type'] == 'Post'
-      post_from_source(t)
-    end.compact
+    posts = @imported_topics.
+      select { |t| t['type'] == 'Post' }.
+      map    { |t| post_from_source(t, is_first_post: false) }.
+      compact
 
     create_posts(posts) { |p| p }
   end
