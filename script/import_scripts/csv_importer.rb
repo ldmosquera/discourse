@@ -180,58 +180,52 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     end
   end
 
+  def post_from_source(source, is_first_post = true)
+    s = source
+
+    topic_id =
+      if ! is_first_post
+        record = topic_lookup_from_imported_post_id(s['reply'])
+
+        if record
+          record[:topic_id]
+        else
+          STDERR.puts "ERROR: imported topic_id not found for post #{s['reply']}"
+          nil
+        end
+      end
+
+    {
+      id: IMPORT_TOPIC_ID_PREFIX + s['id'],
+      user_id: user_id_by_email(s['email'], fallback: @anonymized_user_id),
+      category_id: category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + s['category_id']),
+      title: s['title'] || 'ZZZ no title',
+      raw: s['raw'],
+      topic_id: topic_id,
+    }
+  end
+
   def import_topics
     puts '', "Importing topics"
 
-    first_posts = []
-    @imported_topics.each do |t|
-      if t['type'] == 'Post'
-        next
-      end
-      t['user_id'] = user_id_by_email(t['email'], fallback: @anonymized_user_id)
-      t['category_id'] = category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + t['category_id'])
-      t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
-      first_posts << t
-    end
+    first_posts = @imported_topics.map do |t|
+      next unless t['type'] == 'Discussion'
+      post_from_source(t, true)
+    end.compact
 
-    create_posts(first_posts) do |p|
-      {
-        id: p['id'],
-        user_id: p['user_id'],
-        title: p['title'] || 'ZZZ no title',
-        category: p['category_id'],
-        raw: p['raw'],
-      }
-    end
+
+    create_posts(first_posts) { |p| p }
   end
 
   def import_posts
-    # Work In Progress
-
     puts '', "Importing posts"
 
-    topics = []
-    @imported_topics.each do |t|
-      if t['type'] == 'Discussion'
-        next
-      end
-      t['user_id'] = user_id_by_email(t['email'], fallback: @anonymized_user_id)
-      t['category_id'] = category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + t['category_id'])
-      t['topic_id'] = topic_lookup_from_imported_post_id(t['reply'])&.[](:topic_id)
-      t['id'] = IMPORT_TOPIC_ID_PREFIX + t['id']
-      topics << t
-    end
+    posts = @imported_topics.map do |t|
+      next unless t['type'] == 'Post'
+      post_from_source(t)
+    end.compact
 
-    create_posts(topics) do |t|
-      {
-        id: t['id'],
-        user_id: t['user_id'],
-        title: t['title'] || 'no title',
-        category: t['category_id'],
-        raw: t['raw'],
-        topic_id: t['topic_id'],
-      }
-    end
+    create_posts(posts) { |p| p }
   end
 
 end
