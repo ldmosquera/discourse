@@ -196,17 +196,12 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     end
   end
 
-  def post_from_source(source, is_first_post: false)
+  def post_from_source(source, is_first_post:)
     s = source
 
-    category_id = nil
-
-    if is_first_post
-      category_id = @mapped_category_ids[s['category_id'].to_s]
-
-      # skip topics pointing to a category not present in the categories file (ie. unwanted)
-      return nil unless category_id
-    end
+    category_id = @mapped_category_ids[s['new_posted_in'].to_s]
+    # skip topics pointing to a category not present in the categories file (ie. unwanted)
+    return nil unless category_id
 
     topic_id =
       if ! is_first_post
@@ -226,14 +221,15 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     reply_to_post_number =
       if ! is_first_post
         in_reply_to = s['reply']
-        record = post_id_from_imported_post_id(IMPORT_TOPIC_ID_PREFIX + in_reply_to)
-        Post.find(record[:post_id]).post_number if record
+        id = post_id_from_imported_post_id(IMPORT_TOPIC_ID_PREFIX + in_reply_to)
+
+        DB.query('select post_number from posts where id = ?', id).first&.post_number if id
       end
 
     {
       id: IMPORT_TOPIC_ID_PREFIX + s['id'],
       user_id: user_id_by_email(s['email'], fallback: @anonymized_user_id),
-      category_id: category_id,
+      category: category_id,
       title: s['title'] || 'ZZZ no title',
       raw: s['raw'],
       created_at: Time.parse(s['PostedOn']),
