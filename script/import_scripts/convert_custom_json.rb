@@ -87,6 +87,9 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   def import_users
     puts '', "Importing users"
 
+    # sort by user_id asc so that the last SSO record "wins out"
+    @imported_users_json.sort_by { |u| - u['id'] }
+
     users = []
     @imported_users_json.each do |user|
       u = {}
@@ -127,7 +130,11 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
             end
           end
           if u['external_id'].present?
-            SingleSignOnRecord.create!(user_id: user.id, external_id: u['external_id'], external_email: u['email'], last_payload: '')
+            begin
+              SingleSignOnRecord.create!(user_id: user.id, external_id: u['external_id'], external_email: u['email'], last_payload: '')
+            rescue Exception => ex
+              STDERR.puts "ERROR when creating SSO record for #{user.id}: #{ex}"
+            end
           end
         end
       }
