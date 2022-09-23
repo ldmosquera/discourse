@@ -43,7 +43,16 @@ class ImportScripts::CsvImporter < ImportScripts::Base
       email: 'anonymous@invalid.email',
     ).id
 
-    @email_by_user_id = Hash[ * @imported_emails.map{ |e| [ e['user_id'], e['email'] ] }.flatten ]
+    @email_by_user_id = Hash[ * @imported_emails.map { |e| [ e['user_id'], e['email'] ] }.flatten ]
+
+    @mapped_category_ids = Hash[ *
+      @imported_categories.map do |r|
+        [
+          r['id'].to_s,
+          r['existing_discourse_category_id'],
+        ]
+      end.flatten
+    ]
   end
 
   def user_id_for(original_user_id, fallback: nil)
@@ -189,6 +198,15 @@ class ImportScripts::CsvImporter < ImportScripts::Base
   def post_from_source(source, is_first_post: false)
     s = source
 
+    category_id = nil
+
+    if is_first_post
+      category_id = @mapped_category_ids[s['category_id'].to_s]
+
+      # skip topics pointing to a category not present in the categories file (ie. unwanted)
+      return nil unless category_id
+    end
+
     topic_id =
       if ! is_first_post
         posted_in = s['PostedIn']
@@ -214,7 +232,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
     {
       id: IMPORT_TOPIC_ID_PREFIX + s['id'],
       user_id: user_id_by_email(s['email'], fallback: @anonymized_user_id),
-      category_id: category_id_from_imported_category_id(IMPORT_CATEGORY_ID_PREFIX + s['category_id']),
+      category_id: category_id,
       title: s['title'] || 'ZZZ no title',
       raw: s['raw'],
       created_at: Time.parse(s['PostedOn']),
