@@ -159,22 +159,14 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     root_category_names = categories.map { |c| c['id'] }
     sorted_subcats =
       @imported_subcategories_json.
-      map { |sc| sc['boards'] }.flatten(1).
-      sort_by { |board| root_category_names.include? board['parent_category']['id'] ? 0 : 1 }
+      sort_by { |board| root_category_names.include? board['parent_category_id'] ? 0 : 1 }
 
     sorted_subcats.each do |board|
-      parent_category_name =
-        case board['parent_category']['id']
-          #HACK: pave over some inconsistencies
-          when 'Schulungen_Events' then 'schulungen'
-          when 'Praxisteam' then 'Praxisteams'
-          else
-            board['parent_category']['id']
-        end
-
+      parent_category_name = board['parent_category_id']
       parent_category = categories.find { |c| c[:id] == parent_category_name }
 
-      raise "ERROR: non existing root category #{parent_category_name}" unless parent_category
+      STDERR.puts "ERROR: non existing root category #{parent_category_name} for category #{category['id']}" unless parent_category
+      # raise "ERROR: non existing root category #{parent_category_name}" unless parent_category
 
       categories << {
         id: board['id'],
@@ -230,13 +222,15 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     if ! is_first_post
       first_post_id = message.dig('topic', 'id')
-      topic_id = topic_lookup_from_imported_post_id(first_post_id)&.[](:topic_id)
+      result = topic_lookup_from_imported_post_id(first_post_id)
 
-      # raise "ERROR: topic_id not found for first post #{first_post_id} for post #{id}" unless topic_id
-      STDERR.puts "ERROR: first post not found for post #{message['id']}"
-      return nil unless topic_id
-
-      p.merge! topic_id: topic_id
+      if result
+        p.merge! topic_id: result[:topic_id]
+      else
+        # raise "ERROR: topic_id not found for first post #{first_post_id} for post #{id}" unless topic_id
+        STDERR.puts "ERROR: first post not found for post #{message['id']}"
+        return nil
+      end
     end
 
     p
