@@ -217,7 +217,6 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       raw: message['body'],
       created_at: message['post_time'],
       views: message['metrics']['views'],
-      import_mode: true,
     })
 
     if ! is_first_post
