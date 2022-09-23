@@ -228,6 +228,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
 
     first_posts = @imported_topics.
       select  { |t| t['type'] == 'Discussion' }.
+      sort_by { |t| t['id'] }.
       map     { |t| post_from_source(t, is_first_post: true) }.
       compact
 
@@ -239,6 +240,7 @@ class ImportScripts::CsvImporter < ImportScripts::Base
 
     posts = @imported_topics.
       select  { |t| t['type'] == 'Post' }.
+      sort_by { |t| t['id'] }.
       map     { |t| post_from_source(t, is_first_post: false) }.
       compact
 
