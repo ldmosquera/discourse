@@ -90,15 +90,15 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     users = []
     @imported_users_json.each do |user|
       u = {}
-      u['id'] = user['User']['id']
-      u['external_id'] = user['User']['sso_id']
-      u['username'] = user['User']['login']
-      u['email'] = user['User']['email']
-      u['name'] = "#{user['User']['first_name']} #{user['User']['last_name']}"
-      u['avatar_url'] = user['User']['avatar']['profile']
-      u['bio_raw'] = user['User']['biography']
-      u['location'] = user['User']['location']
-      u['created_at'] = user['User']['registration_data']['registration_time']
+      u['id'] = user['id']
+      u['external_id'] = user['sso_id']
+      u['username'] = user['login']
+      u['email'] = user['email']
+      u['name'] = "#{user['first_name']} #{user['last_name']}"
+      u['avatar_url'] = user['avatar']['profile']
+      u['bio_raw'] = user['biography']
+      u['location'] = user['location']
+      u['created_at'] = user['registration_data']['registration_time']
       u['group_ids'] = []
       user['roles'].each do |group|
         u['group_ids'] << group['id']
@@ -209,31 +209,31 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     end
   end
 
-  def post_from_message(inner_message, is_first_post:)
+  def post_from_message(message, is_first_post:)
     p = {}
 
-    id = inner_message['id']
-    user_id = user_id_from_imported_user_id(inner_message['author']['id'])
+    id = message['id']
+    user_id = user_id_from_imported_user_id(message['author']['id'])
 
     user_id ||= @missing_user_id
 
     p.merge!({
       id: id,
       user_id: user_id,
-      category: category_id_from_imported_category_id(inner_message['board']['id']),
-      title: strip_html_entities(inner_message['subject'])[0...255],
-      raw: inner_message['body'],
-      created_at: inner_message['post_time'],
-      views: inner_message['metrics']['views'],
+      category: category_id_from_imported_category_id(message['board']['id']),
+      title: strip_html_entities(message['subject'])[0...255],
+      raw: message['body'],
+      created_at: message['post_time'],
+      views: message['metrics']['views'],
       import_mode: true,
     })
 
     if ! is_first_post
-      first_post_id = inner_message.dig('topic', 'id')
+      first_post_id = message.dig('topic', 'id')
       topic_id = topic_lookup_from_imported_post_id(first_post_id)&.[](:topic_id)
 
       # raise "ERROR: topic_id not found for first post #{first_post_id} for post #{id}" unless topic_id
-      STDERR.puts "ERROR: first post not found for post #{inner_message['id']}"
+      STDERR.puts "ERROR: first post not found for post #{message['id']}"
       return nil unless topic_id
 
       p.merge! topic_id: topic_id
@@ -246,9 +246,9 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     puts '', "Importing topics"
 
     topics = @imported_messages_json.
-      select  { |m| m['Message']['depth'] == 0 }.
-      sort_by { |m| m['Message']['id'].to_i } .
-      map     { |m| post_from_message(m['Message'], is_first_post: true) }.
+      select  { |m| m['depth'] == 0 }.
+      sort_by { |m| m['id'].to_i } .
+      map     { |m| post_from_message(m, is_first_post: true) }.
       compact
 
     create_posts(topics, total: topics.count) do |topic|
@@ -260,9 +260,9 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     puts '', "Importing replies"
 
     posts = @imported_messages_json.
-      reject  { |m| m['Message']['depth'] == 0 }.
-      sort_by { |m| m['Message']['id'].to_i } .
-      map     { |m| post_from_message(m['Message'], is_first_post: false) }.
+      reject  { |m| m['depth'] == 0 }.
+      sort_by { |m| m['id'].to_i } .
+      map     { |m| post_from_message(m, is_first_post: false) }.
       compact
 
     create_posts(posts, total: posts.count) do |post|
