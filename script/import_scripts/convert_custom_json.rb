@@ -144,6 +144,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         name: category['title'],
         position: category['position'],
         description: category['description'],
+        creation_date: category['creation_date'],
       }
 
       if category['parent_category'].empty? # To ensure parents are created first
@@ -184,6 +185,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
         description: board['description'],
         parent_category_id: parent_category[:id],
+        creation_date: board['creation_date'],
       }
     end
 
@@ -202,6 +204,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         position: category['position'],
         description: strip_html(category['description']),
         parent_category_id: parent_category_id,
+        created_at: Time.parse(category['creation_date']),
       }
     end
   end
