@@ -190,7 +190,8 @@ class ImportScripts::CsvImporter < ImportScripts::Base
         id: c['id'],
         user_id: c['user_id'],
         name: c['name'],
-        description: c['description']
+        description: c['description'],
+        created_at: c['created_at'],
       }
     end
   end
