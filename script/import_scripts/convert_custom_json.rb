@@ -226,9 +226,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     p = {}
 
     id = message['id']
-    user_id = user_id_from_imported_user_id(message['author']['id'])
-
-    user_id ||= @missing_user_id
+    user_id = user_id_from_imported_user_id(message['author']['id']) || @missing_user_id
 
     p.merge!({
       id: id,
