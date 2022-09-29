@@ -118,6 +118,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         bio_raw: u['bio_raw'],
         location: u['location'],
         created_at: u['created_at'],
+        import_mode: true,
         post_create_action: proc do |user|
           if u['avatar_url'].present?
             UserAvatar.import_url_for_user(u['avatar_url'], user) rescue nil
@@ -237,6 +238,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       created_at: message['post_time'],
       views: message['metrics']['views'],
       cook_method: Post.cook_methods[:raw_html],
+      import_mode: true,
     })
 
     if ! is_first_post
