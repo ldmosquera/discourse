@@ -240,6 +240,14 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       views: message['metrics']['views'],
       cook_method: Post.cook_methods[:raw_html],
       import_mode: true,
+      post_create_action: proc do |post|
+        message['kudos'].each do |k|
+          liker_id = user_id_from_imported_user_id(k['user_id']) || @missing_user_id
+          liker = User.find_by_id liker_id
+
+          PostActionCreator.like(liker, post) if liker
+        end
+      end
     })
 
     if ! is_first_post
