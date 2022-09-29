@@ -36,6 +36,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     puts "", "Importing"
 
     SiteSetting.max_category_nesting = 3
+    SiteSetting.min_username_length = 2
 
     import_groups
     import_users
