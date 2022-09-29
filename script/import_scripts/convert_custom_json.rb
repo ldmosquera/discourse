@@ -39,6 +39,8 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     import_groups
     import_users
+    import_sso_records
+
     # "categories" and "boards" map to first and second level categories in Discourse respectively
     import_categories
 
@@ -87,9 +89,6 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   def import_users
     puts '', "Importing users"
 
-    # sort by user_id asc so that the last SSO record "wins out"
-    @imported_users_json.sort_by { |u| - u['id'] }
-
     users = []
     @imported_users_json.each do |user|
       u = {}
@@ -129,15 +128,28 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
               GroupUser.find_or_create_by(user_id: user.id, group_id: group_id)
             end
           end
-          if u['external_id'].present?
-            begin
-              SingleSignOnRecord.create!(user_id: user.id, external_id: u['external_id'], external_email: u['email'], last_payload: '')
-            rescue Exception => ex
-              STDERR.puts "ERROR when creating SSO record for #{user.id}: #{ex}"
-            end
-          end
         end
       }
+    end
+  end
+
+  def import_sso_records
+    puts '', "Importing SSO records"
+
+    sso_records = @imported_users_json.
+      sort_by {|r| - r['id'].to_i }.  #sort in reverse to ensure the latest user_id wins out in case of duplicates
+      map     {|r| [ r['id'], r['external_id'], r['email'] ] if r['external_id'] }.
+      compact
+
+    sso_records.each do |user_id, external_id, email|
+      user_id = user_id_from_imported_user_id user_id
+
+      begin
+        SingleSignOnRecord.create!(user_id: user_id, external_id: u['external_id'], external_email: u['email'], last_payload: '')
+      rescue Exception => ex
+        STDERR.puts "ERROR when creating SSO record for #{user.id}: #{ex}"
+      end
+      print '.'
     end
   end
 
