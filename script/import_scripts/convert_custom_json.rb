@@ -101,10 +101,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       u['username'] = user['login']
       u['email'] = user['email']
       u['name'] = "#{user['first_name']} #{user['last_name']}"
-      u['avatar_url'] = user['avatar']['profile']
+      u['avatar_url'] = user['avatar_url']
       u['bio_raw'] = user['biography']
       u['location'] = user['location']
-      u['created_at'] = user['registration_data']['registration_time']
+      u['created_at'] = user['registration_time']
       u['group_ids'] = []
       user['roles'].each do |group|
         u['group_ids'] << group['id']
