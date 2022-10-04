@@ -236,6 +236,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     end
   end
 
+  def staff_guardian
+    @_staff_guardian ||= Guardian.new(Discourse.system_user)
+  end
+
   def post_from_message(message, is_first_post:)
     p = {}
 
@@ -258,6 +262,12 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           liker = User.find_by_id liker_id
 
           PostActionCreator.like(liker, post) if liker
+        end
+
+        if message['labels'].any?
+          tag_names = message['labels']
+
+          DiscourseTagging.tag_topic_by_names(post.topic, staff_guardian, tag_names)
         end
       end
     })
