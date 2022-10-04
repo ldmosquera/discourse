@@ -123,10 +123,15 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         location: u['location'],
         created_at: u['created_at'],
         import_mode: true,
+
+        custom_fields: ({
+          'import_avatar_url': u['avatar_url'],
+        } if u['avatar_url'].presence),
+
         post_create_action: proc do |user|
-          if u['avatar_url'].present?
-            UserAvatar.import_url_for_user(u['avatar_url'], user) rescue nil
-          end
+          # if u['avatar_url'].present?
+          #   UserAvatar.import_url_for_user(u['avatar_url'], user) rescue nil
+          # end
           u['group_ids'].each do |g|
             group_id = group_id_from_imported_group_id(g)
             if group_id
