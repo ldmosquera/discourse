@@ -274,6 +274,13 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
           DiscourseTagging.tag_topic_by_names(post.topic, staff_guardian, tag_names)
         end
+
+        if message['url'].present?
+          tag_names = message['url']
+
+          post.custom_fields['import_url'] = message['url']
+          post.save!
+        end
       end
     })
 
