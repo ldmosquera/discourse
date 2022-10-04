@@ -231,6 +231,11 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
             c.custom_fields['import_language'] = category['language']
             c.save!
           end
+
+          if category['url'].present?
+            c.custom_fields['import_url'] = category['url']
+            c.save!
+          end
         end
       }
     end
