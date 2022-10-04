@@ -179,11 +179,8 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       end
     end
 
-    # move leaf categories to the end to ensure their parents will be created before them
-    root_category_names = categories.map { |c| c['id'] }
-    sorted_subcats =
-      @imported_subcategories_json.
-      sort_by { |board| root_category_names.include? board['parent_category_id'] ? 0 : 1 }
+    # sort breadth first
+    sorted_subcats = @imported_subcategories_json.sort_by { |board| [ board['language'], board['depth'], board['position'] ] }
 
     sorted_subcats.each do |board|
       parent_category_name = board['parent_category_id']
