@@ -186,8 +186,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       parent_category_name = board['parent_category_id']
       parent_category = categories.find { |c| c[:id] == parent_category_name }
 
-      STDERR.puts "ERROR: non existing root category #{parent_category_name} for category #{category['id']}" unless parent_category
-      # raise "ERROR: non existing root category #{parent_category_name}" unless parent_category
+      unless parent_category
+        STDERR.puts "ERROR: non existing root category #{parent_category_name} for board #{board['id']}"
+        next
+      end
 
       categories << {
         id: board['id'],
@@ -262,7 +264,6 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       if result
         p.merge! topic_id: result[:topic_id]
       else
-        # raise "ERROR: topic_id not found for first post #{first_post_id} for post #{id}" unless topic_id
         STDERR.puts "ERROR: first post not found for post #{message['id']}"
         return nil
       end
