@@ -221,6 +221,13 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         description: strip_html(category['description']),
         parent_category_id: parent_category_id,
         created_at: Time.parse(category['creation_date']),
+
+        post_create_action: proc do |c|
+          if category['language'].present?
+            c.custom_fields['import_language'] = category['language']
+            c.save!
+          end
+        end
       }
     end
   end
