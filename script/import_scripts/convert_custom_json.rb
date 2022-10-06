@@ -229,12 +229,12 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         post_create_action: proc do |c|
           if category['language'].present?
             c.custom_fields['import_language'] = category['language']
-            c.save!
+            c.save_custom_fields
           end
 
           if category['url'].present?
             c.custom_fields['import_url'] = category['url']
-            c.save!
+            c.save_custom_fields
           end
         end
       }
@@ -279,7 +279,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           tag_names = message['url']
 
           post.custom_fields['import_url'] = message['url']
-          post.save!
+          post.save_custom_fields
         end
       end
     })
