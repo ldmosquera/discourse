@@ -167,47 +167,53 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     puts '', "Importing categories and boards"
 
     categories = []
-    @imported_categories_json.each do |category|
-      c = {
-        id: category['id'],
-        name: category['title'],
-        position: category['position'],
-        description: category['description'],
-        creation_date: category['creation_date'],
-      }
 
-      if category['parent_category'].empty? # To ensure parents are created first
-        categories.unshift(c)
-      else
-        c['parent_category_id'] = category['root_category']['id']
-        categories << c
+    # Khoros "categories" are top level categories
+    categories.concat(
+      @imported_categories_json.map do |category|
+        {
+          id: category['id'],
+          name: category['title'],
+          position: category['position'],
+          description: category['description'],
+          creation_date: category['creation_date'],
+        }
       end
-    end
+    )
 
-    # sort breadth first
-    sorted_subcats = @imported_subcategories_json.sort_by { |board| [ board['language'], board['depth'], board['position'] ] }
+    # Khoros "boards" are children categories to the above
+    categories.concat(
+      @imported_subcategories_json.
+        sort_by { |board| [ board['order'] ] }.
+        map do |board|
+          {
+            id: board['id'],
+            name: board['title'],
 
-    sorted_subcats.each do |board|
-      parent_category_name = board['parent_category_id']
-      parent_category = categories.find { |c| c[:id] == parent_category_name }
+            #FIXME: this field probably needs massaging of some kind
+            position: board['position'],
 
-      unless parent_category
-        STDERR.puts "ERROR: non existing root category #{parent_category_name} for board #{board['id']}"
-        next
+            description: board['description'],
+            parent_category_id: board['parent_category_id'],
+            creation_date: board['creation_date'],
+          }
+        end
+    )
+
+    # validation: drop categories with unknown parent_category_id (NOTE: resolve data issues before proceeding)
+    categories = categories.map do |category|
+      if parent_id = category[:parent_category_id]
+        unless categories.find { |c| c[:id] == parent_id }
+          STDERR.puts "ERROR: non existing parent category #{parent_id} for board #{category[:id]}"
+          next
+        end
       end
 
-      categories << {
-        id: board['id'],
-        name: board['title'],
+      category
+    end.compact
 
-        #FIXME: this field probably needs massaging of some kind
-        position: board['position'],
-
-        description: board['description'],
-        parent_category_id: parent_category[:id],
-        creation_date: board['creation_date'],
-      }
-    end
+    #pull categories
+    #categories = categories.partition{|c| c[:parent_category_id].nil? }.flatten
 
     categories.uniq!
 
