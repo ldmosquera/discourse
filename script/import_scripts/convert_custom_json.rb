@@ -44,10 +44,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     import_groups
     import_users
     import_sso_records
-
-    # "categories" and "boards" map to first and second level categories in Discourse respectively
     import_categories
-
     import_topics
     import_replies
 
@@ -164,6 +161,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   end
 
   def import_categories
+    # NOTE: "categories" map to first level Discourse categories; "boards" map to 2nd level and beyond
     puts '', "Importing categories and boards"
 
     categories = []
