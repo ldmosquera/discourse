@@ -110,7 +110,7 @@ gem 'oj', '3.13.14'
 
 gem 'pg'
 gem 'mini_sql'
-gem 'pry-rails', require: false
+gem 'pry-rails' #, require: false
 gem 'pry-byebug', require: false
 gem 'r2', require: false
 gem 'rake'
