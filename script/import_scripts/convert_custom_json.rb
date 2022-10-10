@@ -285,6 +285,11 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           post.custom_fields['import_url'] = message['url']
           post.save_custom_fields
         end
+
+        if message['cover_image']['href'].presence
+          post.topic.custom_fields['header_image_url'] = message['cover_image']['href']
+          post.topic.save_custom_fields
+        end
       end
     })
 
