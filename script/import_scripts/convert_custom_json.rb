@@ -175,6 +175,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           position: category['position'],
           description: category['description'],
           creation_date: category['creation_date'],
+          language: category['language'],
         }
       end
     )
@@ -194,6 +195,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
             description: board['description'],
             parent_category_id: board['parent_category_id'],
             creation_date: board['creation_date'],
+            language: board['language'],
           }
         end
     )
