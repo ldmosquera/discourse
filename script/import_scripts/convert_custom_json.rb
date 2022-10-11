@@ -252,13 +252,18 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   def post_from_message(message, is_first_post:)
     p = {}
 
+    category_id = category_id_from_imported_category_id(message['board']['id'])
+
+    #skip posts for which category ID can't be found, because if it's not in categories/boards data then it's unwanted
+    return nil if category_id.nil?
+
     id = message['id']
     user_id = user_id_from_imported_user_id(message['author']['id']) || @missing_user_id
 
     p.merge!({
       id: id,
       user_id: user_id,
-      category: category_id_from_imported_category_id(message['board']['id']),
+      category: category_id,
       title: strip_html_entities(message['subject'])[0...255],
       raw: message['body'],
       created_at: message['post_time'],
