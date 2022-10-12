@@ -55,16 +55,6 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     JSON.parse(File.read(path))
   end
 
-  def username_for(name)
-    result = name.downcase.gsub(/[^a-z0-9\-\_]/, '')
-
-    if result.blank?
-      result = Digest::SHA1.hexdigest(name)[0...10]
-    end
-
-    result
-  end
-
   def import_groups
     puts '', "Importing groups"
 
@@ -92,10 +82,13 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     users = []
     @imported_users_json.each do |user|
+      username = u['login']
+      username = Digest::SHA1.hexdigest(name)[0...10] if username.blank?
+
       u = {}
       u['id'] = user['id']
       u['external_id'] = user['sso_id']
-      u['username'] = user['login']
+      u['username'] = username
       u['email'] = user['email']
       u['name'] = "#{user['first_name']} #{user['last_name']}"
       u['avatar_url'] = user['avatar_url']
@@ -113,7 +106,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     create_users(users) do |u|
       {
         id: u['id'],
-        username: username_for(u['username']),
+        username: u['username'] ,
         name: u['name'],
         email: u['email'],
         bio_raw: u['bio_raw'],
