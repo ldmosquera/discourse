@@ -132,7 +132,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       begin
         SingleSignOnRecord.create!(user_id: user_id, external_id: external_id, external_email: email, last_payload: '')
       rescue Exception => ex
-        STDERR.puts "ERROR when creating SSO record for #{user_id}: #{ex}"
+        STDERR.puts "\nERROR when creating SSO record for #{user_id}: #{ex}"
       end
       print '.'
     end
