@@ -145,16 +145,18 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     sso_records = @imported_users_json.
       sort_by {|r| - r['id'].to_i }.  #sort in reverse to ensure the latest user_id wins out in case of duplicates
-      map     {|r| [ r['id'], r['external_id'], r['email'] ] if r['external_id'] }.
+      map     {|r| [ r['id'], r['sso_id'], r['email'] ] if r['sso_id'] }.
       compact
 
     sso_records.each do |user_id, external_id, email|
-      user_id = user_id_from_imported_user_id user_id
+      user_id = user_id_from_imported_user_id(user_id)
+
+      raise unless user_id
 
       begin
-        SingleSignOnRecord.create!(user_id: user_id, external_id: u['external_id'], external_email: u['email'], last_payload: '')
+        SingleSignOnRecord.create!(user_id: user_id, external_id: external_id, external_email: email, last_payload: '')
       rescue Exception => ex
-        STDERR.puts "ERROR when creating SSO record for #{user.id}: #{ex}"
+        STDERR.puts "ERROR when creating SSO record for #{user_id}: #{ex}"
       end
       print '.'
     end
