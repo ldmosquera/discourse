@@ -80,38 +80,17 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   def import_users
     puts '', "Importing users"
 
-    users = []
-    @imported_users_json.each do |user|
-      username = u['login']
-      username = Digest::SHA1.hexdigest(name)[0...10] if username.blank?
+    @imported_users_json.uniq!
 
-      u = {}
-      u['id'] = user['id']
-      u['external_id'] = user['sso_id']
-      u['username'] = username
-      u['email'] = user['email']
-      u['name'] = "#{user['first_name']} #{user['last_name']}"
-      u['avatar_url'] = user['avatar_url']
-      u['bio_raw'] = user['biography']
-      u['location'] = user['location']
-      u['created_at'] = user['registration_time']
-      u['group_ids'] = []
-      user['roles'].each do |group|
-        u['group_ids'] << group['id']
-      end
-      users << u
-    end
-    users.uniq!
-
-    create_users(users) do |u|
+    create_users(@imported_users_json) do |u|
       {
         id: u['id'],
-        username: u['username'] ,
-        name: u['name'],
+        username: (u['login'].presence || SecureRandom.hex),
+        name: "#{u['first_name']} #{u['last_name']}",
         email: u['email'],
-        bio_raw: u['bio_raw'],
+        bio_raw: u['biography'],
         location: u['location'],
-        created_at: u['created_at'],
+        created_at: u['registration_time'],
         import_mode: true,
 
         custom_fields: ({
@@ -122,10 +101,9 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           # if u['avatar_url'].present?
           #   UserAvatar.import_url_for_user(u['avatar_url'], user) rescue nil
           # end
-          u['group_ids'].each do |g|
-            group_id = group_id_from_imported_group_id(g)
-            if group_id
-              GroupUser.find_or_create_by(user_id: user.id, group_id: group_id)
+          u['roles'].each do |r|
+            if group_id = group_id_from_imported_group_id(r['id'])
+              GroupUser.find_or_create_by!(user_id: user.id, group_id: group_id)
             end
           end
         end
@@ -351,3 +329,4 @@ end
 if __FILE__ == $0
   ImportScripts::JsonGeneric.new.perform
 end
+
