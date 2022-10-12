@@ -119,17 +119,25 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   def import_sso_records
     puts '', "Importing SSO records"
 
+    external_ids = {}
+
     sso_records = @imported_users_json.
-      sort_by {|r| - r['id'].to_i }.  #sort in reverse to ensure the latest user_id wins out in case of duplicates
-      map     {|r| [ r['id'], r['sso_id'], r['email'] ] if r['sso_id'] }.
-      compact
+      select  {|r| r['sso_id'].presence }.
+      sort_by {|r| r['id'].to_i }.
+      map     {|r| [ r['sso_id'], [ r['id'], r['email'] ] ] }
 
-    sso_records.each do |user_id, external_id, email|
-      user_id = user_id_from_imported_user_id(user_id)
+    # deduplicate by external_id ensuring the biggest user_id "wins out"
+    sso_records = Hash[ * sso_records.flatten(1) ].
+      map do |external_id, (id, email)|
+        [ id, external_id, email ]
+      end
 
-      raise unless user_id
+    sso_records.each do |khoros_user_id, external_id, email|
+      user_id = user_id_from_imported_user_id(khoros_user_id)
 
       begin
+        raise "unknown imported user ID #{khoros_user_id}" unless khoros_user_id
+
         SingleSignOnRecord.create!(user_id: user_id, external_id: external_id, external_email: email, last_payload: '')
       rescue Exception => ex
         STDERR.puts "\nERROR when creating SSO record for #{user_id}: #{ex}"
