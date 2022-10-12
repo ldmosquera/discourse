@@ -121,22 +121,17 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     external_ids = {}
 
+    # deduplicate by external_id ensuring the biggest user_id "wins out"
     sso_records = @imported_users_json.
       select  {|r| r['sso_id'].presence }.
       sort_by {|r| r['id'].to_i }.
-      map     {|r| [ r['sso_id'], [ r['id'], r['email'] ] ] }
+      each    {|r| external_ids[r['sso_id']] = [ r['id'], r['email'] ] }
 
-    # deduplicate by external_id ensuring the biggest user_id "wins out"
-    sso_records = Hash[ * sso_records.flatten(1) ].
-      map do |external_id, (id, email)|
-        [ id, external_id, email ]
-      end
-
-    sso_records.each do |khoros_user_id, external_id, email|
+    external_ids.each do |external_id, (khoros_user_id, email)|
       user_id = user_id_from_imported_user_id(khoros_user_id)
 
       begin
-        raise "unknown imported user ID #{khoros_user_id}" unless khoros_user_id
+        raise "unknown imported user ID #{khoros_user_id}" unless user_id
 
         SingleSignOnRecord.create!(user_id: user_id, external_id: external_id, external_email: email, last_payload: '')
       rescue Exception => ex
