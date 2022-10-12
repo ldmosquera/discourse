@@ -24,10 +24,13 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     @imported_subcategories_json = load_json(JSON_SUBCATEGORIES_FILE_PATH)
     @imported_messages_json = load_json(JSON_MESSAGES_FILE_PATH)
 
-    @missing_user_id = User.create!(
-      username: 'missing_user',
-      email: 'missing_user@invalid.email',
-    ).id
+    missing_user_email = 'missing_user@invalid.email'
+
+    @missing_user_id = UserEmail.find_by_email(missing_user_email)&.user_id ||
+      User.create!(
+        username: 'missing_user',
+        email: 'missing_user@invalid.email',
+      ).id
 
     @htmlentities = HTMLEntities.new
   end
@@ -52,6 +55,8 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   end
 
   def load_json(path)
+    return [] if path == 'SKIP'
+
     JSON.parse(File.read(path))
   end
 
