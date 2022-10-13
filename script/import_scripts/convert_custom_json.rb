@@ -82,15 +82,26 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     end
   end
 
+  def path_from(url)
+    # remove leading slash
+    URI(url).path[1..-1]
+  end
+
+  def trim_empty_values(hash)
+    Hash[ * hash.to_a.select { |k,v| v.presence }.flatten ]
+  end
+
   def import_users
     puts '', "Importing users"
 
     @imported_users_json.uniq!
 
     create_users(@imported_users_json) do |u|
+      username = u['login'].presence || SecureRandom.hex
+
       {
         id: u['id'],
-        username: (u['login'].presence || SecureRandom.hex),
+        username: username,
         name: "#{u['first_name']} #{u['last_name']}",
         email: u['email'],
         bio_raw: u['biography'],
@@ -98,9 +109,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         created_at: u['registration_time'],
         import_mode: true,
 
-        custom_fields: ({
-          'import_avatar_url': u['avatar_url'],
-        } if u['avatar_url'].presence),
+        custom_fields: trim_empty_values({
+          'import_avatar_url': u['avatar_url'].presence,
+          'import_url': u['profile_url'].presence,
+        }),
 
         post_create_action: proc do |user|
           # if u['avatar_url'].present?
@@ -110,6 +122,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
             if group_id = group_id_from_imported_group_id(r['id'])
               GroupUser.find_or_create_by!(user_id: user.id, group_id: group_id)
             end
+          end
+
+          if u['profile_url'].presence && u['login'].presence
+            Permalink.create! url: path_from(u['profile_url']), external_url: "/u/#{username}"
           end
         end
       }
@@ -157,6 +173,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           description: category['description'],
           creation_date: category['creation_date'],
           language: category['language'],
+          url: category['view_href'],
         }
       end
     )
@@ -177,6 +194,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
             parent_category_id: board['parent_category_id'],
             creation_date: board['creation_date'],
             language: board['language'],
+            url: board['url'],
           }
         end
     )
@@ -214,15 +232,21 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         created_at: Time.parse(category['creation_date']),
 
         post_create_action: proc do |c|
+          custom_fields_changed = false
+
           if category['language'].present?
             c.custom_fields['import_language'] = category['language']
-            c.save_custom_fields
+            custom_fields_changed = true
           end
 
           if category['url'].present?
+            Permalink.create! url: path_from(category['url']), category_id: c.id
+
             c.custom_fields['import_url'] = category['url']
-            c.save_custom_fields
+            custom_fields_changed = true
           end
+
+          c.save_custom_fields if custom_fields_changed
         end
       }
     end
@@ -242,6 +266,8 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     id = message['id']
     user_id = user_id_from_imported_user_id(message['author']['id']) || @missing_user_id
+
+    post_style = message['style']
 
     p.merge!({
       id: id,
@@ -267,12 +293,21 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           DiscourseTagging.tag_topic_by_names(post.topic, staff_guardian, tag_names)
         end
 
-        if message['url'].present?
-          tag_names = message['url']
+        post_custom_fields_changed = false
 
-          post.custom_fields['import_url'] = message['url']
-          post.save_custom_fields
+        if post_style.presence
+          post.custom_fields['import_post_style'] = post_style
+          post_custom_fields_changed = true
         end
+
+        if url = message['url'].presence
+          Permalink.create! url: path_from(url), post_id: post.id
+
+          post.custom_fields['import_url'] = url
+          post_custom_fields_changed = true
+        end
+
+        post.save_custom_fields if post_custom_fields_changed
 
         if message['cover_image']['href'].presence
           post.topic.custom_fields['header_image_url'] = message['cover_image']['href']
