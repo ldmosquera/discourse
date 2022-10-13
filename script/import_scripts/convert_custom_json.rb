@@ -296,14 +296,32 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     p
   end
 
+  def drop_posts_for_newer_users(posts)
+    last_user_created_at = User.last.created_at
+
+    before = posts.count
+
+    posts.reject! { |p| Date.parse(p['post_time']) > last_user_created_at }
+
+    after = posts.count
+
+    if (after - before).abs != 0
+      STDERR.puts "WARN - dropping #{before - after} posts after last user creation date of #{last_user_created_at}"
+    end
+
+    posts
+  end
+
   def import_topics
     puts '', "Importing topics"
 
     topics = @imported_messages_json.
       select  { |m| m['depth'] == 0 }.
-      sort_by { |m| m['id'].to_i } .
-      map     { |m| post_from_message(m, is_first_post: true) }.
-      compact
+      sort_by { |m| m['id'].to_i }
+
+    topics = drop_posts_for_newer_users topics
+
+    topics = topics.map{ |m| post_from_message(m, is_first_post: true) }.compact
 
     create_posts(topics, total: topics.count) do |topic|
       topic
@@ -315,9 +333,11 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     posts = @imported_messages_json.
       reject  { |m| m['depth'] == 0 }.
-      sort_by { |m| m['id'].to_i } .
-      map     { |m| post_from_message(m, is_first_post: false) }.
-      compact
+      sort_by { |m| m['id'].to_i }
+
+    posts = drop_posts_for_newer_users posts
+
+    posts = posts.map{ |m| post_from_message(m, is_first_post: true) }.compact
 
     create_posts(posts, total: posts.count) do |post|
       post
