@@ -236,6 +236,13 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     post_style = message['style']
 
+    # cook_method =
+    #   case post_style
+    #     when 'blog' then Post.cook_methods[:raw_html]
+    #     else nil
+    #   end
+    cook_method = nil
+
     p.merge!({
       id: id,
       user_id: user_id,
@@ -244,7 +251,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       raw: message['body'],
       created_at: message['post_time'],
       views: message['metrics']['views'],
-      cook_method: Post.cook_methods[:raw_html],
+      cook_method: cook_method,
       import_mode: true,
       post_create_action: proc do |post|
         message['kudos'].each do |k|
