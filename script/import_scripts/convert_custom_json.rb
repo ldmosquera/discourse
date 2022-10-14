@@ -10,8 +10,7 @@ require 'nokogiri'
 class ImportScripts::JsonGeneric < ImportScripts::Base
 
   JSON_USERS_FILE_PATH = ENV['JSON_USERS_FILE'] || 'script/import_scripts/support/sample.json'
-  JSON_CATEGORIES_FILE_PATH = ENV['JSON_CATEGORIES_FILE'] || 'script/import_scripts/support/category.json'
-  JSON_SUBCATEGORIES_FILE_PATH = ENV['JSON_SUBCATEGORIES_FILE'] || 'script/import_scripts/support/Boards.json'
+  JSON_BOARDS_FILE_PATH = ENV['JSON_BOARDS_FILE'] || 'script/import_scripts/support/boards_and_categories.json'
   JSON_MESSAGES_FILE_PATH = ENV['JSON_MESSAGES_FILE'] || 'script/import_scripts/support/messages.json'
   BATCH_SIZE ||= 1000
 
@@ -20,8 +19,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     puts "", "Reading in files"
     @imported_users_json = load_json(JSON_USERS_FILE_PATH)
-    @imported_categories_json = load_json(JSON_CATEGORIES_FILE_PATH)
-    @imported_subcategories_json = load_json(JSON_SUBCATEGORIES_FILE_PATH)
+    @imported_boards_json = load_json(JSON_BOARDS_FILE_PATH)
     @imported_messages_json = load_json(JSON_MESSAGES_FILE_PATH)
 
     missing_user_email = 'missing_user@invalid.email'
@@ -50,6 +48,9 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     import_categories
     import_topics
     import_replies
+
+    # FIXME: implement
+    # import_badges
 
     puts "", "Done"
   end
@@ -158,95 +159,56 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   end
 
   def import_categories
-    # NOTE: "categories" map to first level Discourse categories; "boards" map to 2nd level and beyond
+    # NOTE:
+    # "Khoros categories" map to first level Discourse categories and do not directly contain posts
+    # "Khoros boards" map to 2nd level categories and beyond
     puts '', "Importing categories and boards"
 
-    categories = []
-
-    # Khoros "categories" are top level categories
-    categories.concat(
-      @imported_categories_json.map do |category|
+    categories = @imported_boards_json.
+      sort_by{|r| r['order'].to_i}.
+      map do |r|
         {
-          id: category['id'],
-          name: category['title'],
-          position: category['position'],
-          description: category['description'],
-          creation_date: category['creation_date'],
-          language: category['language'],
-          url: category['view_href'],
+          # deduplicated between cats and boards
+          id:                 r['id_to_use'].presence || r['id'],
+          title:              r['title'],
+          # NOTE: can be either a Khoros category or a board
+          parent_category_id: r['parent_id_to_use'].presence || r['parent_id'],
+          created_at:         r['created_at'],
+          description:        r['description'],
+          language:           r['language'],
+          url:                r['url'],
         }
       end
-    )
-
-    # Khoros "boards" are children categories to the above
-    categories.concat(
-      @imported_subcategories_json.
-        sort_by { |board| [ board['order'] ] }.
-        map do |board|
-          {
-            id: board['id'],
-            name: board['title'],
-
-            #FIXME: this field probably needs massaging of some kind
-            position: board['position'],
-
-            description: board['description'],
-            parent_category_id: board['parent_category_id'],
-            creation_date: board['creation_date'],
-            language: board['language'],
-            url: board['url'],
-          }
-        end
-    )
-
-    # validation: drop categories with unknown parent_category_id (NOTE: resolve data issues before proceeding)
-    categories = categories.map do |category|
-      if parent_id = category[:parent_category_id]
-        unless categories.find { |c| c[:id] == parent_id }
-          STDERR.puts "ERROR: non existing parent category #{parent_id} for board #{category[:id]}"
-          next
-        end
-      end
-
-      category
-    end.compact
-
-    #pull categories
-    #categories = categories.partition{|c| c[:parent_category_id].nil? }.flatten
-
-    categories.uniq!
 
     create_categories(categories) do |category|
       category = HashWithIndifferentAccess.new(category)
 
-      if category['parent_category_id'].present?
-        parent_category_id = category_id_from_imported_category_id(category['parent_category_id'])
+      if pcid = category['parent_category_id'].presence
+        parent_category_id = category_id_from_imported_category_id(pcid)
+
+        unless parent_category_id
+          raise "ERROR: non existing parent category #{pcid} for board #{category[:id]}"
+        end
       end
 
       {
         id: category['id'],
-        name: category['name'],
-        position: category['position'],
+        name: category['title'],
         description: strip_html(category['description']),
         parent_category_id: parent_category_id,
-        created_at: Time.parse(category['creation_date']),
+        created_at: Time.parse(category['created_at']),
 
         post_create_action: proc do |c|
-          custom_fields_changed = false
-
           if category['language'].present?
             c.custom_fields['import_language'] = category['language']
-            custom_fields_changed = true
           end
 
           if category['url'].present?
             Permalink.create! url: path_from(category['url']), category_id: c.id
-
             c.custom_fields['import_url'] = category['url']
-            custom_fields_changed = true
           end
 
-          c.save_custom_fields if custom_fields_changed
+          c.save_custom_fields
         end
       }
     end
