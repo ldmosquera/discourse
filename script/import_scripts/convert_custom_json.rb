@@ -255,24 +255,26 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
           DiscourseTagging.tag_topic_by_names(post.topic, staff_guardian, tag_names)
         end
 
-        post_custom_fields_changed = false
+        begin
+          post_custom_fields_changed = false
 
-        if post_style.presence
-          post.custom_fields['import_post_style'] = post_style
-          post_custom_fields_changed = true
+          if post_style.presence
+            post.custom_fields['import_post_style'] = post_style
+            post_custom_fields_changed = true
+          end
+
+          if url = message['url'].presence
+            Permalink.create! url: path_from(url), post_id: post.id
+
+            post.custom_fields['import_url'] = url
+            post_custom_fields_changed = true
+          end
+
+          post.save_custom_fields if post_custom_fields_changed
         end
 
-        if url = message['url'].presence
-          Permalink.create! url: path_from(url), post_id: post.id
-
-          post.custom_fields['import_url'] = url
-          post_custom_fields_changed = true
-        end
-
-        post.save_custom_fields if post_custom_fields_changed
-
-        if message['cover_image']['href'].presence
-          post.topic.custom_fields['header_image_url'] = message['cover_image']['href']
+        if cover_url = message['cover_image']['href'].presence
+          post.topic.custom_fields['header_image_url'] = cover_url
           post.topic.save_custom_fields
         end
       end
