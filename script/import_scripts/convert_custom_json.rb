@@ -56,7 +56,10 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
   end
 
   def load_json(path)
-    return [] if path == 'SKIP'
+    if path == 'SKIP'
+      warn "WARN: skipping file #{path}"
+      return []
+    end
 
     JSON.parse(File.read(path))
   end
@@ -154,7 +157,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
         SingleSignOnRecord.create!(user_id: user_id, external_id: external_id, last_payload: '')
       rescue Exception => ex
-        STDERR.puts "\nERROR when creating SSO record for #{user_id}: #{ex}"
+        warn "\nERROR when creating SSO record for #{user_id}: #{ex}"
       end
       print '.'
     end
@@ -289,7 +292,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
       if result
         p.merge! topic_id: result[:topic_id]
       else
-        STDERR.puts "ERROR: first post not found for post #{message['id']}"
+        warn "ERROR: first post not found for post #{message['id']}"
         return nil
       end
     end
@@ -307,7 +310,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
     after = posts.count
 
     if (after - before).abs != 0
-      STDERR.puts "WARN - dropping #{before - after} posts after last user creation date of #{last_user_created_at}"
+      warn "WARN - dropping #{before - after} posts after last user creation date of #{last_user_created_at}"
     end
 
     posts
