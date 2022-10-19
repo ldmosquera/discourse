@@ -309,6 +309,8 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     after = posts.count
 
+    # HACK: heuristic to ensure no posts are attributed to @missing_user when post data is fresher than user data (has happened);
+    # these posts will be imported in a later incremental import with presumably 100% complete data.
     if (after - before).abs != 0
       warn "WARN - dropping #{before - after} posts after last user creation date of #{last_user_created_at}"
     end
