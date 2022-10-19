@@ -114,14 +114,11 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
         import_mode: true,
 
         custom_fields: trim_empty_values({
-          'import_avatar_url': u['avatar_url'].presence,
-          'import_url': u['profile_url'].presence,
+          'import_avatar_url': u['avatar_url'],
+          'import_url': u['profile_url'],
         }),
 
         post_create_action: proc do |user|
-          # if u['avatar_url'].present?
-          #   UserAvatar.import_url_for_user(u['avatar_url'], user) rescue nil
-          # end
           u['roles'].each do |r|
             if group_id = group_id_from_imported_group_id(r['id'])
               GroupUser.find_or_create_by!(user_id: user.id, group_id: group_id)
@@ -236,6 +233,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     post_style = message['style']
 
+    # FIXME: this should help with editability of posts that are not complex HTML, but will introduce special cases for fixing mentions
     # cook_method =
     #   case post_style
     #     when 'blog' then Post.cook_methods[:raw_html]
