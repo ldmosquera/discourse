@@ -348,7 +348,7 @@ class ImportScripts::JsonGeneric < ImportScripts::Base
 
     posts = drop_posts_for_newer_users posts
 
-    posts = posts.map{ |m| post_from_message(m, is_first_post: true) }.compact
+    posts = posts.map{ |m| post_from_message(m, is_first_post: false) }.compact
 
     create_posts(posts, total: posts.count) do |post|
       post
